@@ -1,0 +1,13 @@
+hgucode	name	MODFLOWID	deqid	hcode
+POAQ	Lower Potomac Aquifer	19	1	1
+POAQ	Middle Potomac Aquifer	19	2	2
+POAQ	Upper Potomac Aquifer	19	3	3
+VBAQ	Virginia Beach Aquifer	16	4	4
+PDAQ	Peedee Aquifer	14	5	5
+AQAQ	Aquia Aquifer	12	6	6
+PPAQ	Piney Point Aquifer	7	7	7
+SMAQ	St. Marys Aquifer	5	8	8
+SURF	Surficial (Columbia) Aquifer	1	10	10
+YEAQ	Lower Yorktown-Eastover Aquifer	3	9l	9l
+YEAQ	Middle Yorktown-Eastover Aquifer	3	9m	9m
+YEAQ	Upper Yorktown-Eastover Aquifer	3	9u	9u

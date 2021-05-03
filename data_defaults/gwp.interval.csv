@@ -1,0 +1,107 @@
+mpid	WELLNO	NTERVL_TYP	NTERVL_NUM	NTERVL_TOP	NTERVL_BOT	SCREEN_SIZ	AQ1	CU1	AQ2	CU2	AQ3	CU3	AQ4	CU4	AQ5	CU5	AQ6	CU6	AQ7	CU7	AQ8	CU8	AQ9L	CU9L	AQ9M	CU9M	AQ9U	CU9U	AQ10	DIAMETER	INT_COMNT	NEW_INTERVAL	IUPDATE	IUPDATEBY
+373600075463800	100-00008	C	1	0	415		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	3	MAS 6/25/04 interval obtained from storet		2004-06-25 00:00:00	
+373600075463800	100-00008	H	1	0			f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	MAS 6/25/04 interval obtained from storet		2004-06-25 00:00:00	
+373600075463800	100-00008	S	1	367	372		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		MAS 6/25/04 interval obtained from storet		2004-06-25 00:00:00	
+374537075400401	100-00006	C	1	0	20		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	20	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	C	2	215	236		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	C	3	266	271		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	G	1	0	60		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-10-31 00:00:00	
+374537075400401	100-00006	H	1				f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	24	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	H	2				f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	19	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	H	3				f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	S	1	170	215	30	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374537075400401	100-00006	S	2	236	266	30	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+374705075390100	100-00013	C	1	0	45		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8			2013-08-23 00:00:00	hdg93141
+374705075390100	100-00013	C	2	64	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6			2013-08-23 00:00:00	hdg93141
+374705075390100	100-00013	H	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8			2013-08-23 00:00:00	hdg93141
+374705075390100	100-00013	S	1	45	64	30	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	7.5			2013-08-23 00:00:00	hdg93141
+374706075390000	100-00014	C	1	0	18		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	14			2013-08-23 00:00:00	hdg93141
+374706075390000	100-00014	C	2	0	45		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8			2013-08-23 00:00:00	hdg93141
+374706075390000	100-00014	C	3	40	90		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6			2013-08-23 00:00:00	hdg93141
+374706075390000	100-00014	H	1	0	85		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8			2013-08-23 00:00:00	hdg93141
+374706075390000	100-00014	S	1	45	78	30	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8			2013-08-23 00:00:00	hdg93141
+375256075332301	100-00012	C	1	0	56		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	18	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375256075332301	100-00012	C	2	0	134		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375256075332301	100-00012	C	3	149	294		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375256075332301	100-00012	G	1	0	56		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-11-05 00:00:00	
+375256075332301	100-00012	H	1	0	56		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	22	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	H	2	56	300		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	17	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	H	3	300	307		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	S	1	134	149	30	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	S	2	158	173		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f		11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	S	3	205	215		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f		11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	S	4	219	229		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f		11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375256075332301	100-00012	S	5	240	250		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn,  from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375256075332301	100-00012	S	6	274	289		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	f	f	6	11/5/03, vpn,  from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375304075333202	100-00011	C	1	0	198		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375304075333202	100-00011	C	2	198	200		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375304075333202	100-00011	C	3	212	216		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	C	4	224	234		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2.		2003-11-05 00:00:00	
+375304075333202	100-00011	C	5	262	273		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2.		2003-11-05 00:00:00	
+375304075333202	100-00011	C	6	288	295		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2.		2003-11-05 00:00:00	
+375304075333202	100-00011	G	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-10-31 00:00:00	
+375304075333202	100-00011	H	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	22	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	H	2	74	297		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	17	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	H	3	297	325		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	1	138	146		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	2	157	171		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	3	200	212		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	4	216	224		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	5	234	242		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375304075333202	100-00011	S	6	273	288		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375304075333202	100-00011	C	1	0	198		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375304075333202	100-00011	C	2	198	200		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375304075333202	100-00011	C	3	212	216		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	C	4	224	234		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2.		2003-11-05 00:00:00	
+375304075333202	100-00011	C	5	262	273		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2.		2003-11-05 00:00:00	
+375304075333202	100-00011	C	6	288	295		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2.		2003-11-05 00:00:00	
+375304075333202	100-00011	G	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-10-31 00:00:00	
+375304075333202	100-00011	H	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	22	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	H	2	74	297		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	17	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	H	3	297	325		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	1	138	146		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	2	157	171		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	3	200	212		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	4	216	224		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log. 10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375304075333202	100-00011	S	5	234	242		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375304075333202	100-00011	S	6	273	288		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375311075333903	100-00010	C	1	0	198		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375311075333903	100-00010	C	2	198	200		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375311075333903	100-00010	C	3	212	293		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	G	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-10-31 00:00:00	
+375311075333903	100-00010	H	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	22	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	H	2	74	295		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	17	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	H	3	295	370		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	S	1	138	146		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	S	2	158	172		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	S	3	200	212		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	S	4	216	224		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375311075333903	100-00010	S	5	234	242		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn,  from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375311075333903	100-00010	S	6	272	288		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	f	f	6	11/5/03, vpn,  from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375318075334404	100-00009	C	1	0	194		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375318075334404	100-00009	C	2	194	292		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375318075334404	100-00009	G	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-10-31 00:00:00	
+375318075334404	100-00009	H	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	22	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	H	2	74	295		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	17	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	H	3	295	330		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	1	132	140		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	2	156	170		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	3	196	208		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	4	214	222		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375318075334404	100-00009	S	5	226	234		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375318075334404	100-00009	S	6	272	287		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	C	1	0	194		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	8	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375318075334404	100-00009	C	2	194	292		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	10-31-03, bjq, Interval retrieved from STORET		2003-10-31 00:00:00	
+375318075334404	100-00009	G	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f		10-31-03, bjq, Interval retrieved from STORET.  Grout.		2003-10-31 00:00:00	
+375318075334404	100-00009	H	1	0	74		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	22	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	H	2	74	295		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	17	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	H	3	295	330		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	10	11/5/03, vpn, updated from GW-2.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	1	132	140		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	2	156	170		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	8	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	3	196	208		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375318075334404	100-00009	S	4	214	222		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375318075334404	100-00009	S	5	226	234		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.		2003-11-05 00:00:00	
+375318075334404	100-00009	S	6	272	287		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	t	f	f	f	f	f	f	6	11/5/03, vpn, updated from GW-2, aq pick by tsb from geophysical log.  10-31-03, bjq, Interval retrieved from STORET		2003-11-05 00:00:00	
+375538075330200	100-00007	C	1	0	369		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	3	MAS 6/25/04 from Storet		2004-06-25 00:00:00	
+375538075330200	100-00007	H	1	0			f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	6	MAS 6/25/04 from Storet		2004-06-25 00:00:00	
+375538075330200	100-00007	S	1	369	374		f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	f	3	MAS 6/25/04 from Storet		2004-06-25 00:00:00	

@@ -1,0 +1,4580 @@
+<?php
+
+/**
+ * Implement hook_entity_info().
+ *
+ * We define two entities here - the actual entity that will hold our domain
+ * specific information and an entity that holds information about the different
+ * types of entities. See here: http://drupal.org/node/977380 for a discussion on this
+ * choice.
+ */
+function dh_entity_info() {
+
+  $return['dh_feature_type'] = array(
+    'label' => t('dH Feature Type'),
+    'entity class' => 'dHFeatureType',
+    'controller class' => 'dHFeatureTypeController',
+    'base table' => 'dh_feature_type',
+    'fieldable' => TRUE,
+	  'bundle of' => 'dh_feature',
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'exportable' => TRUE,
+    'entity keys' => array (
+	     'name' => 'bundle',
+        'id' => 'fid',
+        'label' => 'name',
+    ),
+    'access callback' => 'dh_feature_type_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/dh_feature_type',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHFeatureTypeUIController',
+    ),
+  );
+
+  $return['dh_feature'] = array(
+    'label' => t('dH Feature'),
+    // The entity class and controller class extend the classes provided by the
+    // Entity API
+    'entity class' => 'dHFeature',
+    'controller class' => 'dHFeatureController',
+    'base table' => 'dh_feature',
+    'fieldable' => TRUE,
+    'field cache' => TRUE,
+    'exportable' => TRUE,
+	  'entity keys' => array(
+      'id' => 'hydroid',
+	    'bundle' => 'bundle',
+	    'label' => 'name'
+    ),
+    // Bundles are defined by the model types below
+    'bundles' => array(),
+    // Bundle keys tell the FieldAPI how to extract information from the bundle objects
+    'bundle keys' => array( 
+	    'bundle' => 'bundle'
+    ),
+    //'property info' => array('hydroid', 'ftype', 'fstatus', 'name'),
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'access callback' => 'dh_feature_access',
+    'module' => 'dh',
+    // The information below is used by EntityDefaultUIController
+    'admin ui' => array(
+      'path' => 'admin/content/dh_features',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHFeatureUIController',
+      //'menu wildcard' => '%dh_feature',
+    ),
+    'view modes' => array(
+      'full' => array(
+        'label' => t('Full Feature'),
+        'custom settings' =>  FALSE,
+      ),
+    ),
+  );
+
+  $return['dh_hydrogeologicunit'] = array(
+    'label' => t('dH Hydrogeologic Unit'),
+    'entity class' => 'dHHydroGeologicUnit',
+    'controller class' => 'dHHydroGeologicUnitController',
+    'base table' => 'dh_hydrogeologicunit',
+    'fieldable' => TRUE,
+	 // do not include property "bundle of" if it is not a bundle of, even empty will cause error
+	 // 'bundle of' => '',
+    //'exportable' => TRUE,
+    'entity keys' => array (
+	     'name' => 'hydroid',
+        'id' => 'hydroid',
+        'label' => 'hguname',
+    ),
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'access callback' => 'dh_feature_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/content/dh_hydrogeologicunit',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHHydroGeologicUnitUIController',
+    ),
+  );
+
+  $return['dh_boreholelog_type'] = array(
+    'label' => t('dH BoreHoleLog Type'),
+    'entity class' => 'dHBoreHoleLogType',
+    'controller class' => 'dHBoreHoleLogTypeController',
+    'base table' => 'dh_boreholelog_type',
+    'fieldable' => TRUE,
+	  'bundle of' => 'dh_boreholelog',
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'exportable' => TRUE,
+    'entity keys' => array (
+	     'name' => 'bundle',
+        'id' => 'bhltid',
+        'label' => 'name',
+    ),
+    'access callback' => 'dh_boreholelog_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/dh_boreholelog_type',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHBoreHoleLogTypeUIController',
+    ),
+  );
+
+  $return['dh_boreholelog'] = array(
+    'label' => t('dH Borehole Log'),
+    'entity class' => 'dHBoreHoleLog',
+    'controller class' => 'dHBoreHoleLogController',
+    'base table' => 'dh_boreholelog',
+    'fieldable' => TRUE,
+    'field cache' => TRUE,
+    'exportable' => TRUE,
+	 //'bundle of' => '',
+    //'exportable' => TRUE,
+    'entity keys' => array (
+	    'name' => 'bhlid',
+      'id' => 'bhlid',
+      'label' => 'bhlid',
+	    'bundle' => 'bundle',
+    ),
+    'bundles' => array(
+      // don't need - happens auto?
+      //'dh_boreholelog' => array (
+      //  'path' => 'admin/content/dh_boreholelog',
+      //  'access callback' => 'dh_boreholelog',
+      //),
+    ),
+    'bundle keys' => array( 
+	    'bundle' => 'bundle'
+    ),
+    'access callback' => 'dh_boreholelog_access',
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/content/dh_boreholelog',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHBoreHoleLogUIController',
+    ),
+  );
+
+  $return['dh_timeseries'] = array(
+    'label' => t('dH TimeSeries'),
+    'entity class' => 'dHTimeSeriesTable',
+    'controller class' => 'dHTimeSeriesTableController',
+    'base table' => 'dh_timeseries',
+    'fieldable' => TRUE,
+	 //'bundle of' => '',
+    //'exportable' => TRUE,
+    'entity keys' => array (
+	    //'name' => 'tid',
+      'id' => 'tid',
+      'label' => 'tid',
+    ),
+    'property info' => array('featureid', 'tstime', 'tsendtime', 'tsvalue', 'tscode', 'entity_type'),
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'access callback' => 'dh_timeseries_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/content/dh_timeseries',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHTimeSeriesTableUIController',
+    ),
+    'view modes' => array(
+      'teaser' => array(
+        'label' => t('Teaser'),
+        'custom settings' =>  FALSE,
+      ),
+      'full' => array(
+        'label' => t('Full TimeSeries'),
+        'custom settings' =>  FALSE,
+      ),
+      'plugin' => array(
+        'label' => t('dH Variable Plugin'),
+        'custom settings' =>  FALSE,
+      ),
+      'tscode' => array(
+        'label' => t('Plugin rendered Code Field'),
+        'custom settings' =>  FALSE,
+      ),
+      'tsvalue' => array(
+        'label' => t('Plugin Rendered Value'),
+        'custom settings' =>  FALSE,
+      ),
+      'featureid' => array(
+        'label' => t('Plugin Rendered Location Field'),
+        'custom settings' =>  FALSE,
+      ),
+      'ical_summary' => array(
+        'label' => t('iCal Summary Field'),
+        'custom settings' =>  FALSE,
+      ),
+    ),
+  );
+
+  $return['dh_variabledefinition'] = array(
+    'label' => t('dH VariableDefinition'),
+    'entity class' => 'dHVariableDefinition',
+    'controller class' => 'dHVariableDefinitionController',
+    'base table' => 'dh_variabledefinition',
+    'fieldable' => TRUE,
+	 //'bundle of' => '',
+    //'exportable' => TRUE,
+    // name as entity keys causes REST to break
+    // but we get tons of errors in the log when we comment out 'name' => 'varkey'
+    'entity keys' => array (
+	     'name' => 'varkey',
+       'id' => 'hydroid',
+       'label' => 'varname',
+    ),
+    'property info' => array('hydroid', 'varid', 'varkey', 'vocabulary', 'varunits'),
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'access callback' => 'dh_variabledefinition_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/content/dh_variabledefinition',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHVariableDefinitionUIController',
+    ),
+  );
+  
+  if (db_table_exists('dh_properties_type')) {
+  $return['dh_properties_type'] = array(
+    'label' => t('dH Properties Type'),
+    'entity class' => 'dHPropertiesType',
+    'controller class' => 'dHPropertiesTypeController',
+    'base table' => 'dh_properties_type',
+    'fieldable' => TRUE,
+	  'bundle of' => 'dh_properties',
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'exportable' => TRUE,
+    'entity keys' => array (
+	    'name' => 'bundle',
+      'id' => 'ptid',
+      'label' => 'name',
+    ),
+    'access callback' => 'dh_properties_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/dh_properties_type',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHPropertiesTypeUIController',
+    ),
+  );
+  }
+  $return['dh_properties'] = array(
+    'label' => t('dH Properties'),
+    'entity class' => 'dHProperties',
+    'controller class' => 'dHPropertiesController',
+    'base table' => 'dh_properties',
+    'revision table' => 'dh_properties_revision',
+    'fieldable' => TRUE,
+	  //'bundle of' => '',
+    //'exportable' => TRUE,
+    'entity keys' => array (
+	   // 'name' => 'pid',
+      'id' => 'pid',
+      'label' => 'pid',
+	    'bundle' => 'bundle',
+	    'revision' => 'vid',
+	    'revision propvalue' => 'propvalue',
+    ),
+    'property info' => array('propname', 'propvalue', 'propcode', 'entity_type', 'startdate', 'enddate' ),
+    'bundles' => array(),
+    'bundle keys' => array( 
+	    'bundle' => 'bundle'
+    ),
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'access callback' => 'dh_properties_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/content/dh_properties',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHPropertiesUIController',
+    ),
+    'view modes' => array(
+      'teaser' => array(
+        'label' => t('Teaser'),
+        'custom settings' =>  FALSE,
+      ),
+      'full' => array(
+        'label' => t('Full Properties'),
+        'custom settings' =>  FALSE,
+      ),
+      'plugin' => array(
+        'label' => t('dH Variable Plugin'),
+        'custom settings' =>  FALSE,
+      ),
+      'ical_summary' => array(
+        'label' => t('iCal Summary Field'),
+        'custom settings' =>  FALSE,
+      ),
+      'openmi_json' => array(
+        'label' => t('JSON Export in OpenMI-OM Format'),
+        'custom settings' =>  FALSE,
+      ),
+    ),
+  );  
+  
+  return $return;
+}
+
+function get_decorated_diff($old, $new){
+    $from_start = strspn($old ^ $new, "\0");        
+    $from_end = strspn(strrev($old) ^ strrev($new), "\0");
+
+    $old_end = strlen($old) - $from_end;
+    $new_end = strlen($new) - $from_end;
+
+    $start = substr($new, 0, $from_start);
+    $end = substr($new, $new_end);
+    $new_diff = substr($new, $from_start, $new_end - $from_start);  
+    $old_diff = substr($old, $from_start, $old_end - $from_start);
+
+    $new = "$start<ins style='background-color:#ccffcc'>$new_diff</ins>$end";
+    $old = "$start<del style='background-color:#ffcccc'>$old_diff</del>$end";
+    return array("old"=>$old, "new"=>$new);
+}
+
+function dh_webform_submission_insert($node, $submission) {
+  //drupal_set_message("Final Submission data: " . print_r((array)$submission,1));
+  // handle linkage to the submittal here
+  //drupal_set_message("dh_webform_submission_insert");
+  if (!module_load_include('inc', 'dh', 'dh.webform.map')) { 
+    //drupal_set_message("Cannot load dh.webform.map"); 
+	return; 
+  }
+  $wfmap = dh_webform_getmap();
+  // define some env constants:
+  // BEGIN - test new handler code
+  dh_webform_handler($node, $submission, $wfmap, 'insert');
+  return;
+}
+
+function dh_webform_submission_update($node, $submission) {
+  // either hook_webform_insert OR hook_webform_update are called but not both depending on 
+  // if this is a draft that is being saved or a draft that is being submitted for real
+  //drupal_set_message("dh_webform_submission_update");
+  // handle linkage to the submittal here
+  if (!module_load_include('inc', 'dh', 'dh.webform.map')) { 
+    //drupal_set_message("Cannot load dh.webform.map"); 
+	return; 
+  }
+  $wfmap = dh_webform_getmap();
+  // define some env constants:
+  // BEGIN - test new handler code
+  dh_webform_handler($node, $submission, $wfmap, 'insert');
+  return;
+}
+
+function dh_webform_submission_presave($node, &$submission) {
+  // load the mapping array 
+  //global $wfmap;
+  //drupal_set_message("dh_webform_submission_presave");
+  if (!module_load_include('inc', 'dh', 'dh.webform.map')) { 
+   //drupal_set_message("Cannot load dh.webform.map"); 
+   return; 
+  }
+  $wfmap = dh_webform_getmap();
+  // define some env constants:
+  // BEGIN - test new handler code
+  $submission = dh_webform_handler($node, $submission, $wfmap, 'presave');
+  return;
+  // END test new handler code
+}
+
+function dh_webform_handler($node, $submission, $wfmap = array(), $hook = 'presave') {
+  // load the mapping array 
+  //global $wfmap;
+  // hook gives the current step this is in for elements that indicate when they are to occur
+  if (empty($wfmap)) {
+    return;
+  }
+  $debug = false;
+  // define some env constants:
+  $env = array(
+    'now' => date('r'),
+    'epoch' => date('U'),
+  );
+  if (property_exists($submission, 'sid')) {
+    $env['sid'] = $submission->sid;
+  } else {
+    drupal_set_message("SID does not exist on submission " . print_r((array)$submission,1));
+  }
+  $dbtype = Database::getConnection()->databaseType();
+  $spatial = true;
+  // check if it's a draft, if so, return
+  if (property_exists($submission,'is_draft')) {
+    if ($debug) drupal_set_message("submission->is_draft = " . $submission->is_draft);
+    // if this is a draft, we let webform do its thing but don't handle it further
+    if ($submission->is_draft == 1) return $submission;
+  }
+  switch ($dbtype) {
+    case 'pgsql':
+      $value = db_query('SELECT substring(PostGIS_Version() from 1 for 3)')->fetchField();
+      if (empty($value)) {
+        $error = 'Could not detect postGIS version - spatial imports unavailable';
+        drupal_set_message($error);
+        $spatial = FALSE;
+      }
+    break;
+    case 'mysql':
+      $value = db_query("SELECT asText(geomfromtext('POINT(1 1)'))")->fetchField();
+      if (empty($value)) {
+        $error = 'Could not detect MySQL OpenGIS Functions';
+        drupal_set_message($error);
+        $spatial = FALSE;
+      }
+    break;
+  }
+  // check for this webform title in the array keys
+  $form_nid = $submission->nid;
+  //drupal_set_message("dH Webform Hook dh_webform_submission_insert loaded: " . print_r((array)$submission,1));
+  //drupal_set_message("Node loaded: " . print_r((array)$node,1));
+  $form_maps = array_keys($wfmap);
+  $form_name = $node->title;
+  $formkey_cid_map = array();
+  if (property_exists($submission, 'webform_result_entities')) {
+    $entities = $submission->webform_result_entities;
+  } else {
+    $entities = array();
+  }
+  if (isset($node->webform)) {
+    foreach ($node->webform['components'] as $thiscomp) {
+      $formkey_cid_map[$thiscomp['form_key']] = $thiscomp['cid'];
+    }
+  }
+  //drupal_set_message("Form Name: $form_name, dH Webform map entries: " . print_r($form_maps,1));
+  if (!isset($wfmap["$form_name"]) or isset($formkey_cid_map['webform_map_name'])) {
+    // check for a webform_map_name variable to use
+    if (isset($formkey_cid_map['webform_map_name'])) {
+      //drupal_set_message("Found webform_map_name " . $formkey_cid_map['webform_map_name'] . " = " . $submission->data[$formkey_cid_map['webform_map_name']][0]);
+      $form_name = trim($submission->data[$formkey_cid_map['webform_map_name']][0]);
+      if (isset($wfmap["$form_name"])) {
+        $wfmap = $wfmap["$form_name"];
+      } else {
+        if ($debug) {
+          drupal_set_message("$form_name not found in dh.webform.map keys = " . print_r($form_maps,1));
+        }
+        return $submission;
+      }
+    } else {
+     // drupal_set_message("Node loaded: " . print_r((array)$node,1));
+      if (trim($form_name) == '') {
+        drupal_set_message("No form name set to retrieve map.");
+      }
+    }
+  } else {
+    //drupal_set_message("cid -> form_key map: " . print_r($formkey_cid_map,1));
+    $wfmap = $wfmap["$form_name"];
+  }
+  // iterate through entries in the mapping array
+  // Insert a record into a 3rd-party module table when a submission is added.
+  foreach ($wfmap as $key => $config) {
+    $values = array();
+    if (!isset($config['bundle'])) {
+      $config['bundle'] = null;
+    }
+    // check to see if the entity has a hook set, if not assume it is the presave
+    $chook = isset($config['hook']) ? $config['hook'] : 'presave';
+    if ($chook <> $hook) {
+      if ($debug) drupal_set_message("Skipping $chook on column $key while processing $hook");
+      continue;
+    }
+    if ($chook == 'insert') {
+      drupal_set_message("webform_handler called from hook_insert for $config[entity] - $config[description] - $config[bundle]");
+    }
+    if (!isset($config['debug'])) {
+      $debug = false;
+    } else {
+      $debug = $config['debug'];
+    }
+    if ($debug) drupal_set_message("Debug Enabled.  Submitted data: " . print_r((array)$submission,1));
+    //if ($debug) drupal_set_message("Submitted Node: " . print_r((array)$node,1));
+    if ($debug) drupal_set_message("Submitted Key Lookups: " . print_r($formkey_cid_map,1));
+    if (isset($config['entity'])) { 
+      $info = entity_get_info($config['entity']);
+      $class = $info['entity class'];
+      if (!class_exists($class)) {
+        if ($debug) {
+          drupal_set_message("Class $class for entity " . $config['entity'] . " can not be found " . print_r($info,1));  
+        }
+        $class = false;
+      }
+    } else { 
+      if ($debug) {
+        drupal_set_message("Missing class for entity $config[entity]");
+      }
+      //drupal_set_message("Submitted Node: " . print_r((array)$node,1));
+      //drupal_set_message("Submitted Key Lookups: " . print_r($formkey_cid_map,1));
+      //drupal_set_message("Submitted Data: " . print_r($submission,1));
+      $info = array();
+      $class = false;
+    }
+    if ($config['bundle'] == '') {
+      if ($debug) {
+        drupal_set_message("Calling: field_info_instances($config[entity], null); ");
+      }
+      $finfo = field_info_instances($config['entity'], null);
+    } else {
+      $eb = $config['bundle'];
+      if ($debug) {
+        drupal_set_message("Calling: field_info_instances($config[entity],  $config[bundle]); ");
+      }
+      $finfo = field_info_instances($config['entity'], $config['bundle']);
+    }
+    if ($debug) {
+      drupal_set_message("Entity: " . $config['entity'] . ", Bundle Field info: " . print_r($finfo, 1));
+    }
+    // create a blank array for storing references
+    $refs = array();
+    $rev_refs = array();
+    $nullfields = array();
+    if (!isset($config['notnull_fields'])) {
+      $config['notnull_fields'] = array();
+    }
+    foreach ($config['fields'] as $thisfield) {
+      $value = null;
+      if (!isset($thisfield['notnull'])) {
+        $thisfield['notnull'] = FALSE;
+      }
+      if ($debug) drupal_set_message("Field " . $thisfield['fieldname'] . " Field type is: " . $thisfield['webform_reftype'] ); 
+      switch ($thisfield['webform_reftype']) {
+        case 'cid':
+        $value = $submission->data[$thisfield['refvalue']][0];
+        break;
+        case 'form_key':
+        if (isset($formkey_cid_map[$thisfield['refvalue']])) {
+          if ($debug) drupal_set_message("Trying to load Field with form_key " . $thisfield['refvalue']);
+          $thiskey = $formkey_cid_map[$thisfield['refvalue']];
+          if ($debug) drupal_set_message("Found " . $thisfield['refvalue'] . " setting to " . $thiskey);
+          if (isset($submission->data[$thiskey])) {
+            if (isset($thisfield['concat'])) {
+              $value = implode($thisfield['concat'], $submission->data[$thiskey]);
+            } else {
+              $value = $submission->data[$thiskey][0];
+            }
+            if ($debug) drupal_set_message("CID $thiskey contains value " . $submission->data[$thiskey][0] . "From array " . print_r($submission->data[$thiskey],1));
+          } else {
+            if ($debug) drupal_set_message("CID $thiskey not found in " . print_r($submission->data,1));
+          }
+        }
+        break;
+        
+        case 'geo_point_form_key':
+          $ginfo = field_info_field($thisfield['fieldname']);
+          if ($debug) drupal_set_message("Geom Field " . print_r($ginfo,1));
+          $gpp = $thisfield['refvalue'];
+          if (isset($gpp['lat_deg'])) {
+            // this is in dms, so need to convert to dd
+            $latd = $submission->data[$formkey_cid_map[$gpp['lat_deg']]][0];
+            $latm = $submission->data[$formkey_cid_map[$gpp['lat_min']]][0];
+            $lats = $submission->data[$formkey_cid_map[$gpp['lat_sec']]][0];
+            $lond = $submission->data[$formkey_cid_map[$gpp['lon_deg']]][0];
+            $lonm = $submission->data[$formkey_cid_map[$gpp['lon_min']]][0];
+            $lons = $submission->data[$formkey_cid_map[$gpp['lon_sec']]][0];
+            if (strlen(trim($latd)) > 0) {
+              if (function_exists('geofield_latlon_DMStoDEC')) {
+                if ($debug) drupal_set_message("Passing geofield_latlon_DMStoDEC('$latd $latm $lats')");
+                $lat = geofield_latlon_DMStoDEC("$latd $latm $lats");
+                if ($debug) drupal_set_message("Passing geofield_latlon_DMStoDEC('$lond $lonm $lons')");
+                $lon = geofield_latlon_DMStoDEC("$lond $lonm $lons");
+                if (function_exists('db_escape_string')) {
+                  $dms_string = db_escape_string("$latd" . "º $latm' $lats\", $lond" . "º $lonm' $lons\"");
+                } else {
+                  $dms_string = "$latd:$latm:$lats, $lond:$lonm:$lons";
+                }
+                if (isset($thisfield['dms_string_name'])) $entities[$thisfield['dms_string_name']] = $dms_string;
+              } else {
+                $lat = null;
+                $lon = null;
+              }
+            } else {
+              $lat = null;
+              $lon = null;
+            }
+          } else {
+            $lat = $submission->data[$formkey_cid_map[$gpp['lat']]][0];
+            $lon = $submission->data[$formkey_cid_map[$gpp['lon']]][0];
+          }
+          $src_srid = $submission->data[$formkey_cid_map[$gpp['srid']]][0];
+          $dest_srid = $ginfo['settings']['srid'];
+          $wkt = NULL;
+          $value = NULL;
+          if (( is_numeric($lat) and is_numeric($lon) ) ) {
+            $wkt = "POINT (" . $lon . " " . $lat . ")";
+            if ($spatial and ( is_numeric($lat) and is_numeric($lon) ) ) {
+              // we can try to reproject this if need be
+              if (!(trim($src_srid) == '') and !(trim($dest_srid) == '') ) {
+                $tsql = "select st_asText(st_transform(st_setSRID(st_GeomFromText('$wkt'), $src_srid), $dest_srid)) as proj_wkt ";
+                $wkt = db_query($tsql)->fetchField();
+                //if ($debug) drupal_set_message("Query: $tsql ; ");
+                if ($debug) drupal_set_message("Query: $tsql ; ");
+                if ($debug) drupal_set_message("Projected: $wkt ; ");
+              }
+            }
+          }
+          if (!($wkt === NULL)) {
+            $value = array('und' => array( 0 => array('geom' => $wkt) ));
+          }
+        break;
+        
+        case 'entity_reference_formkey':
+        if (isset($node->webform)) {
+          if ($debug) drupal_set_message("Checking $thisfield[refvalue] in " . print_r(array_keys($formkey_cid_map),1));
+          $thiskey = $formkey_cid_map[$thisfield['refvalue']];
+          
+          //foreach ($node->webform['components'] as $thiscomp) {
+          //  if ($debug) drupal_set_message("Checking $thisfield[refvalue] in " . $thiscomp['form_key']);
+          //  if ($thiscomp['form_key'] == $thisfield['refvalue']) {
+          //    if ($debug) drupal_set_message("Found $thiskey setting to " . $thiscomp['cid']);
+          //    $thiskey = $thiscomp['cid'];
+          //    break;
+          //  }
+          //}
+        }
+        if ($debug) drupal_set_message("Final cid value: $thiskey");
+        if (isset($submission->data[$thiskey])) {
+          $value = $submission->data[$thiskey][0];
+          if ($debug) drupal_set_message("Reference set to $value " );
+          $refs[] = array(
+            'field' => $thisfield['fieldname'],
+            'entity_type' => $config['entity'],
+            'bundle' => $config['bundle'],
+            'entity_id' => null,
+            'target' => $thisfield['fieldname'] . '_target_id',
+            'target_id' => $value,
+          );
+          $value = array('und' => array( 0 => array('target_id' => $value) ));
+          if ($debug) drupal_set_message("Final entity id value: " . print_r($value,1));
+        }
+        break;
+        
+        case 'EntityFieldQuery_eref':
+        // 
+        if (!isset($thisfield['entity'])) { 
+          drupal_set_message("No entity prop on " . print_r($thisfield,1)); 
+          break; 
+        }
+        $efq = new EntityFieldQuery();
+        $efq->entityCondition('entity_type', $thisfield['entity']);
+        foreach ($thisfield['queryparams'] as $thisparm) {
+          if (!isset($thisparm['operator'])) {
+            $thisparm['operator'] = '=';
+          }
+          switch ($thisparm['type']) {
+            case 'field_webformkey':
+            if (isset($formkey_cid_map[$thisparm['value']])) {
+              $kv = $submission->data[$formkey_cid_map[$thisparm['value']]][0];
+              if ($debug) drupal_set_message("Adding condition " . $thisparm['field'] . ", " . $thisparm['property'] . $thisparm['operator'] .  $kv);
+              $efq->fieldCondition($thisparm['field'], $thisparm['property'], $kv, $thisparm['operator']);
+            } else {
+              drupal_set_message("Could not find form field " . $thisparm['value'] . " in " . print_r(array_keys($submission->data),1));
+            }
+            break;
+            default:
+            //nothing;
+            break;
+          }
+        }
+        
+        $result = $efq->execute();
+        if ($debug) drupal_set_message("Query result object " . print_r((array)$result,1));
+        if ($debug) drupal_set_message("Query object " . print_r((array)$efq,1));
+        // assumes a single value for now
+        if (isset($result[$thisfield['entity']])) {
+          foreach ($result[$thisfield['entity']] as $thiskey => $thisobj) {
+            if (isset($thisfield['queryfield'])) {
+              if (property_exists($thisobj, $thisfield['queryfield'])) {
+                $value = $thisobj->{$thisfield['queryfield']};
+                if ( $value == '' ) $value = NULL;
+                if ( !(($value === NULL) and $thisfield['notnull']) ) {
+                  $value = array('und' => array( 0 => array('target_id' => $value) ));
+                }
+              } else {
+                $value = NULL;
+              }
+            }
+            // assumes a single value for now, so leave
+            break;
+          }
+        }
+        if ($debug) drupal_set_message("Query result: " . print_r($value,1));
+        break;
+        
+        case 'EntityFieldQuery':
+        if (!isset($thisfield['entity'])) { 
+          drupal_set_message("No entity prop on " . print_r($thisfield,1)); 
+          break; 
+        }
+        $efq = new EntityFieldQuery();
+        $efq->entityCondition('entity_type', $thisfield['entity']);
+        foreach ($thisfield['queryparams'] as $thisparm) {
+          if (!isset($thisparm['operator'])) {
+            $thisparm['operator'] = '=';
+          }
+          switch ($thisparm['type']) {
+            case 'property':
+            if ($debug) drupal_set_message("Adding condition " . $thisparm['property'] . $thisparm['operator'] .  $thisparm['value']);
+            $efq->propertyCondition($thisparm['property'], $thisparm['value'], $thisparm['operator']);
+            break;
+            case 'field':
+            if ($debug) drupal_set_message("Adding condition " . $thisparm['field'] . $thisparm['operator'] .  $thisparm['value']);
+            $efq->fieldCondition($thisparm['field'], $thisparm['property'], $thisparm['value'], $thisparm['operator']);
+            break;
+            case 'field_webformkey':
+            if (isset($formkey_cid_map[$thisparm['value']])) {
+              $kv = $submission->data[$formkey_cid_map[$thisparm['value']]][0];
+              if ($debug) drupal_set_message("Adding condition " . $thisparm['field'] . ", " . $thisparm['property'] . $thisparm['operator'] .  $kv);
+              $efq->fieldCondition($thisparm['field'], $thisparm['property'], $kv, $thisparm['operator']);
+            } else {
+              drupal_set_message("Could not find form field " . $thisparm['value'] . " in " . print_r(array_keys($submission->data),1));
+            }
+            break;
+            case 'property_webformkey':
+            if (isset($formkey_cid_map[$thisparm['value']])) {
+              $kv = $submission->data[$formkey_cid_map[$thisparm['value']]][0];
+              if ($debug) drupal_set_message("Adding condition " . $thisparm['property'] . $thisparm['operator'] .  $kv);
+              $efq->propertyCondition($thisparm['property'], $kv, $thisparm['operator']);
+            } else {
+              drupal_set_message("Could not find form field " . $thisparm['value'] . " in " . print_r(array_keys($submission->data),1));
+            }
+            break;
+            default:
+            //nothing;
+            break;
+          }
+        }
+        
+        $result = $efq->execute();
+        if ($debug) drupal_set_message("Query result object " . print_r((array)$result,1));
+        if ($debug) drupal_set_message("Query object " . print_r((array)$efq,1));
+        // assumes a single value for now
+        if (isset($result[$thisfield['entity']])) {
+          foreach ($result[$thisfield['entity']] as $thiskey => $thisobj) {
+            if (isset($thisfield['queryfield'])) {
+              if (property_exists($thisobj, $thisfield['queryfield'])) {
+                $value = $thisobj->{$thisfield['queryfield']};
+              } else {
+                $value = NULL;
+              }
+            } else {
+              $value = $key;
+            }
+            // assumes a single value for now, so leave
+            break;
+          }
+        }
+        if ($debug) drupal_set_message("Query result: $value");
+        break;
+        case 'result':
+        if ($debug) drupal_set_message("Field " . $thisfield['field'] . " looking for resultid " . $thisfield['refvalue']);
+        if (isset($thisfield['refvalue'])) {
+          $value = $entities[$thisfield['refvalue']];
+          if ($debug) drupal_set_message("result = " . $value);
+        }
+        break;
+        
+        case 'constant':
+        if (isset($thisfield['refvalue'])) {
+          $value = $thisfield['refvalue'];
+        }
+        break;
+        
+        case 'env':
+        // environment data
+        if (isset($env[$thisfield['refvalue']])) {
+          $value = $env[$thisfield['refvalue']];
+        } else {
+          if ($debug) drupal_set_message("env var " . $thisfield['refvalue'] . " not found in " . print_r($env,1));
+        }
+        break;
+        
+        case 'entity_reference_env':
+        // get entity reference from environment variables (useful for accessing sid)
+        if (isset($env[$thisfield['refvalue']])) {
+          $value = $env[$thisfield['refvalue']];
+          if ($debug) {
+            drupal_set_message("using env var for entity reference " . $thisfield['refvalue'] . " from " . print_r($env,1));
+          }
+        } else {
+          if ($debug) {
+            drupal_set_message("env var " . $thisfield['refvalue'] . " not found in " . print_r($env,1));
+          }
+        }
+        $refs[] = array(
+          'field' => $thisfield['fieldname'],
+          'entity_type' => $config['entity'],
+          'bundle' => $config['bundle'],
+          'entity_id' => null,
+          'target' => $thisfield['fieldname'] . '_target_id',
+          'target_id' => $value,
+        );
+        if (!( ($value === NULL) and $thisfield['notnull'] ) ) {
+          $value = array('und' => array( 0 => array('target_id' => $value) ));
+        }
+        break;
+        
+        case 'entity_reference_rid':
+        // get entity reference from stored resultid 
+        $value = $entities[$thisfield['refvalue']];
+        $refs[] = array(
+          'field' => $thisfield['fieldname'],
+          'entity_type' => $config['entity'],
+          'bundle' => $config['bundle'],
+          'entity_id' => null,
+          'target' => $thisfield['fieldname'] . '_target_id',
+          'target_id' => $value,
+        );
+        if (!( ($value === NULL) and $thisfield['notnull'] ) ) {
+          $value = array('und' => array( 0 => array('target_id' => $value) ));
+        }
+        break;
+        
+        case 'entity_reference_cid':
+        $value = $submission->data[$thisfield['refvalue']][0];
+        //drupal_set_message("Reference set to $value " );
+        $refs[] = array(
+          'field' => $thisfield['fieldname'],
+          'entity_type' => $config['entity'],
+          'bundle' => $config['bundle'],
+          'entity_id' => null,
+          'target' => $thisfield['fieldname'] . '_target_id',
+          'target_id' => $value,
+        );
+        if (!( ($value === NULL) and $thisfield['notnull'] ) ) {
+          $value = array('und' => array( 0 => array('target_id' => $value) ));
+        }
+        break;
+        
+        case 'file_form_key':
+        // get entity reference from environment variables (useful for accessing sid)
+        $thiskey = $formkey_cid_map[$thisfield['refvalue']];
+        if ($debug) drupal_set_message("Found " . $thisfield['refvalue'] . " setting to " . $thiskey);
+        if (isset($submission->data[$thiskey])) {
+          $value = $submission->data[$thiskey][0];
+        }
+        if (!( ($value === NULL) and $thisfield['notnull'] ) ) {
+          $value = array('und' => array( 0 => array('fid' => $value, 'display' => 1, 'description' => '') ));
+        }
+        break;
+        
+      }
+      if ($value == '') { 
+        $value = null; 
+      }
+      if (strlen($thisfield['fieldname']) > 0) {
+        if ($value === NULL) {
+          // stash a record of this to see if we need to discard the entity
+          if ($debug) {
+            drupal_set_message("Null value found for " . $thisfield['fieldname']);
+          }
+          $nullfields[] = $thisfield['fieldname'];
+        }
+        if ( !($value === NULL) or !$thisfield['notnull']) {
+          if ($debug) drupal_set_message("Checking if " . $thisfield['fieldname'] . " is a property or attached field in finfo: " . print_r(array_keys($finfo),1));
+          //if (in_array($thisfield['fieldname'], array_keys($finfo[$config['entity']]))) {
+          // check if this is a field or property
+          if (in_array($thisfield['fieldname'], array_keys($finfo))) {
+            // if its a field and already an array we assume it has been properly formatted in a previous step 
+            // otherwise, we guess that it follows standard field format
+            if (!is_array($value)) {
+              // we need to format it as a field
+              if ($debug) drupal_set_message("Attached field, formatting in array format");
+              $value = array('und' => array( 0 => array('value' => $value) ));
+            }
+            if ($debug) drupal_set_message($thisfield['fieldname'] . " is an attached field.  Formatting as array " . print_r($value,1));
+          } else {
+            // property - no reformatting needed
+            if ($debug) drupal_set_message($thisfield['fieldname'] . " is a a property.  Formatting as plain value $value");
+          }
+          if (!isset($values[$thisfield['fieldname']])) {
+            // easy, does not yet exist, just set
+                $values[$thisfield['fieldname']] = $value;
+          } else {
+            // we have to figure out how to handle this
+            // assume that at this stage it is not trying to update, so we merge if array, if not overwrite
+            if (is_array($values[$thisfield['fieldname']])) {
+              $values[$thisfield['fieldname']] = array_merge_recursive($values[$thisfield['fieldname']], $value);
+            } else {
+              $values[$thisfield['fieldname']] = $value;
+            }
+          }
+        } else {
+          if ($debug) drupal_set_message("NULL value in notnull column " . $thisfield['fieldname'] . " omitting.");
+        }
+      }
+    }
+    if (isset($config['bundle'])) {
+      if ($config['bundle'] <> '') {
+        $values['bundle'] = $config['bundle'];
+        $values['type'] = $config['bundle'];
+      }
+    }
+    $binfo = field_info_instances($config['entity'], $config['bundle']);
+    if (isset($config['type'])) {
+      if ($config['type'] <> '') {
+        $values['type'] = $config['type'];
+      }
+    }
+    if ($debug) {
+      drupal_set_message("Checking for " . print_r($nullfields,1) . " in not-null array " . print_r($config['notnull_fields'],1));
+      drupal_set_message("Intersects returns: " . count(array_intersect($nullfields, $config['notnull_fields'])));
+    }
+    if ($class and !count(array_intersect($nullfields, $config['notnull_fields'])) ) {
+      if ($debug) drupal_set_message("Calling entity_create ( '" . $config['entity'] . "'" . print_r($values,1));
+      if (isset($values[$info['entity keys']['id']])) {
+        // this is an update not a new, try to load
+        $id = $values[$info['entity keys']['id']];
+        if ($debug) drupal_set_message("Loading entity $id ");
+        if ($debug) drupal_set_message("Values: " . print_r($values,1));
+        if ($debug) drupal_set_message("Obcache: [" . $config['entity'] . "][" . $info['entity keys']['id'] . "] in " . print_r(array_keys($obcache[$config['entity']]),1));
+        if (isset($obcache[$config['entity']][$id])) {
+          $newobj = $obcache[$config['entity']][$id];
+          if ($debug) drupal_set_message("loading... " . print_r((array)$newobj,1));
+        } else {
+          if ($debug) {
+            drupal_set_message("Could not find in obcache: [" . $config['entity'] . "][" . $info['entity keys']['id'] . "] in " . print_r(array_keys($obcache),1));
+          }
+          // trying to load
+          if ($debug) drupal_set_message("Loading ... entity_load($config[entity], <pre>" . print_r(array($id),1) . "</pre>)");
+          $objarray = entity_load($config['entity'], array($id));
+          if ($debug) drupal_set_message("Found ... <pre>" . print_r((array)$objarray,1) . "</pre>)");
+          if (count($objarray) == 0) {
+            if ($debug) drupal_set_message("Failed to load $id");
+            continue;
+          } else {
+            $newobj = $objarray[$id];
+            // we now handle this later in the process
+            //foreach ($values as $valkey => $valval) {
+            //  $newobj->$valkey = $valval;
+            //}
+          }
+        }
+        if (is_object($newobj)) {
+          foreach ($values as $key => $val) {
+            if (strlen(trim($key)) > 0) {
+              if (isset($newobj->$key)) {
+                if ($debug) {
+                  drupal_set_message( " binfo[$key]['widget'] = " . print_r($binfo[$key]['widget'],1) );
+                }
+                // check if this is an entity reference array, we will want to merge recursively
+                if ( ($binfo[$key]['widget']['module'] == 'entityreference') and (is_array($newobj->$key)) ) {
+                  if ($debug) {
+                    drupal_set_message("Merging original <pre>" . print_r($newobj->$key,1) . "</pre>");
+                    drupal_set_message("With additional <pre>" . print_r($val,1) . "</pre>");
+                  }
+                  $val = array_merge_recursive($val,$newobj->$key);
+                  if ($debug) {
+                    drupal_set_message("Updating entity reference field <pre>" . print_r($val,1) . "</pre>");
+                  }
+                }
+              }
+              $newobj->$key = $val;
+            }
+          }
+        }
+      } else {
+        $newobj = entity_create($config['entity'], $values);
+      }
+      if ($debug) drupal_set_message("Saving... <pre>" . print_r((array)$newobj,1) . "</pre>");
+      $newobj->save();
+      if (isset($info['entity keys']['id'])) {
+        $hasidfield = true;
+        $id = $newobj->{$info['entity keys']['id']};
+        //field_attach_load($config['entity'], array($id => $newobj));
+        //$newobj->save();
+        $obcache[$config['entity']][$id] = $newobj;
+      } else {
+        drupal_set_message("Cannot set fields or references because info['entity keys']['id'] is undefined" . print_r($refs,1));
+        $hasidfield = false;
+      }
+      
+      if ($hasidfield and isset($config['resultid'])) {
+        // object requests that entity id is saved
+        $entities[$config['resultid']] = $newobj->{$info['entity keys']['id']};
+        if ($debug) drupal_set_message("complete... setting " . $config['resultid'] . "in entities to:" . $entities[$config['resultid']]);
+      } else {
+        if ($debug) drupal_set_message("Complete - bundle lacks ID field or no esultid request made" );
+      }
+    } else {
+      if (in_array($nullfields, $config['notnull_fields'])) {
+        if ($debug) {
+          drupal_set_message("Not Null Fields found, will not save " . print_r(array_intersect($nullfields, $config['notnull_fields'])));
+        }
+      }
+      if (!$class) {
+        if ($debug) {
+          drupal_set_message("Could not find class to save " . print_r($config,1));
+        }
+      }
+    }
+    if (isset($config['writeback'])) {
+      foreach ($config['writeback'] as $thiskey => $thisvar) {
+        // 
+        if (!is_array($thisvar)) {
+          if (!is_numeric($thiskey)) {
+            // using the form_key, which is preferable
+            //drupal_set_message("Searching node object for $thiskey");
+            if (isset($node->webform)) {
+              foreach ($node->webform['components'] as $thiscomp) {
+                //drupal_set_message("Checking " . $thiscomp['form_key']);
+                if ($thiscomp['form_key'] == $thiskey) {
+                  //drupal_set_message("Found $thiskey setting to " . $thiscomp['cid']);
+                  $thiskey = $thiscomp['cid'];
+                  break;
+                }
+              }
+            }
+          }
+          if (is_numeric($thisvar)) {
+            // just set the value
+            $submission->data[$thiskey][0] = $thisvar;
+            //drupal_set_message("Setting data[$thiskey] = $thisvar");
+          } else {
+            // assume it's just a entity id request
+            $submission->data[$thiskey][0] = $entities[$thisvar];
+            //drupal_set_message("Setting data[$thiskey] = entities[$thisvar] = " . $entities[$thisvar]);
+          }
+        } else {
+          // process a more complex request
+          // TBD
+        }
+      }
+    }
+  }
+  $submission->webform_result_entities = $entities;
+  return $submission;
+}
+
+
+function disabled_dh_addGeometry($bundle, $entity = 'dh_feature', $field_name = 'dh_geofield', $field_type = 'geofield', $widget_type = 'geofield_wkt') {
+
+  // Create the base field
+  $field = array('field_name' => $field_name, 'type' => $field_type);
+  //field_create_field($field);
+
+  // Create an instance of the field and attach it to the poa day entity.
+  $instance = array(
+      'field_name' => $field_name,
+      'entity_type' => $entity,
+      'bundle' => $bundle,
+      'label' => $field_name,
+      'settings' => array(
+      ),
+      'widget' => array(
+        'type' => $widget_type,
+      ),
+      'display' => array(
+        'full' => array(
+          'type' => 'geofield_wkt',
+        ),
+      ),
+    );
+  field_create_instance($instance);
+  
+}
+
+/**
+ * Implements hook_menu().
+ */
+ 
+function dh_menu() {
+  $items = array();
+  /*
+  $items['admin/structure/dh/%edh_feature_type/deletedelete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('example_task_type_form_delete_confirm', 4),
+    'access arguments' => array('administer example_task types'),
+    'weight' => 1,
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'example_task.admin.inc',
+  );
+  */
+  return $items;
+}
+
+
+/**
+ * Gets an array of all feature types, keyed by the type name.
+ *
+ * @param $bundle_name
+ *   If set, the type with the given name is returned.
+ * @return ModelType[]
+ *   Depending whether $bundle isset, an array of model types or a single one.
+ */
+function dh_feature_get_types($bundle_name = NULL) {
+  // entity_load will get the Entity controller for our model entity and call the load
+  // function of that object - we are loading entities by name here.
+  $bundles = entity_load_multiple_by_name('dh_feature_type', isset($bundle_name) ? array($bundle_name) : FALSE);
+  return isset($bundle_name) ? reset($bundles) : $bundles;
+}
+
+
+/**
+ * Menu argument loader; Load a model type by string.
+ *
+ * @param $bundle
+ *   The machine-readable name of a model type to load.
+ * @return
+ *   A model type array or FALSE if $bundle does not exist.
+ */
+function dh_feature_type_load($bundle) {
+  return dh_feature_get_types($bundle);
+}
+
+
+/**
+ * Gets an array of all boreholelog types, keyed by the type name.
+ *
+ */
+function dh_boreholelog_get_types($bundle_name = NULL) {
+  // entity_load will get the Entity controller for our model entity and call the load
+  // function of that object - we are loading entities by name here.
+  $bundles = entity_load_multiple_by_name('dh_boreholelog_type', isset($bundle_name) ? array($bundle_name) : FALSE);
+  return isset($bundle_name) ? reset($bundles) : $bundles;
+}
+
+
+/**
+ * Menu argument loader; Load a model type by string.
+ */
+function dh_boreholelog_type_load($bundle) {
+  return dh_boreholelog_get_types($bundle);
+}
+
+/**
+ * Gets an array of all boreholelog types, keyed by the type name.
+ *
+ */
+function dh_properties_get_types($bundle_name = NULL) {
+  // entity_load will get the Entity controller for our model entity and call the load
+  // function of that object - we are loading entities by name here.
+  $bundles = entity_load_multiple_by_name('dh_properties_type', isset($bundle_name) ? array($bundle_name) : FALSE);
+  return isset($bundle_name) ? reset($bundles) : $bundles;
+}
+
+
+/**
+ * Menu argument loader; Load a model type by string.
+ */
+function dh_properties_type_load($bundle) {
+
+  return dh_properties_get_types($bundle);
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ *
+ * We are adding the info about the model types via a hook to avoid a recursion
+ * issue as loading the model types requires the entity info as well.
+ *
+ * @todo This needs to be improved
+ */
+function dh_entity_info_alter(&$entity_info) {
+
+  // set up menu references for each bundled entity
+  // dH Feature
+  foreach (dh_feature_get_types() as $type => $info) {
+    $entity_info['dh_feature']['bundles'][$type] = array(
+      'label' => $info->name,
+      'admin' => array(
+        'path' => 'admin/structure/dh_feature_type/manage/%dh_feature_type',
+        'real path' => 'admin/structure/dh_feature_type/manage/' . $type,
+        'bundle argument' => 4,
+        'access arguments' => array('administer dh_feature_type types'),
+      ),
+    );
+  }
+  // dH BoreholeLog
+  foreach (dh_boreholelog_get_types() as $type => $info) {
+    $entity_info['dh_boreholelog']['bundles'][$type] = array(
+      'label' => $info->name,
+      'admin' => array(
+        'path' => 'admin/structure/dh_boreholelog_type/manage/%dh_boreholelog_type',
+        'real path' => 'admin/structure/dh_boreholelog_type/manage/' . $type,
+        'bundle argument' => 4,
+        'access arguments' => array('administer dh_boreholelog_type types'),
+      ),
+    );
+  }
+
+  if (db_table_exists('dh_properties_type')) {
+  // dH Properties
+  foreach (dh_properties_get_types() as $type => $info) {
+    $entity_info['dh_properties']['bundles'][$type] = array(
+      'label' => $info->name,
+      'admin' => array(
+        'path' => 'admin/structure/dh_properties_type/manage/%dh_properties_type',
+        'real path' => 'admin/structure/dh_properties_type/manage/' . $type,
+        'bundle argument' => 4,
+        'access arguments' => array('administer dh_properties_type types'),
+      ),
+    );
+  }
+  }
+  
+  // described https://www.drupal.org/node/2308093
+  // The schema properties we need to provide a setter for.
+  // This among other things makes them visible to Migrate Extras' Entity API
+  // destination plugin.
+  $settable_properties = array(
+    'hydrocode',
+    'ftype',
+    'name',
+  );
+
+  $properties = &$entity_info['dh_feature']['properties'];
+  $properties['ftype'] = array(
+    'label' => t("FType"),
+    'type' => 'user',
+    'description' => t("The class abbreviation."),
+    'getter callback' => 'entity_property_verbatim_get',
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer dh_feature entities',
+    'required' => TRUE,
+    'schema field' => 'ftype',
+  );  
+  
+}
+
+// allow text_textfield widget for long text area types
+function dh_field_widget_info_alter(&$info) {
+  // Add a setting to a widget type.
+  $info ['text_textfield']['field types'][] = 'text_long';
+}
+  
+function dh_entity_property_info_dev() {
+  $property_info = array();
+  $prop_fields = array();
+  // set via editable meta-data API
+  $settable_ps = array('propname' => 'text', 'propcode' => 'text', 'featureid' => 'integer', 'varid' => 'integer', 'propvalue' => 'decimal', 'startdate' => 'integer', 'enddate' => 'integer');
+  foreach ($settable_ps as $thiscol => $thistype) {
+    $prop_fields[$thiscol] = array(
+      'setter callback' => 'entity_property_verbatim_set',
+      'getter callback' =>'entity_property_verbatim_get',
+      'setter permission' => 'administer dh_feature entities',
+      'type' => $thistype,
+      'schema field' => $thiscol,
+      'label' => t($thiscol),
+    );
+  }
+  $property_info['dh_properties']['properties'] = $prop_fields;
+  //dpm($property_info," hook_entity_property_info called");
+  return $property_info;
+}
+  
+function dh_entity_property_info_alter(&$entity_info) {
+
+  $feature_fields = &$entity_info['dh_feature']['properties'];
+  // set via editable meta-data API
+  $settable_feat = array('hydroid', 'name', 'ftype', 'fstatus', 'hydrocode');
+  foreach ($settable_feat as $thiscol) {
+    $feature_fields[$thiscol]['setter callback'] = 'entity_property_verbatim_set';
+    $feature_fields[$thiscol]['getter callback'] = 'entity_property_verbatim_get';
+    $feature_fields[$thiscol]['setter permission'] = 'edit own dh_feature entities';
+    //$feature_fields[$thiscol]['type'] = 'user';
+    $feature_fields[$thiscol]['schema field'] = $thiscol;
+    $feature_fields[$thiscol]['label'] = t($thiscol);
+    $feature_fields[$thiscol]['description'] = t($thiscol);
+  }
+  
+  $ts_fields = &$entity_info['dh_timeseries']['properties'];
+  // set via editable meta-data API
+  $settable_ts = array('tstime', 'tsendtime', 'varid', 'tsvalue', 'tscode', 'entity_type', 'featureid');
+  foreach ($settable_ts as $thiscol) {
+    $ts_fields[$thiscol]['setter callback'] = 'entity_property_verbatim_set';
+    $ts_fields[$thiscol]['getter callback'] = 'entity_property_verbatim_get';
+    $ts_fields[$thiscol]['setter permission'] = 'edit own dh_feature entities';
+    //$ts_fields[$thiscol]['type'] = 'user';
+    $ts_fields[$thiscol]['schema field'] = $thiscol;
+    $ts_fields[$thiscol]['label'] = t($thiscol);
+  }
+  $prop_fields = &$entity_info['dh_properties']['properties'];
+  // set via editable meta-data API
+  $settable_ps = array('propname'=>'text', 'propcode' => 'text', 'propvalue'=>'numeric', 'bundle'=>'text', 'varid'=>'integer', 'featureid'=>'integer', 'entity_type' => 'text');
+  foreach ($settable_ps as $thiscol => $thistype) {
+    $prop_fields[$thiscol]['setter callback'] = 'entity_property_verbatim_set';
+    $prop_fields[$thiscol]['getter callback'] = 'entity_property_verbatim_get';
+    $prop_fields[$thiscol]['setter permission'] = 'edit own dh_properties entities';
+    //$prop_fields[$thiscol]['type'] = $thistype;
+    $prop_fields[$thiscol]['schema field'] = $thiscol;
+    $prop_fields[$thiscol]['label'] = t($thiscol);
+  }
+  
+  $var_fields = &$entity_info['dh_variabledefinition']['properties'];
+  // set via editable meta-data API
+  $settable_ps = array('varname', 'varkey', 'varcode', 'vocabulary', 'varunits', 'datatype', 'data_entry');
+  foreach ($settable_ps as $thiscol) {
+    $var_fields[$thiscol]['setter callback'] = 'entity_property_verbatim_set';
+    $var_fields[$thiscol]['getter callback'] = 'entity_property_verbatim_get';
+    $var_fields[$thiscol]['setter permission'] = 'administer dh_feature entities';
+    //$prop_fields[$thiscol]['type'] = 'user';
+    $var_fields[$thiscol]['schema field'] = $thiscol;
+    $var_fields[$thiscol]['label'] = t($thiscol);
+  }
+}
+ 
+ function dh_permission() {
+  
+  $permissions = array(
+    'administer dh_feature types' => array(
+      'title' => t('Administer dH Feature types'),
+      'description' => t('Allows users to configure task types and their fields.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh_feature entities' => array(
+      'title' => t('Create dH Feature entities'),
+      'description' => t('Allows users to create dH Feature entities.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_feature entities' => array(
+      'title' => t('View dH Feature types'),
+      'description' => t('Allows users to view dH Feature types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_feature entities' => array(
+      'title' => t('Edit any dH Feature types'),
+      'description' => t('Allows users to edit any dH Feature types.'),
+      'restrict access' => FALSE,
+    ),
+    'delete any dh_feature entities' => array(
+      'title' => t('Delete any dH Feature Entities'),
+      'description' => t('Allows users to delete any dH Feature Entities.'),
+      'restrict access' => FALSE,
+    ),
+    'delete any dh_timeseries entities' => array(
+      'title' => t('Delete dH TimeSeries Value'),
+      'description' => t('Allows users to delete any dH TimeSeries Value.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_feature entities' => array(
+      'title' => t('Edit own dH Feature types'),
+      'description' => t('Allows users to edit own dH Feature types.'),
+      'restrict access' => FALSE,
+    ),
+    'administer dh types' => array(
+      'title' => t('Administer dH types'),
+      'description' => t('Allows users to configure task types and their fields.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh entities' => array(
+      'title' => t('Create dH types'),
+      'description' => t('Allows users to create dH types.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh entities' => array(
+      'title' => t('View dH types'),
+      'description' => t('Allows users to view dH types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh entities' => array(
+      'title' => t('Edit any dH types'),
+      'description' => t('Allows users to edit any dH types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh entities' => array(
+      'title' => t('Edit own dH types'),
+      'description' => t('Allows users to edit own dH types.'),
+      'restrict access' => FALSE,
+    ),
+	 
+	 
+    'create dh_properties entities' => array(
+      'title' => t('Create dH Properties'),
+      'description' => t('Allows users to create dH Properties.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_properties entities' => array(
+      'title' => t('View dH Properties'),
+      'description' => t('Allows users to view dH Properties.'),
+      'restrict access' => FALSE,
+    ),
+    'delete any dh_properties entities' => array(
+      'title' => t('Delete any dH Properties'),
+      'description' => t('Allows users to delete any dH Properties.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_properties entities' => array(
+      'title' => t('Edit any dH Properties'),
+      'description' => t('Allows users to edit any dH Properties.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_properties entities' => array(
+      'title' => t('Edit own dH Properties'),
+      'description' => t('Allows users to edit own dH Properties.'),
+      'restrict access' => FALSE,
+    ),
+	 
+	 // timeseries
+    'administer dh_timeseries entities' => array(
+      'title' => t('Administer dH TimeSeries records'),
+      'description' => t('Allows users to Administer dH TimeSeries.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh_timeseries entities' => array(
+      'title' => t('Create dH TimeSeries records'),
+      'description' => t('Allows users to create dH TimeSeries.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_timeseries entities' => array(
+      'title' => t('View dH TimeSeries records'),
+      'description' => t('Allows users to view dH TimeSeries.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_timeseries entities' => array(
+      'title' => t('Edit any dH TimeSeries records'),
+      'description' => t('Allows users to edit any dH TimeSeries.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_timeseries entities' => array(
+      'title' => t('Edit own dH TimeSeries records'),
+      'description' => t('Allows users to edit own dH TimeSeries.'),
+      'restrict access' => FALSE,
+    ),
+
+    // vardef
+    'administer dh_variabledefinition entities' => array(
+      'title' => t('Administer dH VariableDefinition records'),
+      'description' => t('Allows users to Administer dH VariableDefinition.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh_variabledefinition entities' => array(
+      'title' => t('Create dH VariableDefinition records'),
+      'description' => t('Allows users to create dH VariableDefinition.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_variabledefinition entities' => array(
+      'title' => t('View dH VariableDefinition records'),
+      'description' => t('Allows users to view dH VariableDefinition.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_variabledefinition entities' => array(
+      'title' => t('Edit any dH VariableDefinition records'),
+      'description' => t('Allows users to edit any dH VariableDefinition.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_variabledefinition entities' => array(
+      'title' => t('Edit own dH VariableDefinition records'),
+      'description' => t('Allows users to edit own dH VariableDefinition.'),
+      'restrict access' => FALSE,
+    ),
+	 
+	 
+    'administer dh_boreholelog entities' => array(
+      'title' => t('Administer dH BoreholeLog records'),
+      'description' => t('Allows users to Administer dH BoreholeLog.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh_boreholelog entities' => array(
+      'title' => t('Create dH BoreholeLog records'),
+      'description' => t('Allows users to create dH BoreholeLog.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_boreholelog entities' => array(
+      'title' => t('View dH BoreholeLog records'),
+      'description' => t('Allows users to view dH BoreholeLog.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_boreholelog entities' => array(
+      'title' => t('Edit any dH BoreholeLog records'),
+      'description' => t('Allows users to edit any dH BoreholeLog.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_boreholelog entities' => array(
+      'title' => t('Edit own dH BoreholeLog records'),
+      'description' => t('Allows users to edit own dH BoreholeLog.'),
+      'restrict access' => FALSE,
+    ),
+    
+    'administer dh_aquifer types' => array(
+      'title' => t('Administer dH Aquifer types'),
+      'description' => t('Allows users to configure task types and their fields.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh_aquifer entities' => array(
+      'title' => t('Create dH Aquifer types'),
+      'description' => t('Allows users to create dH Aquifer types.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_aquifer entities' => array(
+      'title' => t('View dH Aquifer types'),
+      'description' => t('Allows users to view dH Aquifer types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_aquifer entities' => array(
+      'title' => t('Edit any dH Aquifer types'),
+      'description' => t('Allows users to edit any dH Aquifer types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_aquifer entities' => array(
+      'title' => t('Edit own dH Aquifer types'),
+      'description' => t('Allows users to edit own dH Aquifer types.'),
+      'restrict access' => FALSE,
+    ),
+	 
+    'administer dh_tstype types' => array(
+      'title' => t('Administer dH TimeSeries types'),
+      'description' => t('Allows users to configure dH TimeSeries types and their fields.'),
+      'restrict access' => FALSE,
+    ),
+    'create dh_tstype entities' => array(
+      'title' => t('Create dH TimeSeries types'),
+      'description' => t('Allows users to create dH TimeSeries types.'),
+      'restrict access' => FALSE,
+    ),
+    'view dh_tstype entities' => array(
+      'title' => t('View dH TimeSeries types'),
+      'description' => t('Allows users to view dH TimeSeries types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit any dh_tstype entities' => array(
+
+      'title' => t('Edit any dH TimeSeries types'),
+      'description' => t('Allows users to edit any dH TimeSeries types.'),
+      'restrict access' => FALSE,
+    ),
+    'edit own dh_tstype entities' => array(
+      'title' => t('Edit own dH TimeSeries types'),
+      'description' => t('Allows users to edit own dH TimeSeries types.'),
+      'restrict access' => FALSE,
+    ),
+  );
+  
+  //Generate permissions per feature type 
+  foreach (dh_feature_get_types() as $type) {
+    $type_name = check_plain($type->bundle);
+    $permissions += array(
+      "edit any $type_name dh_feature_type" => array(
+        'title' => t('%type_name: Edit any feature', array('%type_name' => $type->name)),
+      ),
+      "edit own $type_name dh_feature_type" => array(
+        'title' => t('%type_name: Edit own feature', array('%type_name' => $type->name)),
+      ),
+      "view any $type_name dh_feature_type" => array(
+        'title' => t('%type_name: View any feature', array('%type_name' => $type->name)),
+      ),
+      "view own $type_name dh_feature_type" => array(
+        'title' => t('%type_name: View own feature', array('%type_name' => $type->name)),
+      ),
+    );
+  }
+  
+  return $permissions;
+}
+
+function dh_access($op, $profile = NULL, $account = NULL) {
+  //return TRUE;
+  return user_access('administer dh types', $account);
+}
+
+function dh_feature_type_access($op, $type = NULL, $account = NULL) {
+  //return TRUE;
+  return user_access('administer dh_feature_type types', $account);
+}
+
+function dh_feature_access($op, $entity, $account, $entity_type) {
+  global $user;
+  // can we insert request to find ownership eref;s here?  This would allow us finegrained control!
+  //dpm($entity, "Called dh_feature_access $op, [entity], $account, $entity_type");
+  // @todo: when getting a timeseries or property request, load parent and call dh_feature_access
+  //        to avoid allowing users to attach events or properties to places that they are not permitted
+  //        to access.  Some roles should be allowed to write to all.  Also, some timeseries events types
+  //        should allow non-privileged users to populate.
+  if (!isset($account)) {
+    $account = $user;
+  }
+  //error_log("Called dh_feature_access by $user->name");
+  
+  if (is_object($entity)) {
+    $is_manager = dh_check_user_mgmt_tree($account->uid, $entity->entityType(), $entity->identifier());
+    //dpm($is_manager, "dh_check_user_mgmt_tree(" . $account->uid . "," . $entity->entityType() . "," . $entity->identifier());
+  } else {
+    $is_manager = FALSE;
+  }
+  switch ($op) {
+    case 'create':
+    return user_access('administer dh_feature entities', $account)
+        || user_access('create dh_feature entities', $account);
+    case 'view':
+    return user_access('administer dh_feature entities', $account)
+        || user_access('view dh_feature entities', $account)
+        || $is_manager
+        ;
+    case 'delete':
+    return user_access('administer dh_feature entities', $account)
+        || user_access('delete any dh_feature entities', $account)
+        || user_access('delete own dh_feature entities', $account)
+        || $is_manager;
+    case 'edit':
+    case 'update':
+    return user_access('administer dh_feature entities')
+        || user_access('edit any dh_feature entities')
+        || (user_access('edit own dh_feature entities') && ($entity->uid == $account->uid))
+        || $is_manager;
+  }
+  return user_access('administer dh_feature types');
+}
+
+function dh_properties_access($op, $entity, $account, $entity_type) {
+  global $user;
+  // properties can have their own permissions and also inherit perms from
+  // their parent feature and from their variable def
+  if (!is_object($account)) {
+    $account = $user;
+  }
+  // @todo: load the entity that this property is being attached to for permissions.
+  //error_log("Called dh_properties_access $op, " . print_r((array)$entity,1) . ", " .  print_r((array)$account,1) . ", $entity_type" . " arg list " . print_r((array)func_get_args(),1));
+  switch ($op) {
+    case 'create':
+    return user_access('administer dh_properties entities', $account)
+        || user_access('create dh_properties entities', $account);
+    case 'delete':
+    return user_access('administer dh_properties entities', $account)
+        || user_access('delete any dh_properties entities', $account)
+        || user_access('delete own dh_properties entities', $account);
+    case 'view':
+    return user_access('administer dh_properties entities', $account)
+        || user_access('view dh_properties entities', $account);
+    case 'edit':
+    case 'update':
+    return user_access('administer dh_properties entities')
+        || user_access('edit any dh_properties entities')
+        || (user_access('edit own dh_properties entities') && ($entity->uid == $account->uid));
+  }
+}
+
+function dh_variabledefinition_access($op, $entity, $account, $entity_type) {
+  global $user;
+  if (!isset($account)) {
+    $account = $user;
+  }
+  //error_log("Called dh_variabledefinition_access $op, " . print_r((array)$entity,1) . ", " .  print_r((array)$account,1) . ", $entity_type");
+  switch ($op) {
+    case 'create':
+    return user_access('administer dh_variabledefinition entities', $account)
+        || user_access('create dh_variabledefinition entities', $account);
+    case 'delete':
+    return user_access('administer dh_variabledefinition entities', $account)
+        || user_access('delete any dh_variabledefinition entities', $account)
+        || user_access('delete own dh_variabledefinition entities', $account);
+    case 'view':
+    return user_access('administer dh_variabledefinition entities', $account)
+        || user_access('view dh_variabledefinition entities', $account);
+    case 'edit':
+    case 'update':
+    return user_access('administer dh_variabledefinition entities')
+        || user_access('edit any dh_variabledefinition entities')
+        || (user_access('edit own dh_variabledefinition entities') && ($entity->uid == $account->uid));
+  }
+}
+
+//function dh_timeseries_access($op, $type = NULL) {
+function dh_timeseries_access($op, $entity, $account, $entity_type) {
+  global $user;
+  if (!isset($account)) {
+    $account = $user;
+  }
+  switch ($op) {
+    case 'create':
+    return user_access('administer dh_timeseries entities', $account)
+        || user_access('create dh_timeseries entities', $account);
+    case 'view':
+    return user_access('administer dh_timeseries entities', $account)
+        || user_access('view dh_timeseries entities', $account);
+    case 'delete':
+    return user_access('administer dh_timeseries entities', $account)
+        || user_access('delete any dh_timeseries entities', $account)
+        || user_access('delete own dh_timeseries entities', $account);
+    case 'edit':
+    case 'update':
+    return user_access('administer dh_timeseries entities')
+        || user_access('edit any dh_timeseries entities')
+        || (user_access('edit own dh_timeseries entities') && ($entity->uid == $account->uid));
+  }
+}
+
+function dh_boreholelog_access($op, $type = NULL) {
+  global $user;
+  if (!isset($account)) {
+    $account = $user;
+  }
+  switch ($op) {
+    case 'create':
+    return user_access('administer dh_boreholelog entities', $account)
+        || user_access('create dh_boreholelog entities', $account);
+    case 'view':
+    return user_access('administer dh_boreholelog entities', $account)
+        || user_access('view dh_boreholelog entities', $account);
+    case 'delete':
+    return user_access('administer dh_boreholelog entities', $account)
+        || user_access('delete any dh_boreholelog entities', $account)
+        || user_access('delete own dh_boreholelog entities', $account);
+    case 'edit':
+    case 'update':
+    return user_access('administer dh_boreholelog entities')
+        || user_access('edit any dh_boreholelog entities')
+        || (user_access('edit own dh_boreholelog entities') && ($entity->uid == $account->uid));
+  }
+}
+
+/******************* CLASSES ******************/
+
+class dHBaseEntity extends Entity {
+  public $dh_props_loaded = FALSE;
+  public $dh_ts_loaded = FALSE;
+  public $dh_properties = array();
+  public $prop_varkey_map = array();
+  public $prop_varid_map = array();
+  public $prop_pid_map = array();
+  public $dh_timeseries = array();
+  public $ts_varkey_map = array();
+  public $ts_varid_map = array();
+  public $ts_tid_map = array();
+  
+  function checkProps($varkey, $compname) {
+    
+  }
+  
+  function loadComponents($criteria = array()) {
+    // loads dH Properties
+    // if criteria is empty load all
+    $comp_props = array('propname', 'propcode', 'varid', 'featureid');
+    $type = $this->entityType();
+    $id = $this->identifier();
+    $efq = new EntityFieldQuery; 
+    $efq->entityCondition('entity_type', 'dh_properties');
+    $efq->propertyCondition('entity_type', $type);
+    $efq->propertyCondition('featureid', $id);
+    foreach ($criteria as $condition) {
+      // screen for allowable query fields that actually exist.
+      if (in_array($condition['name'], $comp_props)) {
+        $op = isset($condition['op']) ? $condition['op'] : '=';
+        $value = isset($condition['value']) ? $condition['value'] : NULL;
+        $efq->propertyCondition($condition['name'], $value, $op);
+      } else {
+        //dpm($condition, 'invalid condition submitted');
+      }
+    }
+    //dpm($efq,"EFQ");
+    $result = $efq->execute();
+    //dpm($result, 'efq res');
+    $dh_props_loaded = array();
+    if (isset($result['dh_properties'])) {
+      while ($rez = array_shift($result['dh_properties']) ) {
+        //dpm($rez);
+        if (property_exists($rez, 'pid')) {
+          $comp = entity_load_single('dh_properties', $rez->pid);
+          $dh_props_loaded[] = $rez->pid;
+          // does not prevent name collisions, we could
+          //  1 - act to prevent name collisions, adding a _i, with i++ stashed in an array
+          //  2 - warn of collisions
+          //  3 - both 1 & 2
+          //  4 - store as array of properties
+          if ($comp->propname == '') {
+            $comp->propname = $comp->varkey;
+          }
+          $loname = strtolower($comp->propname);
+          $this->dh_properties[$loname] = $comp;
+          if (!isset($this->prop_varid_map[$comp->varid])) {
+            $this->prop_varid_map[$comp->varid] = array($loname);
+          } else {
+            $this->prop_varid_map[$comp->varid][] = $loname;
+          }
+          if (!isset($this->prop_varkey_map[$comp->varkey])) {
+            $this->prop_varkey_map[$comp->varkey] = array();
+          }
+          $this->prop_varkey_map[$comp->varkey][$loname] = $loname;
+          $this->prop_pid_map[$rez->pid] = $loname;
+        }
+      }
+    }
+    return $dh_props_loaded;
+  }
+  
+  function loadTimeSeries($criteria = array()) {
+    // this needs to be used judiciously
+    //   max records limit set purposely low
+    // $criteria(
+    //  'max_recs'
+    //  'sort_by' => tstime
+    //  'sort_order' => DESC
+    //  'varkey' => array()
+    // property_conditions(
+    //  'property' => [tstime, tsendtime, tscode, tsvalue, 
+    //  'operator' => eq (eq, lte, gte, gt, lt, ne)
+    // loads dH Properties
+    // if criteria is empty load all
+    $comp_props = array('tscode', 'varid', 'featureid');
+    $type = $this->entityType();
+    $id = $this->identifier();
+    $efq = new EntityFieldQuery; 
+    $efq->entityCondition('entity_type', 'dh_timeseries');
+    $efq->propertyCondition('entity_type', $type);
+    $efq->propertyCondition('featureid', $id);
+    foreach ($criteria as $condition) {
+      // screen for allowable query fields that actually exist.
+      if (in_array($condition['name'], $comp_props)) {
+        $op = isset($condition['op']) ? $condition['op'] : '=';
+        $value = isset($condition['value']) ? $condition['value'] : NULL;
+        $efq->propertyCondition($condition['name'], $value, $op);
+      }
+    }
+    $result = $efq->execute();
+    $dh_ts_loaded = array();
+    if (isset($result['dh_timeseries'])) {
+      while ($rez = array_shift($result['dh_timeseries']) ) {
+        //dpm($rez);
+        if (property_exists($rez, 'tid')) {
+          $comp = entity_load_single('dh_timeseries', $rez->tid);
+          $dh_ts_loaded[] = $rez->tid;
+          // does not prevent name collisions, we could
+          //  1 - act to prevent name collisions, adding a _i, with i++ stashed in an array
+          //  2 - warn of collisions
+          //  3 - both 1 & 2
+          //  4 - store as array of properties
+          $this->dh_timeseries[$comp->propname] = $comp;
+          if (!isset($this->ts_varid_map[$comp->varid])) {
+            $this->ts_varid_map[$comp->varid] = array($comp->propname);
+          } else {
+            $this->ts_varid_map[$comp->varid][] = $comp->propname;
+          }
+          if (!isset($this->ts_varkey_map[$comp->varkey])) {
+            $this->ts_varkey_map[$comp->varkey] = array($comp->propname);
+          } else {
+            $this->ts_varkey_map[$comp->varkey][] = $comp->propname;
+          }
+          $this->ts_tid_map[$rez->tid] = $comp->propname;
+        }
+      }
+    }
+    return $dh_ts_loaded;
+
+  }
+}
+
+//****************************
+// Feature
+//****************************
+
+class dHFeature extends dHBaseEntity {
+  
+  public $is_new;
+  public $bundle;
+  public $name;
+  public $ftype;
+  public $hydroid;
+  public $hydrocode;
+  public $fstatus;
+  
+  public function __construct($values = array(), $entityType = NULL) {
+    parent::__construct($values, 'dh_feature');
+  }
+  protected function defaultLabel() {
+    return $this->name;
+  }
+
+}
+
+class dHFeatureController extends EntityAPIControllerExportable {
+  public function create(array $values = array()) {
+    global $user;
+    // Add values that are specific to our Model
+    $values += array( 
+      //'is_new' => '',
+      'label' => '',
+      'bundle' => '',
+      'ftype' => '',
+      'name' => '',
+      'hydroid' => '',
+      'hydrocode' => '',
+      'fstatus' => '',
+    );
+    if (!isset($values['uid'])) {
+      $values['uid'] = $user->uid;
+    }
+    $feature = parent::create($values);
+    return $feature;
+  }
+
+}
+
+//****************************
+// Feature Type
+//****************************
+
+class dHFeatureType extends Entity {
+  
+  public $is_new;
+  public $bundle;
+  public $name;
+  public $label;
+  public $fid;
+  public $description;
+  
+  public function __construct($values = array()) {
+    parent::__construct($values, 'dh_feature_type');
+  }
+  protected function defaultLabel() {
+    return $this->name;
+  }
+
+}
+
+class dHFeatureTypeController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  
+   /**
+   * Create a model type - we first set up the values that are specific
+   * to our model type schema but then also go through the EntityAPIController
+   * function.
+   * 
+   * @param $type
+   *   The machine-readable type of the model.
+   *
+   * @return
+   *   A model type object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+      'fid' => '',
+      'label' => '',
+      'name' => '',
+    );
+    $feature_type = parent::create($values);
+    return $feature_type;
+  }
+
+}
+
+
+//****************************
+// BoreHoleLog Type
+//****************************
+
+class dHBoreHoleLogType extends Entity {
+  
+  public $is_new;
+  public $bundle;
+  public $name;
+  public $label;
+  public $bhltid;
+  public $description;
+  
+  public function __construct($values = array()) {
+    parent::__construct($values, 'dh_boreholelog_type');
+  }
+  protected function defaultLabel() {
+    return $this->name;
+  }
+
+}
+
+class dHBoreHoleLogTypeController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+      'bhltid' => '',
+      'label' => '',
+      'name' => '',
+    );
+    $bhl_type = parent::create($values);
+    return $bhl_type;
+  }
+}
+
+//****************************
+// BoreHoleLog Entity
+//****************************
+
+class dHBoreHoleLog extends Entity {
+  
+  public $is_new;
+  public $bhlid;
+  public $fromdepth;
+  public $todepth;
+  public $topelev;
+  public $bottomelev;
+  public $refelev;
+  public $material;
+  public $hgucode;
+  public $hguid;
+  public $elevunits;
+  public $bundle;
+  
+  public function __construct($values = array()) {
+    // check to see if parent wellid has been set
+    // if so, check if refelev has been set, if not load from parent, otherwise, use refelev
+    // if so, check to see if bottomelev and/or topelev are null
+    // if not, do an ERQ to get the parents land_elev, set refelev = land_elev
+    // if so, check to see if $values has todepth and/or fromdepth
+    // if so, calculate bottomelev/topelev from landelev - todepth/fromdepth
+    if (isset($values['wellid'])) {
+      // load the BHL parent
+      //drupal_set_message("BHL Entries = " . print_r($values,1));
+      if ( ($values['bottomelev'] === null) or ($values['topelev'] === null)) {
+        // we need to try and calculate
+        if (!($values['refelev'] === null)) {
+          $landelev = $values['refelev'];
+        } else {
+          $well = $values['wellid'];
+          $well = array_shift($well); // get whatever the language is
+          $well = array_shift($well); // get whatever the first entry is
+          $well = $well['target_id'];
+          //drupal_set_message("Well ID = $well");
+          $wells = entity_load('dh_feature', array($well));
+          $well = array_shift($wells);
+          $landelev = $well->dh_landelev;
+          //drupal_set_message("LandElev property = " . print_r($landelev,1));
+          $landelev = array_shift($landelev); // get whatever the language is
+          $landelev = array_shift($landelev); // get whatever the first entry is
+          $landelev = $landelev['value']; // get the value
+          //drupal_set_message("Parent Well land Elevation = $landelev ");
+        }
+        if ( !( ($landelev === NULL) ) ) {
+          // go ahead and calculate the bottomelev/topelev
+          if ( $values['bottomelev'] === null ) {
+            if (! ($values['todepth'] === null) ) {
+              $values['bottomelev'] = $landelev - $values['todepth'];
+              //drupal_set_message("$values[bottomelev] = $landelev - $values[todepth];");
+            }
+          }
+          if ( $values['topelev'] === null ) {
+            if (! ($values['fromdepth'] === null) ) {
+              $values['topelev'] = $landelev - $values['fromdepth'];
+              //drupal_set_message("$values[topelev] = $landelev - $values[fromdepth];");
+            }
+          }
+        }
+      }
+    }
+    //drupal_set_message("Final Values: " .print_r($values,1));
+    parent::__construct($values, 'dh_boreholelog');
+  }
+  
+  protected function defaultLabel() {
+    return $this->bhlid;
+  }
+
+}
+
+class dHBoreHoleLogController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+      'bhlid' => '',
+      'label' => '',
+      'name' => '',
+      'is_new' => '',
+      'bundle' => '',
+    );
+    $feature_type = parent::create($values);
+    return $feature_type;
+  }
+}
+ 
+//****************************
+// HydroGeologicUnit
+//****************************
+
+class dHHydroGeologicUnit extends Entity {
+  
+  public $is_new;
+  public $hydroid;
+  public $hgucode;
+  public $hguname;
+  public $aqcode;
+  public $description;
+  
+  public function __construct($values = array()) {
+    parent::__construct($values, 'dh_hydrogeologicunit');
+  }
+  protected function defaultLabel() {
+    return $this->hguname;
+  }
+
+}
+
+class dHHydroGeologicUnitController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  
+   /**
+   * Create a model type - we first set up the values that are specific
+   * to our model type schema but then also go through the EntityAPIController
+   * function.
+   * 
+   * @param $type
+   *   The machine-readable type of the model.
+   *
+   * @return
+   *   A model type object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+		'hydroid' => '', 
+		'hgucode' => '', 
+		'hguname' => '', 
+		'aqcode' => '', 
+		'description' => '',
+    );
+    $hydrogeologicunit = parent::create($values);
+    return $hydrogeologicunit;
+  }
+
+}
+ 
+//****************************
+// TimeSeries
+//****************************
+
+function dh_handletimestamp($ts) {
+  // don't do date_received as this is a field and is handled there
+  if ( ($ts <> '') and !($ts == NULL)) {
+    $orig = $ts;
+    // if a valid unix epoch style timestamp has been submitted 
+    // this next will try to convert a string
+    if (!( !is_numeric($ts) ? (ctype_digit($ts)) : true ) ) {
+      // not a valid unix timestamp, so try to convert from some date format
+      $ts = strtotime($ts);
+      //drupal_set_message("Converted $orig to Epoch: " . $ts);
+    } else {
+      // valid unix timestamp submitted, proceed without changing
+    }
+  }
+  return $ts;
+}
+
+class dHTimeSeriesTable extends Entity {
+  public $is_new;
+  public $from_cache = FALSE;
+  public $entity_chain = array(); // references to custody chain to insure no recursion at save()
+	public $tid;
+	public $tstime;
+	public $tsendtime;
+	public $utcoffset;
+	public $tsvalue;
+	public $tscode;
+	public $featureid;
+	public $varid;
+	public $varkey;
+	public $varcode;
+	public $varname;
+	public $vardesc;
+	public $year;
+	public $month;
+	public $bundle;
+	public $entity_type;
+	public $dh_variables_plugins;
+	public $plugins_loaded = FALSE;
+	public $modified;
+  
+  public function __construct($values = array()) {
+    // check for entity_type return message if missing and set to default dh_feature
+    $entities = array_keys(entity_get_info());
+    $this->dh_variables_plugins = array();
+    if (!empty($values)) {
+      if (!in_array($values['entity_type'], $entities)) {
+        //watchdog('dh', "dh_timeseries object created without entity_type specified.  Using default dh_feature.");
+        $values['entity_type'] = 'dh_feature';
+      }
+      // check to see if varid is text, if so, do an EFQ on varkey field
+      if (isset($values['varid'])) {
+        if (!is_numeric($values['varid']) and strlen($values['varid'])) {
+          $valid = FALSE;
+          $efq = new EntityFieldQuery(); 
+          $efq->entityCondition('entity_type', 'dh_variabledefinition');
+          $efq->propertyCondition('varkey', $values['varid'], '=');
+          $result = $efq->execute();
+          //drupal_set_message("efq: <pre>" . print_r($result ,1) . "</pre>");
+          if (isset($result['dh_variabledefinition'])) {
+            $rez = array_shift($result['dh_variabledefinition']);
+            if (property_exists($rez, 'hydroid')) {
+              $values['varid'] = $rez->hydroid;
+              $valid = TRUE;
+            }
+          }
+          if (!$valid) {
+            $values['varid'] = 0;
+          }
+        }
+      }
+      if (isset($values['year']) or isset($values['month']) or isset($values['day']) or isset($values['season'])) {
+        if (isset($values['season'])) {
+          $sq = array(1=>'winter', 2=>'spring', 3=>'summer', 4=>'fall');
+          $qs = array('winter'=>1, 'spring'=>2, 'summer'=>3, 'fall'=>4);
+          // if year is provided, and is less than current year we just proceed
+          if (isset($values['year'])) {
+            $syr = $values['year'];
+            // historical, just estimate the middle date of the quarter and move on
+          } else {
+             // otherwise, we assume it's a recent historical entry and we guess the year
+             // and then see if we need to decrement the year
+            $syr = date('Y');
+            $current_season = $sq[ceil(floatval(date('n')) / 3.0)]; // used to check to see if we need to decrement year
+            if ($qs[$values['season']] > $qs[$current_season]) {
+              $syr = $syr - 1;
+            }
+          }
+          // 
+          $yr = $syr;
+          $mo = 1 + ($qs[$values['season']] - 1) * 3;
+          $da = '01';
+          $values['year'] = $yr;
+          $values['month'] = $mo;
+          $values['day'] = $da;
+          $sendmo = $mo + 2;
+          $endmost = implode('-',array($yr, str_pad($sendmo,2,'0', STR_PAD_LEFT), '01'));
+          $days = intval(date("t",strtotime($endmost)));
+          $enddt = implode('-',array($yr, str_pad($sendmo,2,'0', STR_PAD_LEFT), $days));
+          $values['tsendtime'] = date('Y-m-d', strtotime("$enddt"));
+        }
+        if (isset($values['year'])) {
+          $yr = $values['year'];
+        } else {
+          $yr = date('Y');
+        }
+        if (isset($values['quarter'])) {
+          $mo = 3 * $values['quarter'];
+          $values['day'] = date('t', strtotime("$yr-$mo-01"));
+        }
+        if (isset($values['month'])) {
+          $mo = $values['month'];
+        } else {
+          $mo = '01';
+        }
+        if (isset($values['day'])) {
+          $da = $values['day'];
+        } else {
+          $da = '01';
+        }
+        $newts = strtotime("$yr-$mo-$da");
+        if (!($newts === false)) {
+          $values['tstime'] = $newts;
+        }
+      }
+      foreach (array('tstime', 'tsendtime', 'modified') as $thists) {
+        if (isset($values[$thists])) {
+          // handle both unix epoch and string timestamps
+          $values[$thists] = dh_handletimestamp($values[$thists]);
+        }
+      }
+      if (!isset($values['modified'])) {
+        $values['modified'] = date('U');
+      }
+    }
+    parent::__construct($values, 'dh_timeseries');
+    // now all attributes should be set, so lets call any plugin setUp methods
+    $this->setUpPlugins();
+  }
+  
+  protected function setUpPlugins() {
+    // get plugins and check setUp method
+    //   setUp() is called before any attributes are loaded (before the $values array is applied)
+    //   therefore, nothing in the varid, so none of this should happen
+    dh_variables_getPlugins($this);
+    //dpm($this,'setUpPlugins called');
+    $handled = FALSE;
+    foreach ($this->dh_variables_plugins as $plugin) {
+      if (method_exists($plugin, 'setUp')) {
+        $plugin->setUp($this);
+      }
+    }
+    
+  }
+  
+  public function dh_getValue($timestamp = FALSE, $varname = FALSE, $config = array()) {
+    // load plugins if available
+    // check for plugins with dh_getValue, if found, execute
+    // else, use local accessors, which is just the value of the property or field.
+    // if timestamp is false, assume current value
+    // if varname is false, assume the object default value (i.e. propvalue or tsvalue for dh properties/timeseries)
+    // if we later feel this duplicates function of drupal getValue we can simply call it from that function
+    dh_variables_getPlugins($this);
+    $handled = FALSE;
+    foreach ($this->dh_variables_plugins as $plugin) {
+      if (method_exists($plugin, 'dh_getValue')) {
+        $value = $plugin->dh_getValue($this, $timestamp, $varname, $config);
+        $handled = TRUE;
+      }
+    }
+    if (!$handled) {
+      watchdog('dh', 'no dh_getValue method found on plugin ' . get_class($plugin));
+      // @todo: look for a timeseries entry if !($timestamp === FALSE)
+      // @todo: handle $varname to show other properties specified by $varname
+      // @todo: handle attached fields - would be nice to wrap field accessors
+      $value = $this->tsvalue; // nothing fancy done by default
+    }
+    return $value;
+  }
+  
+  protected function setUp() {
+    parent::setUp();
+    //dpm($this,'setUp() called');
+    // setUp() is called before any attributes are loaded (before the $values array is applied)
+    //   therefore, nothing in the varid, so none of this should happen
+    if (!empty($this->varid)) {
+      // get the varkey for this
+      $var = dh_vardef_info(intval($this->varid));
+      if (is_object($var)) {
+        $this->varkey = $var->varkey;
+        $this->varname = $var->varname;
+        $this->varcode = $var->varcode;
+        $this->vardesc = $var->vardesc;
+        $this->varunits = $var->varunits;
+      }
+    }
+  }
+  
+  protected function defaultLabel() {
+    return $this->tid;
+  }
+  protected function defaultUri() {
+    $path = 'dh_timeseries/' . $this->identifier();
+    $plugins = dh_variables_getPlugins($this);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'defaultUri')) {
+        $path = $plug->defaultUri($entity);
+      }
+    }
+    return array('path' => $path);
+  }
+}
+
+class dHTimeSeriesTableController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  
+   /**
+   * Create a model type - we first set up the values that are specific
+   * to our model type schema but then also go through the EntityAPIController
+   * function.
+   * 
+   * @param $type
+   *   The machine-readable type of the model.
+   *
+   * @return
+   *   A model type object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    global $user;
+    $values += array( 
+      'name' => '',
+      'tid' => '',
+      'tstime' => '',
+      'tscode' => NULL,
+      'tsendtime' => '',
+      'utcoffset' => '',
+      'tsvalue' => NULL,
+      'featureid' => '',
+      'entity_type' => '',
+      'modified' => '',
+      'varid' => ''
+    );
+    if (!isset($values['uid'])) {
+      $values['uid'] = $user->uid;
+    }
+    // check to see if varid is text, if so, do an EFQ on varkey field
+    if (isset($values['varid'])) {
+      if (!is_numeric($values['varid']) and strlen($values['varid'])) {
+        $valid = FALSE;
+        $values['varid'] = dh_varkey2varid($values['varid']);
+        if (!$values['varid']) {
+          $values['varid'] = 0;
+        }
+      }
+    }    
+    $entity = parent::create($values);
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'create')) {
+        $plug->create($entity);
+      }
+    }
+    return $entity;
+  }
+  
+  public function save($entity, DatabaseTransaction $transaction = NULL) {
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'save')) {
+        $plug->save($entity);
+      }
+    }
+    $timecols = array('tstime', 'tsendtime');
+    foreach ($timecols as $thiscol) {
+      if (property_exists($entity, $thiscol)) {
+        $entity->$thiscol = dh_handletimestamp($entity->$thiscol);
+      }
+    }
+    // the only run here is that modified on insert will be overridden
+    $entity->modified = date('U');
+    // check to see if varid is text, if so, do an EFQ on varkey field
+    if (!is_numeric($entity->varid)) {
+      $valid = FALSE;
+      $entity->varid = dh_varkey2varid($entity->varid);
+      if (!$entity->varid) {
+        // @todo: throw exception
+        $entity->varid = 0;
+      }
+    }
+    return parent::save($entity, $transaction);
+  }
+  
+  protected function cacheGet($ids, $conditions = array()) {
+    //dpm($ids,"cacheGet");
+    $entities = parent::cacheGet($ids, $conditions);
+    foreach ($entities as $key => $entity) {
+      $entities[$key]->from_cache = TRUE;
+    }
+    //dpm($entities,"entities");
+    return $entities;
+  }
+  
+  protected function cacheGetByName($names, $conditions = array()) {
+    $entities = parent::cacheGetByName($names, $conditions);
+    //dpm($names,"Called cacheGetByName()");
+    foreach ($entities as $key => $entity) {
+      $entities[$key]->from_cache = TRUE;
+    }
+    return $entities;
+  }
+
+  public function invoke($hook, $entity) {
+    parent::invoke($hook, $entity);
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      switch ($hook) {
+        case 'insert':
+        if (method_exists($plug, 'insert')) {
+          $plug->insert($entity);
+        }
+        break;
+        case 'update':
+        if (method_exists($plug, 'update')) {
+          $plug->update($entity);
+        }
+        break;
+      }
+    }
+  }
+  
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+    $content = parent::buildContent($entity, $view_mode, $langcode, $content);
+    // set up basic view modes
+    // then handle all plugins to override defaults 
+    // Note: Views result sets MUST have tid column included, even if hidden, in order to show a rendered ts entity.
+    switch ($view_mode) {
+      case 'teaser':
+        $content['varname'] = array(
+          '#type' => 'item',
+          '#title' => t('Type'),
+          '#markup' => $entity->varname,
+        );
+        $content['tstime'] = array(
+          '#type' => 'item',
+          '#title' => t('Start Time'),
+          '#markup' => format_date($entity->tstime),
+        );
+        $content['tsendtime'] = array(
+          '#type' => 'item',
+          '#title' => t('End Time'),
+          '#markup' => format_date($entity->tstime),
+        );
+        $content['tsvalue'] = array(
+          '#type' => 'item',
+          '#title' => t('Value'),
+          '#markup' => $entity->tsvalue,
+        );
+        $content['tscode'] = array(
+          '#type' => 'item',
+          '#title' => t('Code'),
+          '#markup' => $entity->tscode,
+        );
+        $content['tstext'] = field_view_field('dh_timeseries', $entity, 'tstext');
+        $content['tstext']['#title'] = t('Comments');
+      break;
+      case 'raw':
+        $content['varname'] = array(
+          '#type' => 'item',
+          '#title' => t('Type'),
+          '#markup' => $entity->varname,
+        );
+        $content['tstime'] = array(
+          '#type' => 'item',
+          '#title' => t('Start Time'),
+          '#markup' => format_date($entity->tstime),
+        );
+        $content['tsendtime'] = array(
+          '#type' => 'item',
+          '#title' => t('End Time'),
+          '#markup' => format_date($entity->tstime),
+        );
+        $content['tsvalue'] = array(
+          '#type' => 'item',
+          '#title' => t('Value'),
+          '#markup' => $entity->tsvalue,
+        );
+        $content['tscode'] = array(
+          '#type' => 'item',
+          '#title' => t('Code'),
+          '#markup' => $entity->tscode,
+        );
+        $content['tstext'] = field_view_field('dh_timeseries', $entity, 'tstext');
+        $content['tstext']['#title'] = t('Comments');
+      break;
+      case 'full':
+      // @todo: plugin mode should be deprecated since it should apply everywhere unless we call for raw 
+      case 'plugin':
+      default:
+        $content['varname'] = array(
+          '#type' => 'item',
+          '#title' => t('Type'),
+          '#markup' => $entity->varname,
+        );
+        $content['tstime'] = array(
+          '#type' => 'item',
+          '#title' => t('Start Time'),
+          '#markup' => format_date($entity->tstime),
+        );
+        $content['tsendtime'] = array(
+          '#type' => 'item',
+          '#title' => t('End Time'),
+          '#markup' => format_date($entity->tstime),
+        );
+        $content['tsvalue'] = array(
+          '#type' => 'item',
+          '#title' => t('Value'),
+          '#markup' => $entity->tsvalue,
+        );
+        $content['tscode'] = array(
+          '#type' => 'item',
+          '#title' => t('Code'),
+          '#markup' => $entity->tscode,
+        );
+        $content['tstext'] = field_view_field('dh_timeseries', $entity, 'tstext');
+        $content['tstext']['#title'] = t('Comments');
+      break;
+    }
+    if ($view_mode <> 'raw') {
+      $plugins = dh_variables_getPlugins($entity);
+      if (!is_array($plugins)) {
+        $plugins = array($plugins);
+      }
+      foreach ($plugins as $plug) {
+        if (method_exists($plug, 'buildContent')) {
+          $plug->buildContent($content, $entity, $view_mode);
+        }
+      }
+    }
+    if (in_array($view_mode, array('tscode', 'tsvalue', 'featureid'))) {
+      // remove all but tid and indicated render mode 
+      foreach ($content as $key => $render) {
+        if ($key <> $view_mode) {
+          if ($key <> 'tid') {
+            $content[$key]['#type'] = 'hidden';
+          }
+        }
+      }
+      $content[$view_mode]['#type'] = 'item';
+    }
+    return $content;
+  }
+}
+
+ 
+//****************************
+// VariableDefinition
+//****************************
+
+class dHVariableDefinition extends Entity {
+  public $is_new;
+	public $hydroid;
+	public $varname;
+	public $vardesc;
+	public $vocabulary;
+	public $varunits;
+	public $varkey;
+	public $datatype;
+	public $varcode;
+	public $isregular;
+	public $timestep;
+	public $timeunits;
+	public $nodataval;
+	public $plugin;
+	public $options;
+  
+  public function __construct($values = array()) {
+    parent::__construct($values, 'dh_variabledefinition');
+  }
+  protected function defaultLabel() {
+    return $this->varname;
+  }
+}
+
+class dHVariableDefinitionController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  
+   /**
+   * Create a model type - we first set up the values that are specific
+   * to our model type schema but then also go through the EntityAPIController
+   * function.
+   * 
+   * @param $type
+   *   The machine-readable type of the model.
+   *
+   * @return
+   *   A model type object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+		'hydroid' => '',
+      'varname' => '',
+      'vardesc' => '',
+      'vocabulary' => '',
+      'varunits' => '',
+      'varkey' => '',
+      'datatype' => '',
+      'varcode' => '',
+      'isregular' => '',
+      'timestep' => '',
+      'timeunits' => '',
+      'nodataval' => '',
+	    'plugin' => '',
+	    'options' => array()
+    );
+    $feature_type = parent::create($values);
+    return $feature_type;
+  }
+}
+
+//****************************
+// dH Properties
+//****************************
+class dHPropertiesTypeController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+      'ptid' => '',
+      'label' => '',
+      'name' => '',
+    );
+    $p_type = parent::create($values);
+    return $p_type;
+  }
+}
+class dHPropertiesType extends Entity {
+  public $is_new;
+  public $bundle;
+  public $name;
+  public $label;
+  public $ptid;
+  public $description;
+  
+  public function __construct($values = array()) {
+    parent::__construct($values, 'dh_properties_type');
+  }
+  protected function defaultLabel() {
+    return $this->name;
+  }
+}
+class dHProperties extends dHBaseEntity {
+	public $pid;
+  public $entity_chain = array(); // references to custody chain to insure no recursion at save()
+	public $propvalue;
+	public $propcode;
+	public $featureid;
+	public $varid;
+	public $varkey;
+	public $propname;
+	public $entity_type;
+	public $bundle;
+	public $modified;
+	public $dh_variables_plugins;
+	public $plugins_loaded = FALSE;
+  
+  public function __construct($values = array()) {
+    $this->dh_variables_plugins = array();
+    if (!empty($values)) {
+      if (empty($values['bundle'])) {
+        $values['bundle'] = 'dh_properties';
+      }
+      $timecols = array('startdate', 'enddate', 'modified');
+      foreach ($timecols as $thiscol) {
+        if (isset($values[$thiscol])) {
+          $values[$thiscol] = dh_handletimestamp($values[$thiscol]);
+        }
+      }
+      if (isset($values['propvalue'])) {
+        if (strlen($values['propvalue']) == 0) {
+          $values['propvalue'] = NULL;
+        }
+      } else {
+        $values['propvalue'] = NULL;
+      }
+      if (isset($values['varid'])) {
+        $var = dh_vardef_info($values['varid']);
+        //dpm($var, "result from dh_vardef_info(" . $values['varid'] . ")");
+        if (is_object($var)) {
+          $values['varid'] = $var->hydroid;
+        }
+      }
+      if (!isset($values['modified'])) {
+        $values['modified'] = date('U');
+      }
+    }
+    parent::__construct($values, 'dh_properties');
+    //dpm($values,'dh_properties construct values');
+    $this->setUpPlugins();
+  }
+  
+  protected function setUpPlugins() {
+    // get plugins and check setUp method
+    //   setUp() is called before any attributes are loaded (before the $values array is applied)
+    //   therefore, nothing in the varid, so none of this should happen
+    dh_variables_getPlugins($this);
+    //dpm($this,'setUpPlugins called');
+    $handled = FALSE;
+    foreach ($this->dh_variables_plugins as $plugin) {
+      if (method_exists($plugin, 'setUp')) {
+        $plugin->setUp($this);
+      }
+    }
+  }
+  
+  protected function setUp() {
+    parent::setUp();
+    //dpm($this,'setUp() called');
+    if (!empty($this->varid)) {
+      // get the varkey for this
+      $var = dh_vardef_info($this->varid);
+      //dpm($var,"dh_vardef_info($this->varid)");
+      if (is_object($var)) {
+        $this->varkey = $var->varkey;
+        $this->varname = $var->varname;
+        $this->varcode = $var->varcode;
+        $this->vardesc = $var->vardesc;
+        $this->varunits = $var->varunits;
+      }
+    }
+    // get plugins and check setUp method
+    dh_variables_getPlugins($this);
+    $handled = FALSE;
+    foreach ($this->dh_variables_plugins as $plugin) {
+      if (method_exists($plugin, 'setUp')) {
+        $plugin->setUp($this);
+      }
+    }
+  }
+  
+  public function dh_getValue($timestamp = FALSE, $varname = FALSE, $config = array()) {
+    // load plugins if available
+    // check for plugins with dh_getValue, if found, execute
+    // else, use local accessors, which is just the value of the property or field.
+    // if timestamp is false, assume current value
+    // if varname is false, assume the object default value (i.e. propvalue or tsvalue for dh properties/timeseries)
+    // if we later feel this duplicates function of drupal getValue we can simply call it from that function
+    dh_variables_getPlugins($this);
+    $handled = FALSE;
+    foreach ($this->dh_variables_plugins as $plugin) {
+      if (method_exists($plugin, 'dh_getValue')) {
+        $value = $plugin->dh_getValue($this, $timestamp, $varname, $config);
+        $handled = TRUE;
+      }
+    }
+    if (!$handled) {
+      // @todo: look for a timeseries entry if !($timestamp === FALSE)
+      // @todo: handle $varname to show other properties specified by $varname
+      // @todo: handle attached fields - would be nice to wrap field accessors
+      $value = $this->propvalue; // nothing fancy done by default
+    }
+    return $value;
+  }
+  
+  protected function defaultLabel() {
+    return $this->propname;
+  }
+  protected function defaultUri() {
+    $path = 'dh_properties/' . $this->identifier();
+    $plugins = dh_variables_getPlugins($this);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'defaultUri')) {
+        $path = $plug->defaultUri($entity);
+      }
+    }
+    return array('path' => $path);
+  }
+}
+
+class dHPropertiesController extends EntityAPIControllerExportable {
+  
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  
+   /**
+   * Create a model type - we first set up the values that are specific
+   * to our model type schema but then also go through the EntityAPIController
+   * function.
+   * 
+   * @param $type
+   *   The machine-readable type of the model.
+   *
+   * @return
+   *   A model type object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    global $user;
+    // Add values that are specific to our Model
+    $values += array( 
+      'pid' => '',
+      'propvalue' => NULL,
+      'featureid' => '',
+      'varid' => '',
+      'entity_type' => '',
+      'propname' => '',
+      'propcode' => '',
+      'bundle' => '',
+      'modified' => '',
+    );
+    if (!isset($values['uid'])) {
+      $values['uid'] = $user->uid;
+    }
+    // @todo: call dh_properties_enforce_singularity with values to 
+    //        see if this should be a create or a load
+    //  THIS SHOULD WORK BUT WE NEED TO TEST BEFORE DEPLOYING
+    //  IN CASE THERE ARE PROBLEMS WITH RETURNING AN EXISTING OBJECT WHEN IS_NEW IS EXPECTED
+    if (isset($values['groupname']) and ($values['groupname'] == 'chem_rates')) {
+      $entity = dh_properties_enforce_singularity($values, 'varid');
+      if (!$entity) {
+        //drupal_set_message("create called with values: " . print_r($values,1));
+        $entity = parent::create($values);
+      }
+    } else {
+      // just use the old school versionb
+      $entity = parent::create($values);
+    }
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'create')) {
+        $plug->create($entity);
+      }
+    }
+    return $entity;
+  }
+  public function save($entity, DatabaseTransaction $transaction = NULL) {
+    // handle all plugins, then save
+    // handle all plugins, then save
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'save')) {
+        $plug->save($entity);
+      }
+    }
+    $timecols = array('startdate', 'enddate');
+    foreach ($timecols as $thiscol) {
+      if (property_exists($entity, $thiscol)) {
+        $entity->$thiscol = dh_handletimestamp($entity->$thiscol);
+        if ($entity->$thiscol == '') {
+          $entity->$thiscol = NULL;
+        }
+      }
+    }
+    $entity->modified = date('U');
+    // @todo: try to remove this, or try $entity->propvalue = NULL -- this is causing errors
+    //        in drupal_write_record because it removes this from the object which is unexpected
+    //        and actually kind of uncool.
+    if (strlen($entity->propvalue) == 0) {
+      $entity->propvalue = NULL;
+      // @todo: remove this
+      unset($entity->propvalue);
+    }
+    return parent::save($entity, $transaction);
+  }
+  
+  public function invoke($hook, $entity) {
+    parent::invoke($hook, $entity);
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      switch ($hook) {
+        case 'insert':
+        if (method_exists($plug, 'insert')) {
+          $plug->insert($entity);
+        }
+        break;
+        case 'update':
+        if (method_exists($plug, 'update')) {
+          $plug->update($entity);
+        }
+        break;
+      }
+    }
+  }
+  
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+    //dpm($entity, 'handling buildContent');
+    $content = parent::buildContent($entity, $view_mode, $langcode, $content);
+    // set up basic view modes
+    // then handle all plugins to override defaults 
+    $modate = date("Y-m-d h:m a", dh_handletimestamp($entity->modified) );
+    switch ($view_mode) {
+      case 'teaser':
+        $content['propname'] = array(
+          '#type' => 'item',
+          '#title' => t('Name'),
+          '#markup' => $entity->propname . "<br>(mod: $modate)"
+        );
+        $content['varname'] = array(
+          '#type' => 'item',
+          '#title' => t('Type'),
+          '#markup' => $entity->varname,
+        );
+        $content['startdate'] = array(
+          '#type' => 'item',
+          '#title' => t('Start Time'),
+          '#markup' => format_date($entity->startdate),
+        );
+        $content['enddate'] = array(
+          '#type' => 'item',
+          '#title' => t('End Time'),
+          '#markup' => format_date($entity->startdate),
+        );
+        $content['propvalue'] = array(
+          '#type' => 'item',
+          '#title' => t('Value'),
+          '#markup' => $entity->propvalue,
+        );
+        $content['propcode'] = array(
+          '#type' => 'item',
+          '#title' => t('Code'),
+          '#markup' => $entity->propcode,
+        );
+      break;
+      case 'raw':
+        $content['propname'] = array(
+          '#type' => 'item',
+          '#title' => t('Name'),
+          '#markup' => $entity->propname . "<br>(mod: $modate)"
+        );
+        $content['varname'] = array(
+          '#type' => 'item',
+          '#title' => t('Type'),
+          '#markup' => $entity->varname,
+        );
+        $content['startdate'] = array(
+          '#type' => 'item',
+          '#title' => t('Start Time'),
+          '#markup' => format_date($entity->startdate),
+        );
+        $content['enddate'] = array(
+          '#type' => 'item',
+          '#title' => t('End Time'),
+          '#markup' => format_date($entity->startdate),
+        );
+        $content['propvalue'] = array(
+          '#type' => 'item',
+          '#title' => t('Value'),
+          '#markup' => $entity->propvalue,
+        );
+        $content['propcode'] = array(
+          '#type' => 'item',
+          '#title' => t('Code'),
+          '#markup' => $entity->propcode,
+        );
+      break;
+      case 'full':
+      // @todo: plugin mode should be deprecated since it should apply everywhere unless we call for raw 
+      case 'plugin':
+      default:
+        $content['propname'] = array(
+          '#type' => 'item',
+          '#title' => t('Name'),
+          '#markup' => $entity->propname . "<br>(mod: $modate)",
+        );
+        $content['varname'] = array(
+          '#type' => 'item',
+          '#title' => t('Type'),
+          '#markup' => $entity->varname,
+        );
+        $content['startdate'] = array(
+          '#type' => 'item',
+          '#title' => t('Start Time'),
+          '#markup' => format_date($entity->startdate),
+        );
+        $content['enddate'] = array(
+          '#type' => 'item',
+          '#title' => t('End Time'),
+          '#markup' => format_date($entity->startdate),
+        );
+        $content['propvalue'] = array(
+          '#type' => 'item',
+          '#title' => t('Value'),
+          '#markup' => $entity->propvalue,
+        );
+        $content['propcode'] = array(
+          '#type' => 'item',
+          '#title' => t('Code'),
+          '#markup' => $entity->propcode,
+        );
+      break;
+    }
+    if ($view_mode <> 'raw') {
+      $plugins = dh_variables_getPlugins($entity);
+      if (!is_array($plugins)) {
+        $plugins = array($plugins);
+      }
+      foreach ($plugins as $plug) {
+        if (method_exists($plug, 'buildContent')) {
+          //dsm("Calling Plugin buildContent with $view_mode");
+          $plug->buildContent($content, $entity, $view_mode);
+        }
+      }
+    }
+    return $content;
+  }
+}
+
+// **************************
+// Hooks and Entity functions
+// ****************************
+
+/**
+ * Implements hook_entity_update().
+ */
+  // *******************************************************************************
+  // update() and insert() are called after the TS or prop entity is saved, which allows 
+  // us to do things that require a final, saved object, such as insure we have a tid/pid
+  // @todo: we need to make some rules to prevent infinite recursion wherein:
+  //   - some prop/ts of type "A" trigger the creation of prop/ts "B" 
+  //   - prop/ts "B" triggers the creation of a prop/ts of type "A"
+  //   - ad infinitum
+  // To prevent this we can:
+  //   - not allow ts to trigger creation of ts attached to it 
+  //   - not allow props whose entity_type is ts to trigger creation of a ts attached to it
+  //   - not allow props whose entity_type is prop to trigger creation of a ts or prop attached to it
+  //     - this will effectively limit props to having one layer of children created automatically by plugins
+  //   - And/Or set some global drupal session variable to track # of times plugins iterate and return after some max
+function dh_entity_update($entity, $type) {
+  // insert ts events for supporting entities 
+  // * ex: dh_adminreg_features have a hook to insert ts for startdate/enddate)
+  dh_entity_ts_event($entity, $type);
+  // perform special handling of ts and properties 
+  // things such as singularity settings are handled here
+  switch ($type) {
+    case 'dh_properties':
+    case 'dh_timeseries':
+    // load the plugins
+    // call the plugin update() method
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    //dpm($entity,'entity');
+    //dpm($plugins,'plugins');
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'update')) {
+        $plug->update($entity, $type);
+      }
+    }
+    break;
+  }
+  switch ($type) {
+    case 'dh_properties':
+    //dh_prop_iu_checks($entity);
+    break;
+    case 'dh_timeseries':
+    dh_ts_iu_checks($entity);
+    break;
+  }
+}
+/**
+ * Implements hook_entity_insert().
+ */
+function dh_entity_insert($entity, $type) {
+  dh_entity_ts_event($entity, $type);
+  // perform special handling of ts and properties 
+  // things such as singularity settings are handled here
+  // this is important since it occurs AFTER the entity is inserted, making things like 
+  // the pid and tid available.
+  switch ($type) {
+    case 'dh_properties':
+    case 'dh_timeseries':
+    // load the plugins
+    // call the plugin insert() method
+    $plugins = dh_variables_getPlugins($entity);
+    //dpm($entity,'entity');
+    //dpm($plugins,'plugins');
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'insert')) {
+        $plug->insert($entity);
+      }
+    }
+    break;
+  }
+  switch ($type) {
+    case 'dh_properties':
+    //dh_prop_iu_checks($entity);
+    break;
+    case 'dh_timeseries':
+    dh_ts_iu_checks($entity);
+    break;
+  }
+}
+
+function dh_ts_iu_checks($entity) {
+  // @todo: 
+  //   - call dh_timeseries_enforce_singularity with values to 
+  //     see if this is a replacement
+  //     If this should be singular, we need to remove all previous version of the entity 
+  //     Then proceed on creating this one.
+  $var = dh_vardef_info($entity->varid);
+  //dpm($var, "Checking multiplicity = $var->multiplicity ");
+  //dpm($entity, "entity");
+  if (!empty($var->multiplicity) and ($var->multiplicity <> 'none') and ($var->multiplicity <> 'default')) {
+    //dpm($entity, "dh_timeseries_enforce_singularity_dev (entity,$var->multiplicity)");
+    dh_timeseries_enforce_singularity_dev($entity, $var->multiplicity );
+    //dpm($entity, "entity");
+  }
+}
+
+/**
+ * Implements hook_entity_load().
+ */
+function dh_entity_load($entities, $type) {
+  // make this consistent with all the other hook_entity_ calls
+  // such that it's ok to pass ina  asingle entity rather than an array
+  if (!is_array($entities) and is_object($entities)) {
+    $entities = array($entities);
+  }
+  switch ($type) {
+    case 'dh_properties':
+    case 'dh_timeseries':
+    // load the plugins
+    foreach ($entities as $entity) {
+      // call the plugin insert() method
+      $plugins = dh_variables_getPlugins($entity);
+      if (!is_array($plugins)) {
+        $plugins = array($plugins);
+      }
+      foreach ($plugins as $plug) {
+        if (method_exists($plug, 'load')) {
+          $plug->load($entity);
+        }
+      }
+    }
+    break;
+  }
+}
+/**
+ * Implements hook_entity_delete().
+ */
+function dh_entity_delete($entity, $type) {
+  // @todo: consider how this might work using the batch api in the event of 
+  //        a feature with a very large number of timeseries values
+  $einfo = entity_get_info($type);
+  if (!isset($einfo['entity keys']['id'])) {
+    // throw malformed entity exception and return
+    return;
+  }
+  // if this is a dh variable entity, call the plugin delete method before deleting all child props
+  switch ($type) {
+    case 'dh_properties':
+    case 'dh_timeseries':
+    // load the plugins
+    // call the plugin delete() method
+    $plugins = dh_variables_getPlugins($entity);
+    if (!is_array($plugins)) {
+      $plugins = array($plugins);
+    }
+    foreach ($plugins as $plug) {
+      if (method_exists($plug, 'delete')) {
+        $plug->delete($entity);
+      }
+    }
+    break;
+  }
+  $idcol = $einfo['entity keys']['id'];
+  if ($entity->$idcol) {
+    dh_entity_timeseries_delete($entity, $type, $entity->$idcol);
+    dh_entity_property_delete($entity, $type, $entity->$idcol);
+  }
+  // @todo: iterate through all fields and see if there are any attributed erefs or attributed fields
+  // attributed erefs can be determined by their plugin behavior maybe?
+  // or we can hard wire at the module level for things like om_agman -> field_link_to_registered_agchem
+  //dpm($entity,'entity');
+}
+
+function dh_entity_timeseries_delete($entity, $type, $id) {
+  $values = array('entity_type' => $type, 'featureid' => $id );
+  $result = dh_get_timeseries($values, 'all');
+  if (isset($result['dh_timeseries'])) {
+    foreach ($result['dh_timeseries'] as $todel) {
+      entity_delete('dh_timeseries', $todel->tid);
+    }
+  }
+}
+
+function dh_entity_property_delete($entity, $type, $id) {
+  $values = array('entity_type' => $type, 'featureid' => $id);
+  $result = dh_get_properties($values, 'all');
+  if (isset($result['dh_properties'])) {
+    foreach ($result['dh_properties'] as $todel) {
+      entity_delete('dh_properties', $todel->pid);
+    }
+  }
+}
+
+function dh_entity_ts_event_types_alter(&$event_types) {
+  // insert ts events for AR fields/properties ()such as startdate, enddate, dh_link_submittal_feature) 
+  // insert ts events for those linked via adminreg 
+  //   system erefs like dh_link_submittal_feature
+  $event_types += array(
+  );
+}
+
+function dh_entity_ts_event($entity, $type) {
+  $event_types = array();
+  // load event_types from drupal_alter hooks
+  drupal_alter('entity_ts_event_types', $event_types);
+  //dpm($entity, "dh_entity_ts_event Checking for entity");
+  //dpm($event_types, "dh_entity_ts_event Checking for $type");
+  if (!isset($event_types[$type])) {
+    return;
+  }
+  foreach ($event_types[$type] as $key => $config) { 
+    if (!$config['bundle'] || ($config['bundle'] == $entity->bundle)) {
+      // handle featureid first, and if it is multiple, iterate through and process for each
+      if (isset($config['featureid']) && isset($config['entity_type'])) {
+        //dpm($config, "Checking for featureid");
+        $fids = dh_handle_entity_map($config['featureid'], $entity, $type);
+        //dpm($fids, "Found fids");
+        $fids = is_array($fids) ? $fids : array($fids);
+        foreach ($fids as $featureid) {
+          if ($featureid > 0) {
+            $values = array();
+            $values['featureid'] = $featureid;
+            $values['entity_type'] = dh_handle_entity_map($config['entity_type'], $entity, $type);
+            foreach ($config['map'] as $col => $map) {
+              $values[$col] = dh_handle_entity_map($map, $entity, $type);
+            }
+            //dpm($values,"dh_entity_ts_event Triggered $type ");
+            if (!isset($config['multiplicity'])) {
+              dh_update_timeseries($values);
+            } else {
+              dh_update_timeseries($values, $config['multiplicity']);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function dh_handle_entity_map($map, $entity, $type) {
+  if (!is_array($map)) {
+    // if not an array assume this is a constant
+    return $map;
+  }
+  switch($map['value_src_type']) {
+    case 'form_key':
+      // grabs value from the form in whatever format form uses
+      $value = FALSE; // this might be N/A with a entity map
+    break;
+    case 'eref_targetid':
+      // like form_eref_targetid but for an entity
+      $value = array();
+      // returns an array containing only the target ids from an entity reference field
+      $froms = field_get_items($type, $entity, $map['value']);
+      foreach ($froms as $fr) {
+        $value[] = $fr['target_id'];
+      }
+    break;
+    case 'constant':
+      $value = $map['value'];
+    break;
+    case 'property':
+      // changed to reflect different handling in php 7 - http://php.net/manual/en/migration70.incompatible.php#migration70.incompatible.variable-handling.indirect
+      //$value = $entity->$map['value'];
+      $value = $entity->{$map['value']};
+    break;
+    case 'env':
+      $value = FALSE; // need to figure how we'll handle this
+    break;
+    case 'token':
+      $value = token_replace($map['value'], array(), array('clear'=>TRUE)); 
+    break;
+  }
+  return $value;
+}
+
+
+// **************************
+// Helper functions
+// ****************************
+
+function dh_varkey2varid($varkey, $one_id = FALSE) {
+  $valid = FALSE;
+  $varid = array();
+
+  foreach (explode(',', $varkey) as $thisarg) {
+    $efq = new EntityFieldQuery(); 
+    $efq->entityCondition('entity_type', 'dh_variabledefinition');
+    $efq->propertyCondition('varkey', $thisarg, '=');
+    $result = $efq->execute();
+    if (isset($result['dh_variabledefinition'])) {
+      $rez = array_shift($result['dh_variabledefinition']);
+      if (property_exists($rez, 'hydroid')) {
+        if ($one_id) {
+          // short circuit and return only a single ID
+          return $rez->hydroid;
+        }
+        $varid[] = $rez->hydroid;
+        $valid = TRUE;
+      }
+    }
+  }
+  if ($valid) {
+    return $varid;
+  } else {
+    return false;
+  }
+}
+
+function dh_varid2varkey($varid) {
+  $valid = FALSE;
+  $varkey = array();
+  if (!is_array($varid)) {
+    $varid = explode(',', $varid);
+  }
+  foreach ($varid as $thisarg) {
+    $result = entity_load_single('dh_variabledefinition', $thisarg);
+    if ($result) {
+      if (property_exists($result, 'varkey')) {
+        $varkey[] = $result->varkey;
+        $valid = TRUE;
+      }
+    }
+  }
+  if ($valid) {
+    return $varkey;
+  } else {
+    return false;
+  }
+}
+
+function dh_varcode2varid($varcode, $one_id = FALSE) {
+  $valid = FALSE;
+  $varid = array();
+
+  foreach (explode(',', $varcode) as $thisarg) {
+    $efq = new EntityFieldQuery(); 
+    $efq->entityCondition('entity_type', 'dh_variabledefinition');
+    $efq->propertyCondition('varcode', $thisarg, '=');
+    $result = $efq->execute();
+    if (isset($result['dh_variabledefinition'])) {
+      $rez = array_shift($result['dh_variabledefinition']);
+      if (property_exists($rez, 'hydroid')) {
+        if ($one_id) {
+          // short circuit and return only a single ID
+          return $rez->hydroid;
+        }
+        $varid[] = $rez->hydroid;
+        $valid = TRUE;
+      }
+    }
+  }
+  if ($valid) {
+    return $varid;
+  } else {
+    return false;
+  }
+}
+
+function dh_get_timeseries(&$values, $multiplicity) {
+  // this passes $values by reference because it should be a one-time translation of tstime and varid
+
+  // ***********************************************************
+  // * Do translations
+  //   * make sure the variable is in place and translated to varid
+  //   * Translate tstime and tsendtime to seconds since the epoch
+  // ***********************************************************
+  if (isset($values['tstime'])) {
+    $values['tstime'] = dh_handletimestamp($values['tstime']);
+  }
+  if (isset($values['tsendtime'])) {
+    $values['tsendtime'] = dh_handletimestamp($values['tsendtime']);
+  }
+  if (!is_numeric($values['featureid'])) {
+    return FALSE;
+  }
+  // make sure the variable is in place and translated to varid
+  if (isset($values['varkey'])) {
+    $varcol = 'varkey';
+  } else {
+    $varcol = 'varid';
+  }
+  if (isset($values[$varcol])) {
+    $var = dh_vardef_info($values[$varcol]);
+    //dpm($var, "result from dh_vardef_info(" . $values['varid'] . ")");
+    if (is_object($var)) {
+      $values['varid'] = $var->hydroid;
+    }
+  }
+  $efq = new EntityFieldQuery;
+  $efq->entityCondition('entity_type', 'dh_timeseries');
+  $efq->propertyCondition('featureid', $values['featureid'], '=');
+  if (!($multiplicity == 'all')) {
+    // if 'all' is request we ignore varid, otherwise we want a specific var
+    // this is used for delete operations or operations in which we want top return
+    // any and all timeseries records associated with this entity
+    $efq->propertyCondition('varid', $values['varid'], '=');
+  }
+  $efq->propertyCondition('entity_type', $values['entity_type'], '=');
+  // @todo - test the below which would support multiple feature ids
+  //$efq->propertyCondition('featureid', $values['featureid']);
+  $efq->propertyCondition('featureid', $values['featureid'], '=');
+  // singular - one record only for featureid/entity_type/varid - clear all if multiple
+  //   ex: a birthdate
+  // non_singular - just force an insert regardless of duplication
+  // tstime_singular - one record for featureid/entity_type/varid/tstime/tsendtime
+  switch ($multiplicity) {
+    case 'all':
+    // returning all
+    break;
+    
+    case 'singular':
+    // expects only 1 value, but essentially returns all values
+    break;
+    
+    case 'non_singular':
+    // returns any values for this featureid/entity_type
+    break;
+    
+    case 'tsendtime_singular':
+      if (!empty($values['tsendtime'])) {
+        $efq->propertyCondition('tsendtime', $values['tsendtime'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tsendtime_singular must have valid tsendtime.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'tstime_singular':
+      if (!empty($values['tstime'])) {
+        $efq->propertyCondition('tstime', $values['tstime'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tstime_singular must have valid tstime.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'tscode_singular':
+      if (!empty($values['tscode'])) {
+        $efq->propertyCondition('tscode', $values['tscode'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tscode_singular must have non-null tscode.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'tsvalue_singular':
+      if (!empty($values['tsvalue'])) {
+        $efq->propertyCondition('tsvalue', $values['tsvalue'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tsvalue_singular must have non-null tsvalue.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'tstimecode_singular':
+      if (!empty($values['tstime']) and !empty($values['tscode'])) {
+        $efq->propertyCondition('tscode', $values['tscode'], '=');
+        $efq->propertyCondition('tstime', $values['tstime'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tstimecode_singular must have non-null tstime and tscode.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'tspan_singular':
+      if (!empty($values['tstime'])) {
+        $efq->propertyCondition('tstime', $values['tstime'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tspan_singular must have non-null tstime.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+      if (!empty($values['tsendtime'])) {
+        $efq->propertyCondition('tsendtime', $values['tsendtime'], '=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with tspan_singular must have non-null tsendtime.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'trange':
+    case 'trange_singular':
+      if (!empty($values['tstime'])) {
+        $efq->propertyCondition('tstime', $values['tstime'], '>=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with trange must have non-null tstime.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+      if (!empty($values['tsendtime'])) {
+        $efq->propertyCondition('tsendtime', $values['tsendtime'], '<=');
+      } else {
+        watchdog('dh', 'dh_get_timeseries queries with trange must have non-null tsendtime.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    default:
+      if (!empty($values['tstime'])) {
+        $efq->propertyCondition('tstime', $values['tstime'], '=');
+      }
+    break;
+  }
+  $efq->propertyOrderBy('tid', 'DESC');
+  $result = $efq->execute();
+  return $result;
+}
+
+function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
+  // multiplicity should be replaced by a setting that allows user to specify
+  // different attributes such as start, end, name, varid, valkues, etc.
+  // make sure the variable is in place and translated to varid
+  // @todo: $load = TRUE returns all properties as objects
+  if (isset($values['varkey'])) {
+    $varcol = 'varkey';
+  } else {
+    $varcol = 'varid';
+  }
+  if (isset($values[$varcol])) {
+    $var = dh_vardef_info($values[$varcol]);
+    //dpm($var, "result from dh_vardef_info(" . $values['varid'] . ")");
+    if (is_object($var)) {
+      $values['varid'] = $var->hydroid;
+    }
+  }
+  if (!is_numeric($values['featureid'])) {
+    return FALSE;
+  }
+  $efq = new EntityFieldQuery;
+  $efq->entityCondition('entity_type', 'dh_properties');
+  // @todo - test the below which would support multiple feature ids
+  //$efq->propertyCondition('featureid', $values['featureid']);
+  $efq->propertyCondition('featureid', $values['featureid'], '=');
+  // specific types don't use varid
+  if (!in_array($multiplicity, array('name', 'name_singular', 'all'))) {
+    // if 'all' is request we ignore varid, otherwise we want a specific var
+    // this is used for delete operations or operations in which we want top return
+    // any and all timeseries records associated with this entity
+    $efq->propertyCondition('varid', $values['varid'], '=');
+  }
+  // singular - one record only for featureid/entity_type/varid - clear all if multiple
+  //   ex: a birthdate
+  // non_singular - just force an insert regardless of duplication
+  // tstime_singular - one record for featureid/entity_type/varid/tstime/tsendtime
+  switch ($multiplicity) {
+    case 'all':
+    // returning all
+    break;
+    
+    case 'name':
+    case 'name_singular':
+    // expects only 1 value, but essentially returns all values for varid
+      $efq->propertyCondition('propname', $values['propname'], '=');
+    break;
+    
+    case 'singular':
+    // returns any values for this featureid/entity_type/varid
+    break;
+    
+    case 'non_singular':
+    // returns any values for this featureid/entity_type
+    break;
+    
+    case 'tstime_singular':
+      $efq->propertyCondition('startdate', $values['startdate'], '=');
+    break;
+    
+    case 'tspan_singular':
+      $efq->propertyCondition('startdate', $values['startdate'], '=');
+      $efq->propertyCondition('enddate', $values['enddate'], '=');
+    break;
+    
+    case 'props_singular':
+      $valcols = array('propcode', 'propvalue', 'startdate', 'enddate');
+      foreach ($valcols as $col) {
+        if (isset($values[$col])) {
+          $efq->propertyCondition($col, $values[$col], '=');
+        }
+      }
+    break;
+    
+    case 'propcode_singular':
+      if (!empty($values['propcode'])) {
+        $efq->propertyCondition('propcode', $values['propcode'], '=');
+      } else {
+        watchdog('dh', 'dHProperties queries with propcode_singular must have non-null propcode.', WATCHDOG_WARNING);
+        return FALSE;
+      }
+    break;
+    
+    case 'varid':
+    default:
+      $efq->propertyCondition('varid', $values['varid'], '=');
+    break;
+  }
+  $efq->propertyCondition('entity_type', $values['entity_type'], '=');
+  $efq->propertyOrderBy('pid', 'DESC');
+  //dpm($efq,'efq');
+  $result = $efq->execute();
+  //dpm($result,'dh_get_properties result');
+  return $result;
+}
+
+function dh_timeseries_enforce_singularity(&$values, $multiplicity, $set_values = TRUE) {
+  //dpm($values,'dh_timeseries_enforce_singularity call');
+  // @todo:
+  // - if $values is an object, we opt to use this as the desired end-point, so we seek a tid match 
+  // - or, if there is no tid, then this has never been saved 
+  if ($multiplicity == 'all') {
+    watchdog('dh_timeseries', "Illegal multiplicity == all sent to dh_timeseries_enforce_singularity");
+    return FALSE;
+  }
+  // retrieves an object if it exists, and enforces singularity 
+  // then, sets the values on the property, effectively calling an update with supplied values.
+  $notnull = array('featureid', 'entity_type');
+  foreach ($notnull as $v) {
+    if (!isset($values[$v]) or ($values[$v] === NULL)) {
+      watchdog('dh_timeseries', "NULL value for dh_timeseries $v");
+      return FALSE;
+    }
+  }
+  $result = dh_get_timeseries($values, $multiplicity);
+  $entity = FALSE;
+  if (isset($result['dh_timeseries'])) {
+    $data = entity_load('dh_timeseries', array_keys($result['dh_timeseries']));
+    //dpm($data,'entity_load result');
+    $entity = array_shift($data);
+    if (!(strpos($multiplicity, 'singular') === FALSE)) {
+      // this somewhat strange if statement 
+      // the word "singular" IS in the multiplicity setting
+      // that means, if dh_get_timeseries returned multiple matches 
+      // we need to grab one and delete the others because this is to be singular
+      // otherwise, we just take the first one we come to and ignore the rest
+      // this applies to any type of singularity since the dh_get_timeseries should have returned
+      // only 1 record if this was truly singular.
+      foreach ($data as $todel) {
+        entity_delete('dh_timeseries', $todel->tid);
+      }
+    }
+    if ($set_values) {
+      foreach ($values as $key => $val) {
+        $entity->$key = $val;
+      }
+    }
+  }
+  //dpm($entity, 'returning');
+  return $entity;
+}
+
+
+
+function dh_timeseries_enforce_singularity_dev(&$values, $multiplicity, $set_values = TRUE) {
+  //dpm($values,'dh_timeseries_enforce_singularity call');
+  // if $values is an object, we opt to use this as the desired end-point, so we seek a tid match 
+  // or, if there is no tid, then this has never been saved 
+  if ($multiplicity == 'all') {
+    watchdog('dh_timeseries', "Illegal multiplicity == all sent to dh_timeseries_enforce_singularity");
+    return FALSE;
+  }
+  if (is_object($values)) {
+    $entity = $values;
+    $values = (array)$entity;
+    $set_values = FALSE; // this has already been done and can cause problems
+  } else {
+    $entity = FALSE;
+  }
+  // retrieves an object if it exists, and enforces singularity 
+  // then, sets the values on the property, effectively calling an update with supplied values.
+  $notnull = array('featureid', 'entity_type');
+  foreach ($notnull as $v) {
+    if (!isset($values[$v]) or ($values[$v] === NULL)) {
+      watchdog('dh_timeseries', "NULL value for dh_timeseries $v");
+      return FALSE;
+    }
+  }
+  //dpm($values, "Searching with $multiplicity");
+  $result = dh_get_timeseries($values, $multiplicity);
+  if (isset($result['dh_timeseries'])) {
+    $data = entity_load('dh_timeseries', array_keys($result['dh_timeseries']));
+    // dpm($data,'entity_load result');
+    if (!$entity) {
+      // if we were not sent a specific entity to keep, we keep the first one we find 
+      // then delete the rest 
+      $entity = array_shift($data);
+    }
+    if (!(strpos($multiplicity, 'singular') === FALSE)) {
+      // this somewhat strange if statement 
+      // the word "singular" IS in the multiplicity setting
+      // that means, if dh_get_timeseries returned multiple matches 
+      // we need to grab one and delete the others because this is to be singular
+      // otherwise, we just take the first one we come to and ignore the rest
+      // this applies to any type of singularity since the dh_get_timeseries should have returned
+      // only 1 record if this was truly singular.
+      foreach ($data as $todel) {
+        if ($entity->tid <> $todel->tid) {
+          entity_delete('dh_timeseries', $todel->tid);
+        }
+      }
+    }
+    if ($set_values) {
+      foreach ($values as $key => $val) {
+        $entity->$key = $val;
+      }
+    }
+  }
+  //dpm($entity, 'returning');
+  return $entity;
+}
+
+function dh_properties_enforce_singularity(&$values, $multiplicity, $set_values = TRUE) {
+  // retrieves an object if it exists, and enforces singularity 
+  // requires featureid and entity_type otherwise we could delete a whole bunch pof stuff by accident
+  $notnull = array('featureid', 'entity_type');
+  foreach ($notnull as $v) {
+    if (!isset($values[$v]) or ($values[$v] === NULL)) {
+      watchdog('dh_properties', "NULL value for dh_properties $v");
+      return FALSE;
+    }
+  }
+  //dpm($values, "multiplicity = $multiplicity, values in dh_properties_enforce_singularity");
+  $result = dh_get_properties($values, $multiplicity);
+  //dpm($result, 'dh_get_properties result in dh_properties_enforce_singularity');
+  $entity = FALSE;
+  if (isset($result['dh_properties'])) {
+    //dpm($result,'efq result');
+    $data = entity_load('dh_properties', array_keys($result['dh_properties']));
+    //dpm($data,'entity_load result');
+    $entity = array_shift($data);
+    if (!(strpos($multiplicity, 'singular') === FALSE) or ($multiplicity == 'name')) {
+      //dpm($data,'need to delete extraneous entries');
+      // we need to grab one and delete the others because this is to be singular
+      // otherwise, we just take the first one we come to and ignore the rest
+      foreach ($data as $todel) {
+        //dpm(entity_load_single('dh_properties', $todel->pid), 'todel object');
+        entity_delete('dh_properties', $todel->pid);
+      }
+    }
+    if ($set_values) {
+      foreach ($values as $key => $val) {
+        $entity->$key = $val;
+      }
+    }
+  }
+  return $entity;
+}
+
+function dh_update_timeseries($values, $multiplicity = 'tstime_singular') {  
+  // must have timestamp, featureid and entity_type
+  // $multiplicity - @todo:  remove this, and get setting from dh_variabledefinition?
+  //  
+  $notnull = array('featureid', 'entity_type', 'tstime');
+  foreach ($notnull as $v) {
+    if (!isset($values[$v]) or ($values[$v] === NULL)) {
+      watchdog('dh_timeseries', "NULL value for dh_timeseries $v");
+      return FALSE;
+    }
+  }
+  $entity = dh_timeseries_enforce_singularity($values, $multiplicity); 
+  if (!$entity) {
+    //dpm($values,"creating ts");
+    $entity = entity_create('dh_timeseries', $values);
+  }
+  if (is_object($entity) and method_exists($entity, 'save')) {
+    //dpm($entity, "saving");
+    $entity->save();
+    return $entity->tid;
+  } else {
+    //dpm($entity,"entity is not object or save() method does not exist");
+    return FALSE;
+  }
+  //drupal_set_message("Arg: '$argument'");
+}
+
+function dh_update_properties($values, $multiplicity = 'name') {  
+  // must have timestamp, featureid and entity_type
+  // $multiplicity - @todo:  remove this, and get setting from dh_variabledefinition?
+  // default allows any and all multiples provided that they have a unique name
+  $notnull = array('featureid', 'entity_type', 'varid');
+  foreach ($notnull as $v) {
+    if (!isset($values[$v]) or ($values[$v] === NULL)) {
+      watchdog('dh_properties', "NULL value for dh_properties $v");
+      return FALSE;
+    }
+  }
+  $result = dh_get_properties($values, $multiplicity);
+  if (isset($result['dh_properties'])) {
+    $data = entity_load('dh_properties', array_keys($result['dh_properties']));
+    $record = array_shift($data);
+    if (!(strpos($multiplicity, 'singular') === FALSE)) {
+      // we need to grab one and delete the others because this is to be singular
+      // otherwise, we just take the first one we come to and ignore the rest
+      foreach ($data as $todel) {
+        entity_delete('dh_properties', $todel->pid);
+      }
+    }
+    foreach ($values as $key => $val) {
+      $record->$key = $val;
+    }
+  } else {
+    //dpm($values,"creating dh_properties");
+    $record = entity_create('dh_properties', $values);
+    foreach ($values as $key => $val) {
+      $record->$key = $val;
+    }
+  }
+  if (is_object($record) and method_exists($record, 'save')) {
+    //dpm($record, "saving");
+    $record->save();
+    return $record->pid;
+  } else {
+    //dpm($record,"record is not object or save() method does not exist");
+    return FALSE;
+  }
+  //drupal_set_message("Arg: '$argument'");
+}
+
+function dh_vardef_varname_options($conditions = array()) {
+  // returns a varname keyed list for use in search forms
+  $options = array();
+  if (empty($conditions)) {
+    $conditions[] = "varname <> ''";
+    $conditions[] = 'varname is not NULL';
+  }
+  $option_list = implode(" AND ", $conditions);
+  $qstr = "select varname from {dh_variabledefinition} where " . $option_list;
+  $qstr .= " ORDER BY varname ";
+  $q = db_query($qstr);
+  //dpm($q,'query');
+  foreach ($q as $var) {
+    $options[$var->varname] = $var->varname;
+  }
+  //dpm($options, "Select options");
+  return $options;
+}
+
+function dh_vardef_varselect_options($conditions = array(), $indexcol = 'hydroid') {
+  //dpm($conditions,'conditions');
+  //dpm($indexcol, 'indexcol');
+  // returns a varid keyed list, for use in form processing
+  $options = array();
+  if (empty($conditions)) {
+    $conditions[] = "varname <> ''";
+    $conditions[] = 'varname is not NULL';
+  }
+  $option_list = implode(" AND ", $conditions);
+  if (!db_field_exists('dh_variabledefinition', $indexcol)) {
+    // @todo: should throw an error here
+    return $options;
+  }
+  $qstr = "select $indexcol, varname, varunits from {dh_variabledefinition} where " . $option_list;
+  $qstr .= " ORDER BY varname ";
+  $q = db_query($qstr);
+  foreach ($q as $var) {
+    if (property_exists($var, $indexcol)) {
+      $options[$var->$indexcol] = $var->varname . "($var->varunits)";
+    }
+  }
+  //dpm($options, "Select options");
+  return $options;
+}
+
+function dh_varkey_varselect_options($conditions = array()) {
+  return dh_vardef_varselect_options($conditions, $indexcol = 'varkey');
+}
+
+function dh_vardef_vocab_options($keyed = TRUE) {
+  $q = db_query("select vocabulary from {dh_variabledefinition} where vocabulary is not null and vocabulary <> '' group by vocabulary order by vocabulary");
+  foreach ($q as $var) {
+    if ($keyed) {
+      $options[$var->vocabulary] = $var->vocabulary;
+    } else {
+      $options[] = $var->vocabulary;
+    }
+  }
+  return $options;
+}
+
+function dh_fstatus_options() {
+  return array(
+    'proposed' => t('Proposed/Unknown/Other'),
+    'active' => t('Active'),
+    'inactive' => t('Out of Service/Temporarily Inactive'),
+    'abandoned' => t('Abandoned'),
+    'duplicate' => t('Duplicate'),
+  );
+}
+
+function dh_vardef_info($varid) {
+  // returns a variable object
+  // if integer is given, looks for varid, if text searches on varkey
+  if (!empty($varid)) {
+    if (!is_numeric($varid)) {
+      $qstr = "select * from {dh_variabledefinition} where varkey = '$varid' ";
+    } else {
+      $qstr = "select * from {dh_variabledefinition} where hydroid = $varid ";
+    }
+  } else {
+    return 0;
+  }
+  $q = db_query($qstr);
+  foreach ($q as $var) {
+    return $var;
+  }
+  return 0;
+}
+
+function dh_getMpFacilityHydroId($mp) {
+  // load necessary facility properties for this event
+  if (!$mp) {
+    return FALSE;
+  }
+  if (!is_object($mp)) {
+    $mp = entity_load_single('dh_feature', $mp);
+  }
+  if (!$mp) {
+    return FALSE;
+  }
+  $facid = isset($mp->dh_link_station_sensor['und']) ? $mp->dh_link_station_sensor['und'][0]['target_id'] : FALSE;
+  $facid = isset($mp->dh_link_facility_mps['und']) ? $mp->dh_link_facility_mps['und'][0]['target_id'] : $facid;
+  return $facid;
+}
+
+function dh_getMpFacilityEntity($mp) {
+  // load necessary facility properties for this event
+  $facid = dh_getMpFacilityHydroId($mp);
+  if (!$facid) {
+    return FALSE;
+  }
+  $fac_entity = entity_load_single('dh_feature', $facid);
+  return $fac_entity;
+}
+
+function dh_facility_tree_select($facs, $include_fac = TRUE, $mp_bundle = FALSE, $mp_ftype = FALSE, $include_dupes = TRUE) {
+  // create associative array hydroid -> name 
+  $facs = is_array($facs) ? $facs : array($facs);
+  $faclist = array();
+  foreach ($facs as $facid) {
+    // we have the option to pass in objects if we like
+    if (!is_object($fac)) {
+      $fac = entity_load_single('dh_feature', $facid);
+    }
+    $faclist[$fac->hydroid] = $fac->name;
+  }
+  // sort by name, preserving keys
+  asort($faclist);
+  $options = array();
+  // create select list options from these
+  foreach ($faclist as $facid => $facname) {
+    // get blocks, sorted by name
+    $options[$facname] = array();
+    if ($include_fac) {
+      $options[$facname][$facid] = 'All ' . $facname;
+    }
+    $blockids = dh_get_facility_mps($facid, $mp_bundle, $mp_ftype, $include_dupes);
+    $blocks = entity_load('dh_feature', $blockids);
+    
+    $blocklist = array();
+    foreach ($blocks as $block) {
+      //dpm($block,'block');
+      $blocklist[$block->hydroid] = $block->name;
+    }
+    asort($blocklist);
+    foreach ($blocklist as $blockid => $blockname) {
+      $options[$facname][$blockid] = $blockname;
+    }
+  }
+  //dpm($options,'opts');
+  return $options;
+}
+
+// support transfers connectivity to_node/from_node type relationships
+function dh_get_reverse_erefs($eref_config = array()) {
+  // Usage:
+  // $eref_config['eref_fieldname'] = 
+  // $eref_config['target_entity_id'] = 
+  // $eref_config['entity_type'] = type of entity doing referencing
+  // $eref_config['entity_id_name'] = id column name of entity doing referencing
+  $referencing = array();
+  if (empty($eref_config)) {
+    watchdog('dh', 'dh_get_reverse_erefs called with empty config()', WATCHDOG_WARNING);
+    return $referencing;
+  }
+  if (!($eref_config['target_entity_id'] > 0)) {
+    watchdog('dh', 'dh_get_reverse_erefs called with null entity_id', WATCHDOG_WARNING);
+    return $referencing;
+  }
+  $entity_id = $eref_config['target_entity_id'];
+  $efq = new EntityFieldQuery(); 
+  $efq->entityCondition('entity_type', $eref_config['entity_type']);
+  $efq->fieldCondition($eref_config['eref_fieldname'], 'target_id', $eref_config['target_entity_id']);
+  $rez = $efq->execute();
+  if (is_array($rez) and isset($rez[$eref_config['entity_type']])) {
+    while ($ref = array_shift($rez[$eref_config['entity_type']]) ) {
+      $referencing[] = $ref->{$eref_config['entity_id_name']};
+    }
+  }
+  return $referencing;
+}
+
+function dh_check_user_mgmt_tree($uid, $entity_type, $entity_id, $depth = 0) {
+  $depth++;
+  //dpm($uid, "dh_check_user_mgmt_tree($uid, $entity_type, $entity_id, $depth )");
+  if ($depth > 500) {
+    return FALSE;
+  }
+  // get the tree associated with a specific entity
+  // passes if:
+  // - entity in question has dh_link_feature_mgr_id (target_id) = uid
+  // - entity in question links upstream to a feature via an eligible link field 
+  //   to an entity for which dh_link_feature_mgr_id (target_id) = uid
+  // eligible links - NOT YET USED
+  $eligible_links = array('dh_link_facility_mps');
+  $is_owner = dh_get_user_mgr_features($uid, FALSE, FALSE, $entity_id);
+  //dpm($is_owner, "dh_get_user_mgr_features($uid, FALSE, FALSE, $entity_id)");
+  if (count($is_owner)) {
+    //dpm("is owner = 1");
+    return TRUE;
+  }
+  $fac = dh_getMpFacilityHydroId($entity_id);
+  //dpm($fac,"checking for mp->fac relationships");
+  if ($fac) {
+    return dh_check_user_mgmt_tree($uid, 'dh_feature', $fac, $depth);
+  }
+  return FALSE;
+}
+
+
+// support transfers connectivity to_node/from_node type relationships
+function dh_get_entity_erefs($entity, $eref_field_name) {
+  $els = array();
+  $tos = field_get_items($entity->entityType(), $entity, $eref_field_name);
+  if (is_array($tos)) {
+    foreach ($tos as $to) {
+      $els[] = $to['target_id'];
+    }
+  }
+  return $els;
+}
+
+// support transfers connectivity to_node/from_node type relationships
+function dh_get_facility_mps($facid, $bundle = FALSE, $ftype = FALSE, $include_dupes = TRUE) {
+  $mps = array();
+  if (empty($facid)) {
+    return $mps;
+  }
+  $etype = 'dh_feature';
+  $pkname = 'hydroid';
+  $entity_id = FALSE;
+  $checks = array('dh_link_facility_mps');
+  $op = is_array($facid) ? 'in' : '=';
+  foreach ($checks as $check) {
+    $efq = new EntityFieldQuery(); 
+    $efq->entityCondition('entity_type', $etype);
+    $efq->fieldCondition($check, 'target_id', $facid, $op);
+    if ($bundle) $efq->propertyCondition('bundle', $bundle, '=');
+    if ($ftype) $efq->propertyCondition('ftype', $ftype, '=');
+    if (!$include_dupes) $efq->propertyCondition('fstatus', 'duplicate', '!=');
+    $rez = $efq->execute();
+    if (isset($rez[$etype])) {
+      while ($mp = array_shift($rez[$etype]) ) {
+        $mps[] = $mp->$pkname;
+      }
+    }
+  }
+  return $mps;
+}
+
+function dh_get_user_mgr_features($userid, $bundle = FALSE, $ftype = FALSE, $entity_id = FALSE) {
+  $fs = array();
+  $etype = 'dh_feature';
+  $pkname = 'hydroid';
+  $checks = array('dh_link_feature_mgr_id');
+  foreach ($checks as $check) {
+    $efq = new EntityFieldQuery();
+    $efq->entityCondition('entity_type', $etype);
+    if ($bundle) $efq->propertyCondition('bundle', $bundle, '=');
+    if ($entity_id) $efq->propertyCondition('hydroid', $entity_id, '=');
+    if ($ftype) $efq->propertyCondition('ftype', $ftype, '=');
+    $efq->fieldCondition($check, 'target_id', $userid, '=');
+    $rez = $efq->execute();
+    if (isset($rez[$etype])) {
+      while ($f = array_shift($rez[$etype]) ) {
+        $fs[] = $f->$pkname;
+      }
+    }
+  }
+  return $fs;
+}
+
+// returns first matching feature
+function dh_search_feature($hydrocode, $bundle = FALSE, $ftype = FALSE) {
+  $feat = FALSE;
+  $etype = 'dh_feature';
+  $efq = new EntityFieldQuery(); 
+  $efq->entityCondition('entity_type', $etype);
+  $efq->propertyCondition('hydrocode', $hydrocode, '=');
+  if ($bundle) $efq->propertyCondition('bundle', $bundle, '=');
+  if ($ftype) $efq->propertyCondition('ftype', $ftype, '=');
+  $rez = $efq->execute();
+  if (isset($rez[$etype])) {
+    while ($mp = array_shift($rez[$etype]) ) {
+      $feat = $mp->hydroid;
+      break;
+    }
+  }
+  return $feat;
+}
+
+// support transfers connectivity to_node/from_node type relationships
+function dh_get_flow_links($eid, $etype = 'dh_feature') {
+  $ret = array();
+  $pkname = 'hydroid';
+  $entity_id = FALSE;
+  $checks = array('entity_id', 'field_dh_to_entity', 'field_dh_from_entity');
+  foreach ($checks as $check) {
+    $efq = new EntityFieldQuery(); 
+    $efq->entityCondition('entity_type', $etype);
+    if ($check == 'entity_id') {
+      $efq->propertyCondition($pkname, $eid);
+    } else {
+      $efq->fieldCondition($check, 'target_id', $eid, '=');
+    }
+    $rez = $efq->execute();
+    if (isset($rez[$etype])) {
+      $rez = array_shift($rez[$etype]);
+      $entity_id = $rez->$pkname;
+    }
+  }
+
+  if ($entity_id) {
+    $entity = entity_load_single($etype, $entity_id);
+    // if this is true, then we need to load the entity and get both ends
+    // and we are done
+    $els = array($entity_id);
+    $froms = field_get_items($etype, $entity, 'field_dh_from_entity');
+    foreach ($froms as $fr) {
+      $els[] = $fr['target_id'];
+    }
+    $tos = field_get_items($etype, $entity, 'field_dh_to_entity');
+    foreach ($tos as $to) {
+      $els[] = $to['target_id'];
+    }
+  }
+  return $els;
+}
+
+function dh_get_dh_prop_vars($props) {
+  $ret = array();
+  if (count($props) > 0) {
+    $pids = implode(',',array_values($props));
+    $result = db_query("select varid from {dh_properties} where pid in ($pids) group by varid");
+    $ret = $result->fetchCol();
+  }
+  return $ret;
+}
+
+function dh_get_dh_ts_vars($ts) {
+  $ret = array();
+  if (count($ts) > 0) {
+    $tids = implode(',',array_values($ts));
+    $result = db_query("select varid from {dh_timeseries} where tid in ($tids) group by varid");
+    $ret = $result->fetchCol();
+  }
+  return $ret;
+}
+
+function dh_get_dh_propts_tree($entity_type, $entity_id, &$props, &$ts, $prop_limit = 500, $ts_limit = 500) {
+  // retrieve props & timeseries for given etype + id 
+  // stash in $props & $ts arrays
+  // call this routine recursively for each prop and ts entity
+  // returns list of tids and pids
+  $criteria = array('entity_type' => $entity_type, 'featureid' => $entity_id);
+  $proplist = dh_get_properties($criteria, 'all', FALSE);
+  if (isset($proplist['dh_properties'])) {
+    foreach ($proplist['dh_properties'] as $propstub) {
+      $props[] = $propstub->pid;
+      if (count($props) >= $prop_limit) {
+        watchdog('dh', "Prop limit of $prop_limit reached for dh_get_dh_propts_tree($entity_type, $entity_id)");
+        return;
+      }
+      dh_get_dh_propts_tree('dh_properties', $propstub->pid, $props, $ts, $prop_limit, $ts_limit);
+    }
+  }
+  $tslist = dh_get_timeseries($criteria, 'all', FALSE);
+  if (isset($tslist['dh_timeseries'])) {
+    foreach ($tslist['dh_timeseries'] as $tsstub) {
+      $ts[] = $tsstub->tid;
+      if (count($ts) >= $ts_limit) {
+        watchdog('dh', "TS limit of $ts_limit reached for dh_get_dh_propts_tree($entity_type, $entity_id)");
+        return;
+      }
+      dh_get_dh_propts_tree('dh_timeseries', $tsstub->tid, $props, $ts, $prop_limit, $ts_limit);
+    }
+  }
+}
+
+
+function dh_tablefield_parse_array($data) {
+  // Return tablefield formatted table with values from an array.
+  //  this assumes the array is akin to a csv, with the first row containing column headers
+  $max_col_count = 0;
+  $row_count = 0;
+  $imported_tablefield = array();
+  foreach ($data as $row_id => $row) {
+    $col_count = count($row);
+    if ($col_count > 0) {
+      foreach ($row as $col_id => $col) {
+        $imported_tablefield['row_' . $row_count]['col_' . $col_id] = $col;
+      }
+      $max_col_count = $col_count > $max_col_count ? $col_count : $max_col_count;
+      $row_count++;
+    }
+  }
+  return array($imported_tablefield, $row_count, $max_col_count);
+}
+
+  
+function dh_summarizeTimePeriod($entity_type, $featureid, $varkey, $begin, $end) {
+  $begin = dh_handletimestamp($begin);
+  $end = dh_handletimestamp($end);
+  $sd = date('Y-m-d', $begin);
+  $ed = date('Y-m-d', $end);
+  //dsm("$varkey - $sd - $ed");
+  // translate if this is not a varid
+  $varid = (intval($varkey) > 0) ? $varkey : dh_varkey2varid($varkey, TRUE);
+  $q = "  select featureid, entity_type, ";
+  $q .= "   $begin as tstime, $end as tsendtime, ";
+  $q .= "   sum(tsvalue) as sum_value, stddev(tsvalue) as std_value, ";
+  $q .= "   avg(tsvalue) as avg_value, min(tsvalue) as min_value, max(tsvalue) as max_value ";
+  $q .= " from {dh_timeseries}  ";
+  $q .= " where featureid = $featureid ";
+  $q .= "   and entity_type = '$entity_type' ";
+  $q .= "   and tstime >= $begin ";
+  $q .= "   and tstime <= $end ";
+  $q .= "   and varid = $varid ";
+  $q .= " group by featureid, entity_type ";
+  //dpm($q,"query for var = $varkey");
+  $result = db_query($q);
+  $record = $result->fetchAssoc();
+  return $record;
+}
+
+/**
+ * Add Variable Defs fom Plugins
+ */
+ function dh_add_plugin_vardefs() {
+  // auto-register variables.  This can be moved to main dh module at some time if desired.
+  $plugin_defs = ctools_get_plugins('dh', 'dh_variables');
+  foreach ($plugin_defs as $plugin_def) {
+    if (isset($plugin_def['variable'])) {
+      // check the plugin def for a variable def.  If it exists, insure that it is in the db
+      // Never overwrite local changes (later we can enable a setting on vardef table to enable/prevent overwrite).
+      $varinfo = dh_vardef_info($plugin_def['variable']['varkey']);
+      if (!is_object($varinfo)) {
+        dpm($plugin_def['variable'], 'Adding variable def');
+        // we want to try to add this
+        // all relevant pieces should be included here so let the coder beware
+        $var = entity_create('dh_variabledefinition', $plugin_def['variable']);
+        if (!is_object($var)) {
+          watchdog('om','Failed to create plugin defined variable named ' . $plugin_def['variable']['varkey']);
+        } else {
+          $var->save();
+        }
+      }
+    }
+  }
+}
+
+function dh_init() {
+  // initialize after module load tasks
+  dh_add_plugin_vardefs();
+  //dsm("dh_init() called");
+}
+
+/**
+  * Implements hook_views_api().
+  */
+function dh_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'dh') . '/views',
+  );
+}
+
+/**
+  * Implements hook_ctools_plugin_api().
+  */
+function dh_ctools_plugin_api($module = '', $api = '') {
+  if ($module == "feeds" && $api == "feeds_importer_default") {
+    // The current API version is 1.
+    return array("version" => 1);
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function dh_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'content_types') {
+    return 'plugins/' . $plugin_type;
+  }
+  if ($owner == 'ctools' && $plugin_type == 'access') {
+    return 'plugins/' . $plugin_type;
+  }
+  if ($owner == 'om' && $plugin_type == 'om_components') {
+    return 'plugins/' . $plugin_type;
+  }
+  if ($owner == 'dh' && $plugin_type == 'dh_variables') {
+    return 'plugins/' . $plugin_type;
+  }
+}
+
+function dh_ctools_plugin_type() {
+  return array(
+    'dh_components' => array(
+      'classes' => array('handler'),
+    ),
+    'dh_variables' => array(
+      'classes' => array('handler'),
+    ),
+  );
+}
+
+// @todo:
+/* support entityconnect */
+// buttons show up but form to pick entity type (add) or edit form are blank
+/*
+function dh_entityconnect_ref_fields_alter(&$ref_fields) {
+  foreach (field_info_fields() as $id => $field) {
+    // Add support for dH implementations of the Entity reference module.
+    if ($field['type'] == 'entityreference' && $field['module'] == 'entityreference') {
+      $entity_reference_info = entityreference_get_selection_handler($field);
+      $entity_type = $entity_reference_info->field['settings']['target_type'];
+      $target_bundle = isset($entity_reference_info->field['settings']['handler_settings']['target_bundles']) ? $entity_reference_info->field['settings']['handler_settings']['target_bundles'] : NULL;
+
+      switch ($entity_type) {
+
+        case 'dh_feature':
+          // currently, system level create feature perms in dh do not extent to bundle level
+          if (user_access('create dh_feature entities') ) {
+            $ref_fields[$id] = $field;
+          }
+          // so user can have broad entityconnect privileges also
+          elseif (user_access('entityconnect add button') || user_access('entityconnect edit button')) {
+            $ref_fields[$id] = $field;
+          }
+        break;
+      }
+    }
+  }
+}
+*/
+
+/* Include base support for properties panel forms */
+module_load_include('inc', 'dh', 'plugins/dh.display');
+
+function properties_panel_form_submit($form, &$form_state) {
+  //dpm($form_state,"Form State");
+  $legacy_conf = isset($form_state['values']['entity_settings']) ? $form_state['values']['entity_settings'] : $form_state['conf']['entity_settings'];
+  $conf = isset($form_state['conf']['entity_settings']['prop_group']) ? $form_state['conf']['entity_settings']['prop_group'] : $legacy_conf;
+  $tsg = new dhPropertiesGroup($conf);
+  $tsg->validateForm($form, $form_state);
+  $tsg->submitForm($form, $form_state);
+  // handle save_and_next if requested
+  // if add, we route to set properties, then to monthly data entry
+  // if edit we just honor the destination that already is set
+  if ($form_state['triggering_element']['#id'] == 'edit-next') {
+    $form_state['redirect'] = $tsg->conf['nextpage'];
+  } else {
+    // otherwise, look to see if we set a destination in the config
+    //dpm($tsg->conf['destination'], 'object conf ');
+    if ($tsg->conf['destination'] <> '') {
+      $form_state['redirect'] = $tsg->conf['destination'];
+    }
+  }
+}
+
+//function properties_panel_form_validate($properties, $form, &$form_state) {
+  //dpm($form_state,"Validating Form State");
+//}
+
+function properties_panel_form_alter(&$form, &$form_state, $form_id) {
+  // iterate through grouprecords
+  // if an insert is called with null values for ALL of the fields in ->skip_null
+  // we assume that the given record is not intended for saving.  We alert the user, and unset the form_state record?
+}
+
+function properties_panel_form($form, &$form_state, $entity = null, $op = 'edit') {
+  // get configuration.
+  //  - a saved panel conf, legacy format, will have 
+  //    settings form_state['conf']['entity_settings']
+  //  - a rebuilt/submitted form will have form_state['conf']['entity_settings']['prop_group']
+  //  - next generation will need to be able to dynamically indicate name, ala 'prop_group'
+  $legacy_conf = isset($form_state['values']['entity_settings']) ? $form_state['values']['entity_settings'] : $form_state['conf']['entity_settings'];
+  //dpm($entity, "entity");
+  if (is_object($entity) and property_exists($entity, 'prop_group')) {
+    $conf = isset($form_state['conf']['entity_settings'][$entity->prop_group]) ? $form_state['conf']['entity_settings'][$entity->prop_group] : $legacy_conf;
+  } else {
+    $conf = $legacy_conf;
+  }
+  $tsg = new dhPropertiesGroup($conf);
+  $tsg->prepareQuery();
+  //dpm($tsg, "Panel object");
+  $tsg->getData();
+  $tsg->buildForm($form, $form_state);
+  $tsg->addFormActions($form, $form_state);
+  return $form;
+}
+
+/** 
+ * dh timeseries & property plugins
+*/
+function dh_variables_getPlugins(&$dh_varobject, $reload = FALSE) {
+// @todo: store these plugins on the entity - then need to test sending the &$dh_varobject (should be trivial)
+//function dh_variables_getPlugins(&$dh_varobject) {
+  // check to see if we are using plugins, if so:
+  //   1. get the varid from this row
+  //   2. load the plugin associated with it
+  //   3. call plugins 
+  //dpm($dh_varobject,'dh_varobject');
+  $plugin = FALSE;
+  if ($dh_varobject->varid) {
+    //@todo: use map to see if varid is using a different field name
+    $varinfo = dh_vardef_info($dh_varobject->varid);
+    if (is_object($dh_varobject) and ($dh_varobject->plugins_loaded === TRUE)) {
+      $plugin = &$dh_varobject->dh_variables_plugins[$varinfo->plugin];
+    } else {
+      //dpm($varinfo,'varinfo');
+      if ($varinfo->plugin == 'dHVariablePluginDefault') {
+        $plugin_def = array(
+          'label' => t('Default Variable Plugin'),
+          'handler' =>  array(
+            'class' => 'dHVariablePluginDefault',
+            'file' => 'dh.display.inc',
+          ),
+        );
+        $class = 'dHVariablePluginDefault';
+      } else {
+        $plugin_def = ctools_get_plugins('dh', 'dh_variables', $varinfo->plugin);
+      }
+      $class = ctools_plugin_get_class($plugin_def, 'handler');
+      //dpm($plugin_def,"plugin def for $varinfo->plugin, class = $class");
+      $obclass_map = array('dhTimeSeries' => 'dh_timeseries', 'dHProperties' => 'dh_properties');
+      if (!empty($plugin_def)) {
+        if (class_exists($class)) {
+          $conf = array(
+            'entity_type' => isset($obclass_map[get_class($dh_varobject)]) ? $obclass_map[get_class($dh_varobject)] : 'dh_timeseries'
+          );
+          // load plugins on class
+          // Testing
+          $dh_varobject->dh_variables_plugins[$varinfo->plugin] = new $class($conf);
+          $dh_varobject->plugins_loaded = TRUE;
+          $plugin = &$dh_varobject->dh_variables_plugins[$varinfo->plugin];
+          // Old version - this worked!
+          //$plugin = new $class($conf);
+        } else {
+          //watchdog('dh',"Could not find class $class");
+        }
+      } else {
+        watchdog('dh',"Failed: ctools_get_plugins('dh', 'dh_variables', $varinfo->plugin)");
+      }
+    }
+  }
+  return $plugin;
+}
+
+?>

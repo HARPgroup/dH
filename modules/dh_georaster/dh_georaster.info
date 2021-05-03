@@ -1,0 +1,13 @@
+name = dH GeoRaster Module
+description = Adds ArcHydroGW Compatible GeoRaster Tables
+core = 7.x
+php = 5.3.0
+
+; should only need dh, dh can provide all other dependencies
+dependencies[] = dh
+
+files[] = dh_georaster.admin.inc
+;files[] = views/dh_georaster.views_default.inc
+;files[] = feeds/dh_georaster.feeds_importer.default.inc
+
+version = "7.x-1.0"

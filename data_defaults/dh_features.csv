@@ -1,0 +1,10 @@
+ftype,label
+aquifer,Aquifer
+monitoringpoint,MonitoringPoint
+waterpoint,WaterPoint
+waterline,WaterLine
+waterbody,WaterBody
+watershed,Watershed
+borepoint,BorePoint
+boreline,BoreLine
+well,Well

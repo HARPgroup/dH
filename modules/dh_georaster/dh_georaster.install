@@ -1,0 +1,65 @@
+<?php
+
+function dh_georaster_schema() {
+
+  // Table Desc for: GeoRasters
+  $schema['dh_georaster'] = array (
+    'description' => 'Raster catalog for storing raster surfaces. The catalog enables storing rasters within the geodatabase and adding attributes describing raster datasets.',
+    'fields' => array(
+       'rid' => array(
+       'description' => 'Primary key for Rasters',
+       'type' => 'serial',
+       'unsigned' => TRUE,
+       'not null' => TRUE,
+     ),
+     'horizonid' =>  array(
+       'description' => 'Horizon ID: Defines the  depositional sequence; always from bottom to top',
+       'type' => 'float',
+       'not null' => TRUE,
+     ),
+     'clip' =>  array(
+       'description' => 'Option to clip the surface',
+       'type' => 'int',
+       'not null' => TRUE,
+       'default' => 0,
+       'size' => 'big',
+       'not null' => TRUE,
+     ), 
+     'fill' =>  array(
+       'description' => 'Option to fill from bottom up',
+       'type' => 'int',
+       'not null' => TRUE,
+       'default' => 1,
+       'size' => 'big',
+       'not null' => TRUE,
+     ), 
+     'hguid' => array(
+       'description' => 'Reference to HGUID table',
+	  'type' => 'int',
+	  'not null' => TRUE,
+	  'default' => 1,
+	  'size' => 'big',
+	  'not null' => TRUE,
+     ),
+     ) + entity_exportable_schema_fields(),
+     'primary key' => array('rid'),
+     'indexes' => array(
+          'dh_ps_rix' => array('rid'),
+     )
+  );  
+  return $schema;
+}
+
+function dh_georaster_install() {
+  $refdefs[] = array(
+    'fieldname' => 'hguid',
+    'src_type' => 'dh_georaster',
+    'dest_type' => 'dh_hydrogeologicunit',
+    'src_bundle' => 'dh_georaster',
+    'dest_bundle' => NULL,
+    'label' => 'Hydrogeologic Unit',
+    'select_type' => 'select_list'
+  );
+  dh_add_references($refdefs);
+}
+?>

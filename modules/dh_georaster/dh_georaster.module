@@ -1,0 +1,141 @@
+<?php
+
+//Implement hook_entity_info().
+
+function dh_georaster_entity_info() {
+
+  $return['dh_georaster'] = array(
+    'label' => t('dH GeoRaster'),
+    'entity class' => 'dHGeoRaster',
+    'controller class' => 'dHGeoRasterController',
+    'base table' => 'dh_georaster',
+    'fieldable' => TRUE,
+	 //'bundle of' => '',
+    //'exportable' => TRUE,
+    'entity keys' => array (
+	    'name' => 'rid',
+        'id' => 'rid',
+        'label' => 'rid',
+    ),
+    'bundles' => array(),
+    'bundle keys' => array( 
+    ),
+    'access callback' => 'dh_feature_access',
+    'module' => 'dh',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/content/dh_georaster',
+      'file' => 'dh.admin.inc',
+      'controller class' => 'dHGeoRasterUIController',
+    ),
+  );    
+  
+  return $return;
+}
+
+// Implements hook_view_data_alter().
+
+function dh_georaster_views_data_alter(&$data) {
+
+  // do date setups
+  $defaults_date = array(
+    'field' => array(
+    'handler' => 'views_handler_field_date',
+    'click sortable' => TRUE,
+    ),
+    'sort' => array(
+    'handler' => 'views_handler_sort_date',
+    ),
+    'filter' => array(
+    'handler' => 'views_handler_filter_date',
+    ),
+  );
+   $defaults_numeric = array(
+      'title' => t('Numeric Field'),
+      'help' => t('Numeric Field.'), // The help that appears on the UI,
+      'argument' => array(
+         'handler' => 'views_handler_argument_numeric',
+      ),
+      'field' => array(
+         'handler' => 'views_handler_field_numeric',
+         'click sortable' => TRUE,
+			'float' => TRUE, // enables advanced formatting options
+      ),
+      'filter' => array(
+         'handler' => 'views_handler_filter_numeric',
+      ),
+      'sort' => array(
+         'handler' => 'views_handler_sort',
+      )
+   );
+   
+   $numcols = array();
+   $strcols = array();
+   $datecols = array();
+   foreach ($strcols as $thiscol) {
+      $data['dh_georaster'][$thiscol] = $defaults_string;
+      $data['dh_georaster'][$thiscol]['title'] = t("Georaster Data $thiscol");
+      $data['dh_georaster'][$thiscol]['help'] = t("Georaster $thiscol");
+   }
+   foreach ($numcols as $thiscol) {
+      $data['dh_georaster'][$thiscol] = $defaults_numeric;
+      $data['dh_georaster'][$thiscol]['title'] = t("Georaster $thiscol");
+      $data['dh_georaster'][$thiscol]['help'] = t("Georaster $thiscol");
+   }
+   foreach ($datecols as $thiscol) {
+      $data['dh_georaster'][$thiscol]['field'] = $defaults_date['field'];
+      $data['dh_georaster'][$thiscol]['sort'] = $defaults_date['sort'];
+      $data['dh_georaster'][$thiscol]['filter'] = $defaults_date['filter'];
+   }
+
+}
+
+//****************************
+// dH GeoRaster
+//****************************
+
+class dHGeoRaster extends Entity {
+	public $rid;
+	public $horizonid;
+	public $clip;
+	public $fill;
+	public $hguid;
+	  
+  public function __construct($values = array()) {
+    parent::__construct($values, 'dh_georaster');
+  }
+  protected function defaultLabel() {
+    return $this->rid;
+  }
+}
+
+class dHGeoRasterController extends EntityAPIControllerExportable {
+
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+  
+   /**
+   * Create a model type - we first set up the values that are specific
+   * to our model type schema but then also go through the EntityAPIController
+   * function.
+   * 
+   * @param $type
+   *   The machine-readable type of the model.
+   *
+   * @return
+   *   A model type object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    // Add values that are specific to our Model
+    $values += array( 
+      'rid' => '',
+      'horizonid' => '',
+      'clip' => '',
+      'fill' => '',
+      'hguid' => ''	  
+    );
+    $feature_type = parent::create($values);
+    return $feature_type;
+  }
+}

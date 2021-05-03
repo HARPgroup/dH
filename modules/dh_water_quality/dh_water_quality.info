@@ -1,0 +1,9 @@
+name = dH Water Quality Form
+description = Adds  Water Quality Form to dH Module
+core = 7.x
+php = 5.3.0
+
+; should only need dh, dh can provide all other dependencies
+ dependencies[] = dh
+
+

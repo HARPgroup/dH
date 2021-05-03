@@ -1,0 +1,28 @@
+name = dH Module
+description = Implementation of a Generic Feature & Timeseries Data Framework in Drupal
+core = 7.x
+php = 5.3.0
+
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = geofield
+dependencies[] = entityreference
+dependencies[] = prepopulate
+;dependencies[] = editableviews
+
+files[] = dh.admin.inc
+files[] = dh.webform.inc
+files[] = handlers/dh.editableviews_handlers.inc
+files[] = views/handlers/views_handler_filter_in_operator_on.inc
+files[] = views/handlers/dh_views_handler_filter_in_operator_on.inc
+files[] = views/handlers/views_handler_filter_dh_varkey.inc
+files[] = views/handlers/views_handler_filter_dh_fstatus.inc
+files[] = views/handlers/views_handler_filter_dh_propvarkey.inc
+files[] = views/handlers/dh_timeseries_views_handler_field_entity.inc
+files[] = views/handlers/dh_views_handler_field_date_extended.inc
+;files[] = views/handlers/views_handler_field_dh_pluggable_numeric.inc
+files[] = views/dh.views_default.inc
+files[] = views/dh.views.inc
+files[] = feeds/dh.feeds_importer.default.inc
+
+version = "7.x-1.34"

@@ -1,0 +1,1305 @@
+<?php
+
+function dh_adminreg_schema() {
+   // defines 3 major types of AdminReg  entity (documents, oranizational units, etc are sub-types)
+   // 1) entity
+   // 2) Contact
+   // 
+   $schema['dh_adminreg_feature_type'] = array (
+    'description' => 'Base AdminReg Record class in dh',
+    'fields' => array(
+      'fid' => array(
+        'description' => 'Primary key for Feature Types',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'Feature Name (Organization, Contact, Document)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => '',
+      ),
+      'bundle' => array(
+        'description' => 'Feature Type / Bundle (organization, contact, document)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => '',
+      ),
+      'description' => array(
+        'description' => 'Description of this Feature Class',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+		    'default' => '',
+      ),
+   ) + entity_exportable_schema_fields(),
+   'primary key' => array('fid'),
+	 'indexes' => array(
+	    'dh_art_fix'      => array('fid'),
+	    'dh_art_ftix'        => array('bundle')
+	  )
+  );
+  
+   $schema['dh_adminreg_feature'] = array (
+    'description' => 'Base Feature class in dh (ArcHydro: Feature)',
+    'fields' => array(
+      'adminid' => array(
+        'description' => 'Primary key for AdminReg Entity',
+        'type' => 'serial',
+        //'type' => 'int',
+			  'size' => 'big',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'admincode' => array(
+        'description' => 'Data Source/Program specific identifier.',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+      ),
+      'ftype' => array(
+        'description' => 'Feature Type (type specific taxonomy term)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => '',
+      ),
+      'bundle' => array(
+        'description' => 'Bundle (Document, Organization)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => '',
+      ),
+      'name' => array(
+        'description' => 'Name',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => TRUE,
+      ),
+      'startdate' => array(
+        'description' => 'Start Date',
+		    'description' =>  'Timestamp for Record Creation/Beginning.',
+			  'type' => 'int',
+			  'not null' => FALSE,
+			  'size' => 'big',
+      ),
+      'enddate' => array(
+        'description' => 'End Date',
+		    'description' =>  'Timestamp for Record Expiration/Disabled.',
+			  'type' => 'int',
+			  'not null' => FALSE,
+			  'size' => 'big',
+      ),
+      'modified' => array(
+        'description' => 'Modified Date',
+			  'type' => 'int',
+			  'not null' => FALSE,
+			  'size' => 'big',
+      ),
+      'uid' => array(
+        'description' => 'Record Owner',
+			  'type' => 'int',
+			  'not null' => FALSE,
+			  'size' => 'big',
+      ),
+      'status' => array(
+        'description' => 'Status (active, expired, pending, etc.)',
+        'type' => 'varchar',
+		    'length' => 32,
+        'not null' => TRUE,
+      ),
+      'fstatus' => array(
+        'description' => 'Status (active, expired, pending, etc.)',
+        'type' => 'varchar',
+		    'length' => 32,
+        'not null' => TRUE,
+      ),
+   ) + entity_exportable_schema_fields(),
+   'primary key' => array('adminid'),
+	'indexes' => array(
+	   'dh_are_hyix'      => array('adminid'),
+	   'dh_are_ftix'        => array('bundle')
+		)
+   );
+   
+   $schema['dh_adminreg_contact_type'] = array (
+    'description' => 'Base AdminReg contact class in dh',
+    'fields' => array(
+      'arctid' => array(
+        'description' => 'Primary key for Contact Types',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'Type Name (Contact, special)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => 'contact',
+      ),
+      'bundle' => array(
+        'description' => 'Contact Type / Bundle (contact)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => 'dh_adminreg_contact',
+      ),
+      'description' => array(
+        'description' => 'Description of this Contact Class',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+		    'default' => '',
+      ),
+   ) + entity_exportable_schema_fields(),
+   'primary key' => array('arctid'),
+	 'indexes' => array(
+	    'dh_art_fix'      => array('arctid'),
+	    'dh_art_ftix'        => array('bundle')
+	  )
+  );
+  
+   $schema['dh_adminreg_contact'] = array (
+    'description' => 'Base Feature class in dh (ArcHydro: Feature)',
+    'fields' => array(
+      'contactid' => array(
+        'description' => 'Primary key for AdminReg Entity',
+        'type' => 'serial',
+        'size' => 'big',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'admincode' => array(
+        'description' => 'Data Source/Program specific identifier.',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+      ),
+      'ftype' => array(
+        'description' => 'Feature Type (type specific taxonomy term)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => '',
+      ),
+      'bundle' => array(
+        'description' => 'Bundle (Document, Organization)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => TRUE,
+		    'default' => '',
+      ),
+      'name' => array(
+        'description' => 'Name or Title',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => TRUE,
+      ),
+      'prefix' => array(
+        'description' => 'Prefix',
+        'type' => 'varchar',
+		    'length' => 16,
+        'not null' => FALSE,
+      ),
+      'suffix' => array(
+        'description' => 'Suffix',
+        'type' => 'varchar',
+		    'length' => 16,
+        'not null' => FALSE,
+      ),	  	  
+      'description' => array(
+        'description' => 'Description',
+        'type' => 'text',
+		    'size' => 'big',
+        'not null' => FALSE,
+      ),
+      'firstname' => array(
+        'description' => 'First Name',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'lastname' => array(
+        'description' => 'Last Name',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'address1' => array(
+        'description' => 'Address 1',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'address2' => array(
+        'description' => 'Address 2',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'city' => array(
+        'description' => 'City',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'state' => array(
+        'description' => 'State/Province',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'postal_code' => array(
+        'description' => 'Postal Code (zip)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => FALSE,
+      ),
+      'phone' => array(
+        'description' => 'Postal Code (zip)',
+        'type' => 'varchar',
+		    'length' => 64,
+        'not null' => FALSE,
+      ),
+      'email' => array(
+        'description' => 'Email',
+        'type' => 'varchar',
+		    'length' => 255,
+        'not null' => FALSE,
+      ),
+      'uri' => array(
+        'description' => 'Web Site',
+        'type' => 'varchar',
+		    'length' => 512,
+        'not null' => FALSE,
+      ),
+      'modified' => array(
+		    'description' =>  'Timestamp for last modified.',
+			  'type' => 'int',
+			  'not null' => FALSE,
+			  'size' => 'big',
+      ),
+      'status' => array(
+        'description' => 'Status',
+        'type' => 'varchar',
+		    'length' => 32,
+		    'default' => 'active',
+        'not null' => FALSE,
+      ),
+   ) + entity_exportable_schema_fields(),
+   'primary key' => array('contactid'),
+	'indexes' => array(
+	   'dh_arc_hyix'      => array('contactid'),
+	   'dh_arc_bix'        => array('bundle')
+		)
+   );
+  
+  return $schema;
+}
+
+function dh_adminreg_install() {
+  // primary key sharing
+  $adminid_tables = array('dh_adminreg_feature');
+  foreach ($adminid_tables as $thistable) {
+    if (db_table_exists($thistable)) {
+	    db_query("alter table {$thistable} alter column adminid set default nextval('{dh_feature}_hydroid_seq')");
+    }
+  }
+  // hack to make this work
+  db_query("insert into {dh_adminreg_feature} (admincode,name,bundle,status) values('dummy','dummy','facility','expired'); ");
+  // add bundles
+  //error_log("calling dh_adminreg_add_bundles");
+  dh_adminreg_add_bundles();
+  // add fields
+  //error_log("calling dh_adminreg_init_fields");
+  dh_adminreg_init_fields();
+  // add references
+  //error_log("calling dh_adminreg_add_references");
+  dh_adminreg_add_references();
+}
+
+function dh_adminreg_update_7105() {
+  $allrefs = dh_adminreg_define_references();
+  $linked = false;
+  foreach ($allrefs as $thisref) {
+    drupal_set_message("Checking ref name " . $thisref['fieldname']);
+    if ($thisref['fieldname'] == 'dh_link_facility_mps') {
+      drupal_set_message("Found " . $thisref['fieldname']);
+      dh_add_references(array($thisref), true);
+      $linked = true;
+    }
+  }
+  if (!$linked) {
+    drupal_set_message("Could not link facility and mps");
+  }
+}
+
+function dh_adminreg_update_7107() {
+//remove startdate and enddate from milestone bundle
+$fields = array('startdate', 'enddate');
+  foreach ($fields as $field) {
+    drupal_set_message("Deleting Field $field");
+    field_delete_field($field);
+    field_purge_batch(500);
+    $numd++;
+  }	
+
+  //add keyid to organization bundle
+  // set up dh_adminreg_feature fields here
+  $fields_fields = array(
+    'organization' => array(
+      'taxid' => array('label' => 'Tax ID', 'type' => 'varchar_64'),	  
+    )	
+  );
+  $e = 'dh_adminreg_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}  
+}
+
+function dh_adminreg_update_7108() {
+  // remove old version of dh_link_admin_contact
+  $field = array('dh_link_admin_contact');
+	drupal_set_message("Deleting Field $field");
+  field_delete_field($field);
+  field_purge_batch(500);
+  drupal_set_message("Deleted $field");
+  
+  // add new version of dh_link_admin_contact
+  $refdefs = array();
+  $refdefs[] = dh_adminreg_define_contact_link();
+  $refdefs[] = dh_adminreg_define_feature_contact_link();
+  dh_add_references($refdefs, true);
+}
+
+function dh_adminreg_update_7110() {
+
+  //add keyid to organization bundle
+  // set up dh_adminreg_feature fields here
+  $fields_fields = array(
+    'organization' => array(
+      'taxid' => array('label' => 'Tax ID', 'type' => 'varchar_64'),	  
+    )	
+  );
+  $e = 'dh_adminreg_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}  
+}
+
+
+function dh_adminreg_update_7111() {
+  // add new version of dh_adminreg_define_pr_feature_link
+  $refdefs = array();
+  $refdefs[] = dh_adminreg_define_pr_feature_link();
+  dh_add_references($refdefs, true);
+}
+
+
+function dh_adminreg_update_7112() {
+  // set up dh_adminreg_feature fields here
+  $fields_fields = array(
+    'permit' => array(
+      'doc_location' => array('label' => 'Permit Document URL', 'type' => 'text', 'settings'   => array('size' => 255)),
+      'permit_id' => array('label' => 'Permit ID', 'type' => 'text'),
+    ),
+    'registration' => array(
+      'registration_id' => array('label' => 'Registration ID', 'type' => 'text'),
+    ),
+  );
+  $e = 'dh_adminreg_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}
+}
+
+function dh_adminreg_update_7118() {
+  // set up dh_adminreg_feature fields here
+  $fields_fields = array(
+    'permit' => array(
+      'date_received' => array('label' => 'Date Received', 'type' => 'int'),
+    ),
+    'registration' => array(
+      'date_received' => array('label' => 'Date Received', 'type' => 'int'),
+    ),
+    'milestone' => array(
+      'date_received' => array('label' => 'Date Received', 'type' => 'int'),
+    ),	
+  );
+  $e = 'dh_adminreg_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields, false);
+	}
+}
+
+function dh_adminreg_update_7119() {
+  // Add Description Field to facilitym well and intake
+  $fields_fields = array(
+    'facility' => array(
+      'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),
+    'well' => array(
+      'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),
+    'intake' => array(
+      'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),		
+  );
+  $e = 'dh_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}	
+	
+  // set up dh_adminreg_feature fields here
+  $fields_fields = array(
+    'permit' => array(
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),
+    'registration' => array(
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),
+    'organization' => array(
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	   
+    ),	
+    'authority' => array(
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),	
+    'submittal' => array(
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),				
+    'milestone' => array(
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),	
+  );
+  $e = 'dh_adminreg_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}	
+	
+  drupal_set_message(t("Updating default formatters for dH Admin Fields and Instances."));
+  $feature_entity = entity_get_info('dh_adminreg_feature');
+  foreach ($feature_entity['bundles'] as $bundle => $binfo) {
+      $instance_info = field_info_instance('dh_adminreg_feature', 'description', $bundle);
+      if ($instance_info) {
+        drupal_set_message(t("Updating widget for $field on $bundle"));
+        $instance_info['widget'] = array(
+		'type' => 'text',
+		'settings'   => array('size' => 255),
+        );
+        // Write the changed definition back.
+        field_update_instance($instance_info);
+      }
+  }  
+  
+  drupal_set_message(t("Updating default formatters for dH Admin Fields and Instances."));
+  $feature_entity = entity_get_info('dh_feature');
+  foreach ($feature_entity['bundles'] as $bundle => $binfo) {
+      $instance_info = field_info_instance('dh_feature', 'description', $bundle);
+      if ($instance_info) {
+        drupal_set_message(t("Updating widget for $field on $bundle"));
+        $instance_info['widget'] = array(
+		'type' => 'text',
+		'settings'   => array('size' => 255),
+        );
+        // Write the changed definition back.
+        field_update_instance($instance_info);
+      }
+  } 
+
+ //Remove description from dhAR feature tabled
+  db_drop_field('dh_adminreg_feature', 'description');
+
+
+  //Add prefix and suffix
+  $field_name = array('prefix','suffix');
+  // Create the field. 
+  foreach($field_name as $name) {
+  $spec = array(
+    'type' => 'varchar',
+    'description' => ucwords($name),
+    'length' => 16,
+    'not null' => FALSE,
+  ); 
+
+  db_add_field( 'dh_adminreg_contact', $name, $spec);
+  }  
+  
+  
+  //create entity reference
+  $refdefs = array();
+  // ***    Facility to dh feature bundle usafips
+  $refdefs[] = dh_adminreg_define_fa_usafips_link();
+  // ***    dHA Features and Contact to dh feature bundle usafips
+  $refdefs[] = dh_adminreg_define_dHA_usafips_link(); 
+  $refdefs[] = dh_adminreg_define_dHAC_usafips_link();   
+  // ***    feature facility to admin feature organization
+  $refdefs[] = dh_adminreg_define_fa_org_link();   
+ 
+  dh_add_references($refdefs, true);   
+}
+
+function dh_adminreg_update_7125() {
+  // add permit action bundle  
+  $dh_adminreg_feature_typedefs = dh_adminreg_get_bundles('adminreg');
+  dh_adminreg_feature_type_save($dh_adminreg_feature_typedefs['enforcement']);
+  
+  //create entity reference from enforcement to permit
+  $refdefs = array();
+  $refdefs[] = dh_adminreg_define_permit_enforcement_link();
+  dh_add_references($refdefs, true);
+  
+  $fields = array(
+    'enforcement' => array(
+      'date_received' => array('label' => 'Date Received', 'type' => 'int'),
+      'description' => array('label' => 'Description', 'type' => 'text_long'),
+      'enfid' => array('label' => 'Enforcement Action ID', 'type' => 'text'),
+    )      
+  );
+	dh_initialize_fields('enforcement', '', 'dh_adminreg_feature', $fields);
+}  
+  
+function dh_adminreg_update_7126() {
+  // *** Link LU to Facility
+  $refdefs = array();
+  $mptypes = array('landunit');
+  foreach ($mptypes as $mp) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_facility_mps',
+      'src_type' => 'dh_feature',
+      'src_bundle' => $mp,
+      'dest_type' => 'dh_feature',
+      'dest_bundle' => array('facility'),
+      'label' => 'Facility Monitoring Point',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  dh_add_references($refdefs, false);
+}
+
+function dh_adminreg_update_7127() {
+  // *** Link Organization Managing User - for use in GW2 & others (VWUDS/GWP) with end-user reporting
+  $refdefs = array();
+  //  AdminReg Organization Managing User
+  $managed = array('organization');
+  foreach ($managed as $bundle) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_admin_record_mgr_id',
+      'src_type' => 'dh_adminreg_feature',
+      'src_bundle' => $bundle,
+      'dest_type' => 'user',
+      'dest_bundle' => NULL,
+      'label' => 'Link from Admin record to Managing User',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  dh_add_references($refdefs, false);
+}
+
+function dh_adminreg_update_7128() {
+  // *** Link Organization Managing User - for use in GW2 & others (VWUDS/GWP) with end-user reporting
+  $refdefs = array();
+  //  AdminReg registration or permit to land unit (it shouldn't have to be a facility if it's not a facility)
+  foreach (array('landunit') as $src) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_admin_location',
+      'src_type' => 'dh_feature',
+      'src_bundle' => $src,
+      'dest_type' => 'dh_adminreg_feature',
+      'dest_bundle' => array('registration', 'permit'),
+      'label' => 'Physical Location Reference by AdminReg Entity',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  dh_add_references($refdefs, false);
+}
+
+function dh_adminreg_update_7129() {
+  
+  $fields = array(
+    'submittal' => array( 
+      'formid' => array('label' => 'ID of Entity from Webform or other submission method', 'type' => 'int'),
+      'formtype' => array('label' => 'Type of Entity from Webform or other submission method', 'type' => 'varchar_64'),
+    ),				
+  );
+	dh_initialize_fields('submittal', '', 'dh_adminreg_feature', $fields);
+}  
+
+function dh_adminreg_update_7130() {
+  $feature_bundles = dh_feature_get_types();
+  $refdefs = array();
+  // contact linkage to dH Feature
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_feature_submittal',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'submittal',
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => NULL,
+    'label' => 'Link Submittal Record to dH Feature',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  dh_add_references($refdefs, false);
+}
+
+function dh_adminreg_update_7132() {
+  // *** Link User with AR Contact record
+  $refdefs = array();
+  $refdefs[] = dh_adminreg_define_user_contact_link();
+  dh_add_references($refdefs, false);
+}
+
+function dh_adminreg_update_7134() {
+  $refdefs = array();
+  // link a submittal back to a webform
+  $refdefs[] = dh_adminreg_link_submittal_webform();
+  dh_add_references($refdefs, false);
+}
+
+function dh_adminreg_update_7135() {
+  if (!db_field_exists('dh_adminreg_feature', 'fstatus')) {
+    db_query("alter table {dh_adminreg_feature} add column fstatus varchar(32) default 'active' ");
+  } 
+  db_query("update {dh_adminreg_feature} set fstatus = status where (status is null) or (status = '') ");
+}
+function dh_adminreg_update_7137() {
+  $schema = dh_adminreg_schema();
+  drupal_set_message(t("Adding Bundle table for Contacts"));
+	if (!db_table_exists('dh_adminreg_contact_type')) {
+    db_create_table('dh_adminreg_contact_type', $schema['dh_adminreg_contact_type']);
+  } else {
+    return (t('Contact Type table dh_adminreg_contact_type already exists.'));
+  }
+}
+function dh_adminreg_update_7140() {
+  $schema = dh_adminreg_schema();
+  drupal_set_message(t("Adding Default Bundle table for Contacts"));
+  drupal_set_message(t("Setting default Bundle table for existing Contacts"));
+  db_query("update {dh_adminreg_contact} set bundle = 'dh_adminreg_contact' where bundle is null or bundle = '' ");
+	if (db_table_exists('dh_adminreg_contact_type')) {
+    dh_define_adminreg_contact_bundles();
+  } else {
+    throw new DrupalUpdateException(t('Contact Type table dh_adminreg_contact_type not found - will not add default bundle.'));
+  }
+}
+
+function dh_adminreg_update_7141() {
+  drupal_set_message(t("Making status column compliant with Entity API"));
+  db_query("update {dh_adminreg_feature} set status = 1 ");
+  db_query("alter table {dh_adminreg_feature} alter column status set default 1 ");
+  db_query("alter table {dh_adminreg_feature} alter column status type integer using status::integer ");
+}
+
+function dh_adminreg_update_7142() {
+  /**
+   * Add default variables.
+   */
+  dh_adminreg_default_variables();
+}
+
+function dh_adminreg_contact_bundles() {
+  $typedefs = array(
+    'dh_adminreg_contact' => array('bundle' => 'dh_adminreg_contact', 'name' => 'Base Contact Class', 'description' => 'Defines basiccontact class'),
+  );
+  return $typedefs;
+}
+
+function dh_define_adminreg_contact_bundles() {
+  $bundles = dh_adminreg_contact_bundles();
+  foreach ($bundles as $thistype) {
+    drupal_set_message("Adding bundle $thisype");
+    if ($e = entity_create('dh_adminreg_contact_type', $thistype)) {
+      $e->save();
+    }
+  }
+}
+
+function dh_adminreg_define_contact_link() {
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_contact',
+    'src_type' => 'dh_adminreg_contact',
+    'src_bundle' => 'dh_adminreg_contact',
+    'dest_type' => 'dh_adminreg_feature',
+    'dest_bundle' => NULL,
+    'label' => 'Link Contact Record to dH AdminReg Feature',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_link_submittal_feature() {
+  $feature_bundles = dh_feature_get_types();
+  $refdef = array(
+    'fieldname' => 'dh_link_feature_submittal',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'submittal',
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => NULL,
+    'label' => 'Link Submittal Record to dH Feature',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_link_submittal_webform() {
+  $feature_bundles = dh_feature_get_types();
+  $refdef = array(
+    'fieldname' => 'dh_link_webform_submittal',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'submittal',
+    'dest_type' => 'webform_submission_entity',
+    'dest_bundle' => NULL,
+    'label' => 'Link Submittal Record to Webform',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+function dh_adminreg_define_user_contact_link() {
+  $refdef = array(
+    'fieldname' => 'dh_link_user_contact',
+    'src_type' => 'dh_adminreg_contact',
+    'src_bundle' => 'dh_adminreg_contact',
+    'dest_type' => 'user',
+    'dest_bundle' => NULL,
+    'label' => 'Link from Contact record to Target User',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_permit_enforcement_link() {
+  // ***    AdminReg Facility to Permit/Reg
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_permit_enforcement',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'enforcement',
+    'dest_type' => 'dh_adminreg_feature',
+    'dest_bundle' => array('permit'),
+    'label' => 'Permit for Enforcement Action',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_feature_contact_link() {
+  $feature_bundles = dh_adminreg_get_bundles('base');
+  // contact linkage to dH Feature
+  $refdef = array(
+    'fieldname' => 'dh_link_feature_contact',
+    'src_type' => 'dh_adminreg_contact',
+    'src_bundle' => 'dh_adminreg_contact',
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => $feature_bundles,
+    'label' => 'Link Contact Record to dH Feature',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_pr_feature_link() {
+  // ***    dh Property to dh Feature bundles
+  $dhfbtypes = array('facility', 'monitoringpoint', 'usgsgage', 'waterpoint', 'well');
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_pr_condition',
+    'src_type' => 'dh_properties',
+    'src_bundle' => 'dh_properties',
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => $dhfbtypes,
+    'label' => 'Link to Permit Conditions defined from dH Properties',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_fa_usafips_link() {
+  // ***    Facility to dh feature bundle usafips
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_fa_usafips',
+    'src_type' => 'dh_feature',
+    'src_bundle' => 'facility',
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => array('usafips'),
+    'label' => 'Link Facility to usafips',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_dHA_usafips_link() {
+  // ***    Facility to dh feature bundle usafips
+  $dhAtypes = dh_adminreg_get_bundles('adminreg');
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_dha_usafips',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => $dhAtypes,
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => array('usafips'),
+    'label' => 'Link dhA Features to usafips',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_dHAC_usafips_link() {
+  // ***    Facility to dh feature bundle usafips
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_dhac_usafips',
+    'src_type' => 'dh_adminreg_contact',
+    'src_bundle' => 'dh_adminreg_contact',
+    'dest_type' => 'dh_feature',
+    'dest_bundle' => array('usafips'),
+    'label' => 'Link dhA Contact to usafips',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_fa_org_link() {
+  // ***    Facility to admin feature organization
+  $refdef = array(
+    'fieldname' => 'dh_link_admin_fa_or',
+    'src_type' => 'dh_feature',
+    'src_bundle' => 'facility',
+    'dest_type' => 'dh_adminreg_feature',
+    'dest_bundle' =>  array('organization'),
+    'label' => 'Link Facility to dh admin feature organization',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  return $refdef;
+}
+
+function dh_adminreg_define_references() {
+  // ****************************************
+  // ***       hierarchical links
+  // ****************************************
+  // lower items Point "Upwards" at parent (target)
+  // Organization
+  //  <-- Permit/Reg
+  //    <-- Facility
+  //      <-- MonitoringPoint (Well/Intake)
+  
+  // ***    AdminReg Permit to Organization 
+  // may be undefined in the case of a new facility registration, permit application
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_admin_reg_holder',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'permit',
+    'dest_type' => 'dh_adminreg_feature',
+		'dest_bundle' => array('organization'),
+    'label' => 'Permit Holder/Organization',
+		'select_type' => 'entityreference_autocomplete'
+  );
+  //  AdminReg Registration to Organization 
+  // may be undefined in the case of a new facility registration, permit application
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_admin_reg_holder',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'registration',
+    'dest_type' => 'dh_adminreg_feature',
+		'dest_bundle' => array('organization'),
+    'label' => 'Registration Holder/Organization',
+		'select_type' => 'entityreference_autocomplete'
+  );
+  
+  // ***    AdminReg Facility to Permit/Reg
+  foreach (array('facility', 'well', 'landunit') as $src) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_admin_location',
+      'src_type' => 'dh_feature',
+      'src_bundle' => $src,
+      'dest_type' => 'dh_adminreg_feature',
+      'dest_bundle' => array('registration', 'permit'),
+      'label' => 'Physical Location Reference by AdminReg Entity',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  $feature_bundles = dh_feature_get_types();
+  //  AdminReg submittal to all types of features
+  foreach ($feature_bundles as $src) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_admin_location',
+      'src_type' => 'dh_feature',
+      'src_bundle' => $src,
+      'dest_type' => 'dh_adminreg_feature',
+      'dest_bundle' => array('submittal'),
+      'label' => 'Physical Location Reference by AdminReg Entity',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  
+  // ***    dh Property to dh Feature bundles
+  $refdefs[] = dh_adminreg_define_pr_feature_link();
+  
+  // enforcement action to permit link
+  $refdefs[] = dh_adminreg_define_permit_enforcement_link();
+  
+  // ***    Facility to dh feature bundle usafips
+  $refdefs[] = dh_adminreg_define_fa_usafips_link();
+  // ***    dHA Features and Contact to dh feature bundle usafips
+  $refdefs[] = dh_adminreg_define_dHA_usafips_link(); 
+  $refdefs[] = dh_adminreg_define_dHAC_usafips_link();   
+  // ***    feature facility to admin feature organization
+   $refdefs[] = dh_adminreg_define_fa_org_link(); 
+  // ****************************************
+  // ***       Authority links
+  // ****************************************
+  //  AdminReg Registration/Permit to Authority 
+  // may be undefined in the case of a new facility registration, permit application
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_admin_reg_issuer',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'registration',
+    'dest_type' => 'dh_adminreg_feature',
+		'dest_bundle' => array('authority'),
+    'label' => 'Permit/Registration Issuing Authority',
+		'select_type' => 'entityreference_autocomplete'
+  );
+  //  AdminReg Permit Authority 
+  // may be undefined in the case of a new facility registration, permit application
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_admin_reg_issuer',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'permit',
+    'dest_type' => 'dh_adminreg_feature',
+		'dest_bundle' => array('authority'),
+    'label' => 'Permit/Registration Issuing Authority',
+		'select_type' => 'entityreference_autocomplete'
+  );
+
+  // ****************************************
+  // ***      Contact links
+  // ***      to ALL AdminReg Features
+  // ***      and dH Facility Features
+  // ****************************************
+  $refdefs[] = dh_adminreg_define_contact_link();
+  $refdefs[] = dh_adminreg_define_feature_contact_link();
+  
+  // ****************************************
+  // ***      TimeSeries links
+  // ***      to ALL AdminReg Features
+  // ****************************************
+  // location - a generic way of saying "here is the location for the admin entity"
+  $feature_bundles = dh_adminreg_get_bundles('adminreg');
+  foreach ($feature_bundles as $bundle) {
+    // Create linkage from a dH AdminRef Feature to any TimeSeries entry - 
+    // used for example to link a Document of ftype "compliance_report" or "enforcement_action"
+    // or to link a set of submitted data to a submittal bundle
+    // to the TimeSeries values (cuz the TimeSeries values are linked to the WaterPoint)
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_admin_timeseries',
+      'src_type' => 'dh_adminreg_feature',
+      'src_bundle' => $bundle['bundle'],
+      'dest_type' => 'dh_timeseries',
+      'dest_bundle' => NULL,
+      'label' => 'Submittal Data',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  // link a submittal back to a feature
+  $refdefs[] = dh_adminreg_link_submittal_feature();
+  // link a submittal back to a webform
+  $refdefs[] = dh_adminreg_link_submittal_webform();
+  
+  //  AdminReg Permit/Reg Managing User
+  $managed = array('permit', 'registration', 'organization');
+  foreach ($managed as $bundle) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_admin_record_mgr_id',
+      'src_type' => 'dh_adminreg_feature',
+      'src_bundle' => $bundle,
+      'dest_type' => 'user',
+      'dest_bundle' => NULL,
+      'label' => 'Link from Admin record to Managing User',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  
+  //  AdminReg Registration to Submittal 
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_admin_submittal_pr',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'submittal',
+    'dest_type' => 'dh_adminreg_feature',
+		'dest_bundle' => array('registration','permit'),
+    'label' => 'Link from submittal record to permit/registration record',
+		'select_type' => 'entityreference_autocomplete'
+  );
+  
+  // ****************************************
+  // ***       Milestone links
+  // ****************************************  
+  // ***    dh_adminreg_feature Milestone to Permit/Reg
+  $refdefs[] = array(
+    'fieldname' => 'dh_link_admin_milestone',
+    'src_type' => 'dh_adminreg_feature',
+    'src_bundle' => 'milestone',
+    'dest_type' => 'dh_adminreg_feature',
+    'dest_bundle' => array('registration', 'permit'),
+    'label' => 'Milstone Reference by AdminReg Feature Entity',
+    'select_type' => 'entityreference_autocomplete'
+  );
+  
+  // ***    MP to Facility
+  $mptypes = array('monitoringpoint', 'usgsgage', 'waterpoint', 'well', 'landunit');
+  foreach ($mptypes as $mp) {
+    $refdefs[] = array(
+      'fieldname' => 'dh_link_facility_mps',
+      'src_type' => 'dh_feature',
+      'src_bundle' => $mp,
+      'dest_type' => 'dh_feature',
+      'dest_bundle' => array('facility'),
+      'label' => 'Facility Monitoring Point',
+      'select_type' => 'entityreference_autocomplete'
+    );
+  }
+  
+  return $refdefs;
+}
+function dh_adminreg_add_references() {
+  // add references
+  $refdefs = dh_adminreg_define_references();
+  dh_add_references($refdefs, false);
+  
+}
+
+function dh_adminreg_get_bundles($btype = 'adminreg') {
+  
+  $dh_typedefs = array(
+    'facility' => array('bundle' => 'facility', 'name' => 'Facility', 'description' => 'dH Facility (ftypes: WTP, WWTP, etc.)'),
+    'usafips' => array('bundle' => 'usafips', 'name' => 'FIPS Locality', 'description' => 'FIPS Locality'),
+	);
+  $dh_adminreg_feature_typedefs = array(
+    'permit' => array('bundle' => 'permit', 'name' => 'dH Admin/Regulatory Permit Document ', 'description' => ' (ftypes: vwp, vpdes, ...)'),
+    'registration' => array('bundle' => 'registration', 'name' => 'dH Admin/Regulatory Entity/Facility Registration', 'description' => 'dH Admin/Regulatory Facility Registration (for voluntary reporting, permitting etc.)' ),
+    'authority' => array('bundle' => 'authority', 'name' => 'dH Admin/Regulatory Agency', 'description' => 'Regulatory Agency/Office'),
+    'submittal' => array('bundle' => 'submittal', 'name' => 'dH Admin/Regulatory Submittal Document', 'description' => 'Regulatory Agency/Office'),
+    'organization' => array('bundle' => 'organization', 'name' => 'dH Organization', 'description' => 'Admin Organization (ftypes: utility, corporation, nonprofit, foundation, ...)'),
+    'milestone' => array('bundle' => 'milestone', 'name' => 'dH Milestone', 'description' => 'Development Milestone'),	
+    'enforcement' => array('bundle' => 'enforcement', 'name' => 'dH Enforcement Issue', 'description' => 'Permit Enforcement Issue'),	
+	);
+  
+  switch ($btype) {
+    case 'adminreg':
+    $bundles = $dh_adminreg_feature_typedefs;
+    break;
+
+    case 'base':
+    $bundles = $dh_typedefs;
+    break;
+
+    default:
+    $bundles = $dh_typedefs;
+    break;
+  }
+  
+  return $bundles;
+}
+
+
+function dh_adminreg_add_bundles() {
+  // Add Bundles
+  $dh_typedefs = dh_adminreg_get_bundles('base');
+
+	foreach ($dh_typedefs as $key => $thistype) {
+		dh_base_feature_type_save($thistype);
+	}
+  
+  $dh_adminreg_feature_typedefs = dh_adminreg_get_bundles('adminreg');
+
+	foreach ($dh_adminreg_feature_typedefs as $key => $thistype) {
+  drupal_set_message("adding bundle $key");
+  error_log("adding bundle $key");
+		dh_adminreg_feature_type_save($thistype);
+	}
+}
+
+function dh_adminreg_init_fields() {
+  // set up dh_feature fields here
+  $fields_fields = array(
+    'facility' => array(
+      'dh_geofield' => array('label' => 'Geometry', 'type' => 'geofield', 'display' => 'geofield_wkt', 'widget' => 'geofield_wkt'),
+      'address1' => array('label' => 'Address 1', 'type' => 'text'),
+      'address2' => array('label' => 'Address 2', 'type' => 'text'),
+      'city' => array('label' => 'City', 'type' => 'text'),
+      'state' => array('label' => 'State/Province', 'type' => 'text'),
+      'postal_code' => array('label' => 'Zip/Postal Code', 'type' => 'text'),
+      'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),
+    'well' => array(
+      'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),
+    'intake' => array(
+      'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),		
+  );
+  $e = 'dh_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}
+  
+  // set up dh_adminreg_feature fields here
+  $fields_fields = array(
+    'permit' => array(
+      'doc_location' => array('label' => 'Permit Document URL', 'type' => 'text', 'settings'   => array('size' => 255)),
+      'permit_id' => array('label' => 'Permit ID', 'type' => 'text'),
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),
+    ),
+    'registration' => array(
+      'registration_id' => array('label' => 'Registration ID', 'type' => 'text'),
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),
+    'organization' => array(
+      'address1' => array('label' => 'Address 1', 'type' => 'text'),
+      'address2' => array('label' => 'Address 2', 'type' => 'text'),
+      'city' => array('label' => 'City', 'type' => 'text'),
+      'state' => array('label' => 'State/Province', 'type' => 'text'),
+      'postal_code' => array('label' => 'Zip/Postal Code', 'type' => 'text'),
+      'taxid' => array('label' => 'Tax ID', 'type' => 'varchar_64'),	 
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	   
+    ),	
+    'authority' => array(
+	    'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),	
+    'submittal' => array(
+	    'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+      'formid' => array('label' => 'ID of Entity from Webform or other submission method', 'type' => 'int'),
+      'formtype' => array('label' => 'Type of Entity from Webform or other submission method', 'type' => 'varchar_64'),
+    ),				
+    'milestone' => array(
+      'date_received' => array('label' => 'Date Received', 'type' => 'int'),
+	  'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+    ),		
+    'enforcement' => array(
+      'date_received' => array('label' => 'Date Received', 'type' => 'int'),
+	    'description' => array('label' => 'Description', 'type' => 'text_long'),	  
+      'vdeq_enfid' => array('label' => 'Description', 'type' => 'text'),
+    ),	
+  );
+  $e = 'dh_adminreg_feature';
+	foreach ($fields_fields as $key => $thistype) {
+		dh_initialize_fields($key, '', $e, $fields_fields);
+	}
+  
+}
+
+
+/**
+ * Add default variables.
+ */
+function dh_adminreg_default_variables() {
+  $defs = array(
+    'event_dha_default' => array(
+      'varkey' => 'event_dha_default',
+      'varname' => 'Administrative Event',
+      'varcode' => 'event_dha_default',
+      'vardesc' => 'Timeseries event which mirrors startdate (tstime) and enddate (tsendtime) fields in AdminReg entities.',
+      'varunits' => 'n/a',
+      'vocabulary' => 'entity_events',
+      'datatype' => 'event',
+      'plugin' => 'dHVariablePluginDefault',
+      'isregular' => 1,
+      'timestep' => 1,
+      'timeunits' => '',
+      'nodataval' => 0,
+      'data_entry' => '',
+    ),
+    'event_dh_link_submittal_feature' => array(
+      'varkey' => 'event_dh_link_submittal_feature',
+      'varname' => 'Submittal Event',
+      'varcode' => 'event_dh_link_submittal_feature',
+      'vardesc' => 'Timeseries event which mirrors startdate (tstime) and enddate (tsendtime) fields in submittal entities linked to a dh_feature.',
+      'varunits' => 'n/a',
+      'vocabulary' => 'entity_events',
+      'datatype' => 'event',
+      'plugin' => 'dHVariablePluginDefault', // we will replace this later
+      'isregular' => 1,
+      'timestep' => 1,
+      'timeunits' => '',
+      'nodataval' => 0,
+      'data_entry' => '',
+    ),
+  );
+  
+  foreach ($defs as $vardef) {
+    // 
+    if (!dh_vardef_info($vardef['varkey'])) {
+      $ve = entity_create('dh_variabledefinition', $vardef);
+      if ($ve) {
+        $ve->save();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function dh_adminreg_uninstall () {
+  $fields = array('doc_location', 'date_received','taxid');
+	$refdefs = dh_adminreg_define_references();
+  foreach ($refdefs as $thisref) {
+    $fields[] = $thisref['fieldname'];
+  }
+  foreach ($fields as $field) {
+    drupal_set_message("Deleting Field $field");
+    field_delete_field($field);
+    field_purge_batch(500);
+    $numd++;
+  }
+  drupal_set_message("Deleted $numd fields");
+}
+
+
+function dh_adminreg_feature_type_save($info) {
+  // set the base dh_adminreg_feature_type entries
+  // modeled after node_type_save
+  $existing_type = !empty($info['old_bundle']) ? $info['old_bundle'] : $info['bundle'];
+  $is_existing = (bool) db_query_range('SELECT 1 FROM {dh_adminreg_feature_type} WHERE bundle = :bundle', 0, 1, array(':bundle' => $existing_type))->fetchField();
+
+  $fields = array(
+    'bundle' => $info['bundle'],
+    'name' => $info['name'],
+    'description' => $info['description'],
+  );
+
+  if ($is_existing) {
+  error_log("Updating an existing bundle"); 
+    db_update('dh_adminreg_feature_type')
+      ->fields($fields)
+      ->condition('bundle', $existing_type)
+      ->execute();
+
+    if (!empty($info['old_bundle']) && $info['old_bundle'] != $info['bundle']) {
+      field_attach_rename_bundle('dh_adminreg_feature', $info['old_bundle'], $info['bundle']);
+    }
+	 // need equivalent?
+    //module_invoke_all('node_type_update', $type);
+    $status = SAVED_UPDATED;
+  }
+  else {
+    db_insert('dh_adminreg_feature_type')
+      ->fields($fields)
+      ->execute();
+
+    field_attach_create_bundle('dh_adminreg_feature', $info['bundle']);
+
+    $status = SAVED_NEW;
+  }
+
+  // Clear the node type cache.
+  // hmmm ... do we need to supply an equivalent to this?
+  // node_type_cache_reset();
+  dh_adminreg_feature_type_cache_reset();
+
+  return $status;
+}
+
+function dh_adminreg_feature_type_cache_reset() {
+  cache_clear_all('dh_adminreg_feature_type:', 'cache', TRUE);
+  //drupal_static_reset('_node_types_build');
+}
+
+?>

@@ -1,0 +1,25 @@
+hydroid	hgucode	hguname	modflowid	deqno
+1001	SURF	Surficial (Columbia) Aquifer	1	10
+1002	YTCZ	Yorktown Confining Zone	2	
+1003	YEAQ	Upper Yorktown-Eastover Aquifer	3	9u
+1004	YEAQ	Middle Yorktown-Eastover Aquifer	3	9m
+1005	YEAQ	Lower Yorktown-Eastover Aquifer	3	9l
+1006	SMCU	St. Marys Confining Unit	4	
+1007	SMAQ	St. Marys Aquifer	5	8
+1008	CACU	Calvert Confining Unit	6	
+1009	PPAQ	Piney Point Aquifer	7	7
+1010	CHCU	Chickahominy Confining Unit	8	
+1011	XMCU	Exmore Matrix Confining Unit	9	
+1012	XCAQ	Exmore Clast Aquifer	10	
+1013	NMCU	Nanjemoy-Marlboro Confining Unit	11	
+1014	AQAQ	Aquia Aquifer	12	6
+1015	PDCU	Peedee Confining Unit	13	
+1016	PDAQ	Peedee Aquifer	14	5
+1017	VBCU	Virginia Beach Confining Unit	15	
+1018	VBAQ	Virginia Beach Aquifer	16	4
+1019	UCCU	Upper Cenomanian Confining Unit	17	
+1020	POCZ	Potomac Confining Zone	18	
+1021	POAQ	Upper Potomac Aquifer	19	3
+1022	POAQ	Middle Potomac Aquifer	19	2
+1023	POAQ	Lower Potomac Aquifer	19	1
+1024	BSMT	Bedrock Basement	20	
