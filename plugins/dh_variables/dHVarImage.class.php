@@ -116,3 +116,25 @@ class dHVarImageField extends dHVariablePluginDefault {
     return $property->image;
   }
 }
+
+
+class dHVarURL extends dHVarImage {
+  
+  public function buildContent(&$content, &$entity, $view_mode) {
+    parent::buildContent($content, $entity, $view_mode);
+    switch ($view_mode) {
+      case 'plugin':
+      case 'teaser':
+      default:
+        unset($content['propcode']);
+        unset($content['propvalue']);
+        $content['link'] = array(  
+          '#theme' => 'link',
+          '#item' => array(
+            'uri' => $entity->propcode,
+          ),
+        );
+      break;
+    }
+  }
+}
