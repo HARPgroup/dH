@@ -130,9 +130,8 @@ class dHVarURL extends dHVarImage {
         unset($content['propvalue']);
         $content['link'] = array(  
           '#theme' => 'link',
-          '#item' => array(
-            'uri' => $entity->propcode,
-          ),
+          '#text' => 'Click Here',
+          '#path' => $entity->propcode,
         );
       break;
     }
