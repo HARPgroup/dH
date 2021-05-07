@@ -132,6 +132,12 @@ class dHVarURL extends dHVarImage {
           '#theme' => 'link',
           '#text' => 'Click Here',
           '#path' => $entity->propcode,
+          '#options' => array(
+            'attributes' => array(
+              'class' => array('first'), 
+              //REQUIRED:
+              'html' => FALSE,
+           ),
         );
       break;
     }
