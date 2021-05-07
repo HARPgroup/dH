@@ -137,6 +137,7 @@ class dHVarURL extends dHVarImage {
               'class' => array('first'), 
               //REQUIRED:
               'html' => FALSE,
+             ),
            ),
         );
       break;
