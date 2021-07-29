@@ -3471,9 +3471,9 @@ function dh_varcode2varid($varcode, $one_id = FALSE) {
   }
 }
 
-function dh_get_timeseries(&$values, $multiplicity) {
+function dh_get_timeseries(&$values, $multiplicity, $load = FALSE) {
   // this passes $values by reference because it should be a one-time translation of tstime and varid
-
+  // todo: hahdle $load to return as objects
   // ***********************************************************
   // * Do translations
   //   * make sure the variable is in place and translated to varid
@@ -3616,7 +3616,18 @@ function dh_get_timeseries(&$values, $multiplicity) {
   }
   $efq->propertyOrderBy('tid', 'DESC');
   $result = $efq->execute();
-  return $result;
+  if ($load) {
+    // return an array of loaded object 
+    $ts = array();
+    if (isset($result['dh_timeseries'])) {
+      foreach ($result['dh_timeseries'] as $ts_stub) {
+        $ts[] = entity_load_single('dh_timeseries', $ts_stub->tid);
+      }
+    }
+    return $ts;
+  } else {
+    return $result;
+  }
 }
 
 function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
@@ -3823,7 +3834,7 @@ function dh_timeseries_enforce_singularity_dev(&$values, $multiplicity, $set_val
 function dh_properties_enforce_singularity(&$values, $multiplicity, $set_values = TRUE) {
   // retrieves an object if it exists, and enforces singularity 
   // requires featureid and entity_type otherwise we could delete a whole bunch pof stuff by accident
-  $notnull = array('featureid', 'entity_type');
+  $notnull = array('featureid', 'entity_type', 'propname');
   foreach ($notnull as $v) {
     if (!isset($values[$v]) or ($values[$v] === NULL)) {
       watchdog('dh_properties', "NULL value for dh_properties $v");
