@@ -3834,11 +3834,12 @@ function dh_timeseries_enforce_singularity_dev(&$values, $multiplicity, $set_val
 function dh_properties_enforce_singularity(&$values, $multiplicity, $set_values = TRUE) {
   // retrieves an object if it exists, and enforces singularity 
   // requires featureid and entity_type otherwise we could delete a whole bunch pof stuff by accident
-  $notnull = array('featureid', 'entity_type', 'propname');
+  //$notnull = array('featureid', 'entity_type', 'propname');
+  $notnull = array('featureid', 'entity_type');
   foreach ($notnull as $v) {
     if (!isset($values[$v]) or ($values[$v] === NULL)) {
       watchdog('dh_properties', "NULL value for dh_properties $v");
-      watchdog(debug_print_backtrace(0,2));
+      //watchdog(debug_print_backtrace(0,2));
       return FALSE;
     }
   }
