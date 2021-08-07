@@ -1893,6 +1893,11 @@ function dh_update_7179() {
 }
 
 function dh_update_7180() {
-  dh_initialize_fields('dh_timeseries', 'tstext', 'dh_timeseries');
+  // add a timeseries image file at long last 
+  if (field_info_instance('dh_timeseries', 'field_image', 'image') === NULL) {
+    $info_instance = field_info_instance('dh_properties', 'field_image', 'image');
+    $info_instance['entity_type'] = 'dh_timeseries';
+    $fa = field_create_instance($instance);
+  }
 }
 ?>
