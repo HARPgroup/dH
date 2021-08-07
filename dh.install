@@ -1060,6 +1060,7 @@ function dh_initialize_fields($type, $field = '', $entity = 'dh_feature', $field
       ),
        'dh_timeseries' => array(
          'tstext' => array('label' => 'Storage for text ts value', 'type' => 'text_long', 'max_length' => '', 'widget' => 'text_long'),
+         'image' => array('label' => 'Image', 'type' => 'image', 'file_extensions' => 'png gif jpg jpeg', 'widget' => 'image_image'),
       ),
     );
   }
@@ -1889,5 +1890,9 @@ function dh_update_7178() {
 function dh_update_7179() {
   db_query("create index dh_properties_dh_ps_pnix on {dh_properties} (propname)");
   db_query("create index dh_properties_revision_dh_ps_pnix on {dh_properties_revision} (propname)");
+}
+
+function dh_update_7180() {
+  dh_initialize_fields('dh_timeseries', 'tstext', 'dh_timeseries');
 }
 ?>
