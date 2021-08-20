@@ -481,9 +481,9 @@ function dh_views_data_alter(&$data) {
         )
       );
       if (!isset($data[$ebase]['vardef_' . $ebase]['relationship']['extra'])) { 
-        $data[$data[$ebase]['vardef_' . $ebase]['relationship']['extra'] = array();
+        $data[$ebase]['vardef_' . $ebase]['relationship']['extra'] = array();
       }
-      $data[$data[$ebase]['vardef_' . $ebase]['relationship']['extra'][] = array(
+      $data[$ebase]['vardef_' . $ebase]['relationship']['extra'][] = array(
         'field' => 'entity_type', 
         'value' => $ename
       );
