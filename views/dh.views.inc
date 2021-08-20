@@ -455,6 +455,33 @@ function dh_views_data_alter(&$data) {
       );
     }
   }
+  
+  
+  // special vardef to props and ts 
+  $e = entity_get_info();
+  // for properties
+  $vtabs = array('dh_properties', 'dh_timeseries');
+  foreach ($vtabs as $ename) {
+    $einfo = $e[$ename];
+    $ebase = $einfo['base table'];
+    $elabel = $einfo['label'];
+    if ($eidcol) {
+      // should go through and add a relationship for all entity types
+      $data[$ebase]['vardef_' . $ebase] = array(
+        'real field' => 'hydroid',
+        'relationship' => array(
+          'title' => 'Variable Definition for ' . $ebase,
+          'help' => 'Joins the variable definition entry to ' . $ebase,
+          'handler' => 'views_handler_relationship',
+          'label' => t($elabel . ' Variable Definition'),
+          'base' => 'dh_variabledefinition',
+          'base field' => 'hydroid',
+          'left_table' => $ebase,
+          'field' => 'varid',
+        )
+      );
+    }
+  }
 
    // dh_properties basics
    $datecols = array('startdate', 'enddate');
