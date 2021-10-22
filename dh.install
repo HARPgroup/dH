@@ -1897,6 +1897,7 @@ function dh_update_7180() {
   if (field_info_instance('dh_timeseries', 'field_image', 'image') === NULL) {
     $info_instance = field_info_instance('dh_properties', 'field_image', 'image');
     $info_instance['entity_type'] = 'dh_timeseries';
+    $info_instance['bundle'] = 'dh_timeseries';
     $fa = field_create_instance($info_instance);
   }
 }
