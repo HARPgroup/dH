@@ -928,7 +928,6 @@ class EntityGroupConfigurator {
   // always return form
     $this->applyEntityTokens();
     $this->applySettings();
-  error_log("Called  buildForm :: applySettings");
     // this stores settings in form state for later use.
     // we previously had it before applySettings(), but should not matter? Check if it breaks.
     $form_state['conf']['entity_settings'][$this->groupname] = $this->conf;
@@ -983,6 +982,7 @@ class EntityGroupConfigurator {
         }
       }
       $this->renderFormRow($form, $form_state, $line, $row);
+  error_log("Called  buildForm :: renderFormRow");
       if ( $this->use_rebuild_code) {
         $entity_parents = $row_parents;
         array_unshift($entity_parents, 'entities');
