@@ -902,6 +902,7 @@ class EntityGroupConfigurator {
     // @todo: explicitly send form_state to plugins
     $row->form_state = $form_state; // stash a link here to allow queries by plugins
     $this->formRowDefaults($rowform, $row);
+  error_log("Called  buildForm :: renderFormRow :: formRowDefaults");
     $this->formRowPlugins($rowform, $row);
     $this->formRowVisibility($rowform, $row);
     //dpm($row, "This row");
@@ -982,7 +983,6 @@ class EntityGroupConfigurator {
         }
       }
       $this->renderFormRow($form, $form_state, $line, $row);
-  error_log("Called  buildForm :: renderFormRow");
       if ( $this->use_rebuild_code) {
         $entity_parents = $row_parents;
         array_unshift($entity_parents, 'entities');
