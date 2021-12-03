@@ -903,7 +903,6 @@ class EntityGroupConfigurator {
     $row->form_state = $form_state; // stash a link here to allow queries by plugins
     $this->formRowDefaults($rowform, $row);
     $this->formRowPlugins($rowform, $row);
-  error_log("Called  buildForm :: renderFormRow :: formRowPlugins");
     $this->formRowVisibility($rowform, $row);
     //dpm($row, "This row");
     foreach ($this->form_columns as $colname) {
