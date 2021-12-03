@@ -926,6 +926,7 @@ class EntityGroupConfigurator {
   // @todo -- deprecate pass by reference for form & form_state in future versions
   //   - Drupal 8 EntityForm = public function buildForm(array $form, FormStateInterface $form_state)
   // always return form
+  error_log("Called  buildForm");
     $this->applyEntityTokens();
     $this->applySettings();
     // this stores settings in form state for later use.
