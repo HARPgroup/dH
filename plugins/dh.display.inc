@@ -927,8 +927,8 @@ class EntityGroupConfigurator {
   //   - Drupal 8 EntityForm = public function buildForm(array $form, FormStateInterface $form_state)
   // always return form
     $this->applyEntityTokens();
-  error_log("Called  buildForm :: applyEntityTokens");
     $this->applySettings();
+  error_log("Called  buildForm :: applySettings");
     // this stores settings in form state for later use.
     // we previously had it before applySettings(), but should not matter? Check if it breaks.
     $form_state['conf']['entity_settings'][$this->groupname] = $this->conf;
