@@ -1,0 +1,5 @@
+name: dH
+type: module
+description: 'Data Handlers'
+package: custom
+core_version_requirement: ^8 || ^9
