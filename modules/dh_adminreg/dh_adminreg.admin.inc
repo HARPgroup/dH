@@ -328,6 +328,7 @@ function dh_adminreg_feature_form($form, &$form_state, $dh_adminreg_feature, $op
     'duplicate' => t('Duplicate'),
     'expired' => t('Expired'),
     'revoked' => t('Revoked'),
+    'submitted' => t('Submitted'),
     'proposed' => t('Proposed'),
     'other' => t('Other'),
   );
