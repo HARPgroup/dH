@@ -26,7 +26,7 @@ function dh_entity_info() {
         'id' => 'fid',
         'label' => 'name',
     ),
-    'access callback' => 'dh_feature_type_access',
+    'access callback' => 'dh_access',
     'module' => 'dh',
     // Enable the entity API's admin UI.
     'admin ui' => array(
