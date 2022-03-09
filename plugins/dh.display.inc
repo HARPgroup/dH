@@ -1,4 +1,11 @@
 <?php
+/**
+ * @file
+ * Grouped dH entity handler classes.
+ * See also: plugins/components/properties_pane_default.inc 
+ *   for UI integration setup  
+ */
+ 
 ctools_include('plugins');
     
 interface dhFormInterface {
@@ -957,6 +964,18 @@ class EntityGroupConfigurator {
     if (strlen($this->conf['destination']) > 0) {
       $form_state['redirect'] = $this->conf['destination'];
     }
+    if (!empty($this->conf['cancel_destination'])) {
+      $form['cancel_destination'] = array(
+        '#type' => 'hidden',
+        '#default_values' => $this->conf['cancel_destination'],
+      );
+    } else {
+      $form['cancel_destination'] = array(
+        '#type' => 'hidden',
+        '#default_value' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>'
+      );
+    }
+      
     $i = 1;
     $oe = 'odd';
     foreach ($this->data as $row) {
@@ -1081,7 +1100,7 @@ class EntityGroupConfigurator {
       '#value' => t('Cancel'),
       '#weight' => 20,
       '#limit_validation_errors' => array(),
-      '#submit' => array('test_formapi_form_submit_cancel')
+      '#submit' => array('dh_grouped_entity_panel_form_cancel')
     );
     $save_label = $this->conf['save_label'];
     $form['actions']['submit'] = array(
@@ -1108,7 +1127,7 @@ class EntityGroupConfigurator {
         '#value' => t('Delete type'),
         '#weight' => 45,
         '#limit_validation_errors' => array(),
-        '#submit' => array('test_formapi_form_submit_delete')
+        '#submit' => array('dh_grouped_entity_panel_form_delete')
       );
       break;
     }

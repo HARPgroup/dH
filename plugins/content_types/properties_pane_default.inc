@@ -2,7 +2,10 @@
 module_load_include('inc', 'dh', 'plugins/dh.display');
 /**
  * @file
- * Pane for multiple data layer leaflet maps.
+ * Pane for multiple property edit widget.
+ * Form submission handling functions such as 'properties_panel_form_submit'
+ *  handled in dh.module 
+ * Form rendering handled in plugins/dh.display.inc in dHPropertiesGroup class 
  */
 
 $plugin = array(
