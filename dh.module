@@ -4511,10 +4511,9 @@ function dh_grouped_entity_panel_form_cancel($form, &$form_state) {
   dpm($form_state,'form_state');
   if (isset($parms['finaldest'])) {
     $url = $parms['finaldest'];
-  } else {
-    $url = '<front>';
+    drupal_goto($url);
   }
-  drupal_goto($url);
+  
 }
 
 function dh_grouped_entity_panel_form_delete($form, &$form_state) {
