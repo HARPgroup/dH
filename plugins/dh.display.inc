@@ -972,7 +972,7 @@ class EntityGroupConfigurator {
     } else {
       $form['cancel_destination'] = array(
         '#type' => 'hidden',
-        '#default_values' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>'
+        '#default_value' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>'
       );
     }
       
