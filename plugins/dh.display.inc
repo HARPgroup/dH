@@ -965,9 +965,15 @@ class EntityGroupConfigurator {
       $form_state['redirect'] = $this->conf['destination'];
     }
     if (!empty($this->conf['cancel_destination'])) {
-      $form_state['cancel_destination'] = $this->conf['cancel_destination'];
+      $form['cancel_destination'] = array(
+        '#type' => 'hidden',
+        '#default_values' => $this->conf['cancel_destination'],
+      );
     } else {
-      $form_state['cancel_destination'] = !empty($form_state['cancel_destination']) ? $form_state['cancel_destination'] : '<front>';
+      $form['cancel_destination'] = array(
+        '#type' => 'hidden',
+        '#default_values' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>'
+      );
     }
       
     $i = 1;
