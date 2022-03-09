@@ -4508,8 +4508,8 @@ function dh_grouped_entity_panel_form_cancel($form, &$form_state) {
   $parms = drupal_get_query_parameters();
   $args = arg();
   $url = "<front>";
-  if (isset($form_state['inputs']['cancel_destination'])) {
-    $url = $form_state['inputs']['cancel_destination'];
+  if (isset($form_state['input']['cancel_destination'])) {
+    $url = $form_state['input']['cancel_destination'];
   }
   drupal_goto($url);
 }
