@@ -4509,10 +4509,6 @@ function dh_grouped_entity_panel_form_cancel($form, &$form_state) {
   $args = arg();
   dpm($form,'form');
   dpm($form_state,'form_state');
-  $dd = drupal_get_destination();
-  dpm($dd,'drupal_get_destination()');
-  $rf = $_SERVER['HTTP_REFERER'];
-  dpm($rf,'HTTP_REFERER');
   if (isset($parms['finaldest'])) {
     $url = $parms['finaldest'];
     drupal_goto($url);

@@ -964,6 +964,12 @@ class EntityGroupConfigurator {
     if (strlen($this->conf['destination']) > 0) {
       $form_state['redirect'] = $this->conf['destination'];
     }
+    if (!empty($this->conf['cancel_destination'])) {
+      $form_state['cancel_destination'] = $this->conf['cancel_destination'];
+    } else {
+      $form_state['cancel_destination'] = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>';
+    }
+      
     $i = 1;
     $oe = 'odd';
     foreach ($this->data as $row) {
