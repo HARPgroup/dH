@@ -967,7 +967,7 @@ class EntityGroupConfigurator {
     if (!empty($this->conf['cancel_destination'])) {
       $form_state['cancel_destination'] = $this->conf['cancel_destination'];
     } else {
-      $form_state['cancel_destination'] = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>';
+      $form_state['cancel_destination'] = !empty($form_state['cancel_destination']) ? $form_state['cancel_destination'] : '<front>';
     }
       
     $i = 1;
