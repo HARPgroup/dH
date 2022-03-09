@@ -3346,6 +3346,9 @@ function dh_entity_ts_event($entity, $type) {
             }
           }
         }
+        // @todo: handle the case where an edit to the source entity that is linked to a entity reference 
+        //        is edited, and certain link tarets have been unselected, and their timeseries for the map 
+        //        need to be deleted.
       }
     }
   }
