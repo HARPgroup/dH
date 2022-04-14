@@ -2216,7 +2216,6 @@ class dHTimeSeriesTable extends Entity {
     // check for entity_type return message if missing and set to default dh_feature
     $entities = array_keys(entity_get_info());
     $this->dh_variables_plugins = array();
-    dpm($values,'values');
     if (!empty($values)) {
       if (!in_array($values['entity_type'], $entities)) {
         //watchdog('dh', "dh_timeseries object created without entity_type specified.  Using default dh_feature.");
@@ -2307,7 +2306,6 @@ class dHTimeSeriesTable extends Entity {
         $values['modified'] = date('U');
       }
     }
-    dpm($values,'values');
     parent::__construct($values, 'dh_timeseries');
     // now all attributes should be set, so lets call any plugin setUp methods
     $this->setUpPlugins();
