@@ -2433,7 +2433,9 @@ class dHTimeSeriesTableController extends EntityAPIControllerExportable {
         }
       }
     }    
+    dpm($values,'values');
     $entity = parent::create($values);
+    dpm($entity,'entity');
     $plugins = dh_variables_getPlugins($entity);
     if (!is_array($plugins)) {
       $plugins = array($plugins);
