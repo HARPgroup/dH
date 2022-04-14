@@ -1095,6 +1095,9 @@ function dh_timeseries_form($form, &$form_state, $dh_timeseries, $op = 'edit') {
   $p = drupal_get_query_parameters();
   // handle url vars
   $url_varid = isset($p['varid']) ? $p['varid'] : FALSE;
+  if (!is_numeric($url_varid)) {
+    $url_varid = dh_varkey2varid($url_varid, TRUE);
+  }
   $url_featureid = isset($p['featureid']) ? $p['featureid'] : FALSE;
   $url_entity_type = isset($p['entity_type']) ? $p['entity_type'] : FALSE;
   $dh_timeseries->varid = !$dh_timeseries->varid ? $url_varid : $dh_timeseries->varid;
