@@ -3121,7 +3121,7 @@ class dHVariablePluginDefault {
     // load subComponents 
     $procnames = dh_get_dh_propnames('dh_properties', $entity->identifier());
     foreach ($procnames as $thisname) {
-      $sub_entity = om_load_dh_property($entity, $thisname);
+      $sub_entity = om_load_dh_property($entity, $thisname, TRUE);
       $plugin = dh_variables_getPlugins($sub_entity);
       //dpm($plugin,'plugin');
       if (is_object($plugin) and method_exists($plugin, 'exportOpenMI')) {
