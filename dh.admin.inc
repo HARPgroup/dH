@@ -1503,6 +1503,8 @@ function dh_variabledefinition_form($form, &$form_state, $dh_variabledefinition,
     'default' => 'Default (None for timeseries, and Name for properties)',
     'none' => 'No Automatic Setting (properties will still be required to have a unique name)',
     'tstime_singular' => 'Start Time/Date + Varid (timeseries/properties) Singular',
+    'tspan_singular' => 'Start and End Time/Date + Varid (exact time span) Singular',
+    'trange' => 'Within Start and End Time/Date + Varid (anything inside of time span) Singular',
   );
   $form['multiplicity'] = array(
     '#title' => t('Multiplicity Setting'),
