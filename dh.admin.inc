@@ -1505,7 +1505,7 @@ function dh_variabledefinition_form($form, &$form_state, $dh_variabledefinition,
     'tstime_singular' => 'Start Time/Date + Varid (timeseries/properties) Singular',
     'tspan_singular' => 'Start and End Time/Date + Varid (exact time span) Singular',
     'trange' => 'Within Start and End Time/Date + Varid (anything inside of time span) Singular',
-    'code' => 'Only 1 value allowed per tscode/propcode',
+    'code_singular' => 'Code: Only 1 value allowed per tscode/propcode',
   );
   $form['multiplicity'] = array(
     '#title' => t('Multiplicity Setting'),
