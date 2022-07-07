@@ -3552,6 +3552,7 @@ function dh_get_timeseries(&$values, $multiplicity, $load = FALSE) {
       }
     break;
     
+    case 'code':
     case 'tscode_singular':
       if (!empty($values['tscode'])) {
         $efq->propertyCondition('tscode', $values['tscode'], '=');
@@ -3706,6 +3707,7 @@ function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
       }
     break;
     
+    case 'code':
     case 'propcode_singular':
       if (!empty($values['propcode'])) {
         $efq->propertyCondition('propcode', $values['propcode'], '=');
