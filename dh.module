@@ -3901,7 +3901,7 @@ function dh_update_timeseries($values, $multiplicity = 'tstime_singular') {
     //dpm($entity,"entity is not object or save() method does not exist");
     return FALSE;
   }
-  //drupal_set_message("Arg: '$argument'");
+  drupal_set_message("Arg: '$argument'");
 }
 
 function dh_update_properties($values, $multiplicity = 'name_singular') {  
