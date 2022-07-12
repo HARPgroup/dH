@@ -3850,14 +3850,14 @@ function dh_properties_enforce_singularity(&$values, $multiplicity, $set_values 
       return FALSE;
     }
   }
-  //dpm($values, "multiplicity = $multiplicity, values in dh_properties_enforce_singularity");
+  dpm($values, "multiplicity = $multiplicity, values in dh_properties_enforce_singularity");
   $result = dh_get_properties($values, $multiplicity);
   //dpm($result, 'dh_get_properties result in dh_properties_enforce_singularity');
   $entity = FALSE;
   if (isset($result['dh_properties'])) {
     //dpm($result,'efq result');
     $data = entity_load('dh_properties', array_keys($result['dh_properties']));
-    //dpm($data,'entity_load result');
+    dpm($data,'entity_load result');
     $entity = array_shift($data);
     if (!(strpos($multiplicity, 'singular') === FALSE) or ($multiplicity == 'name') or ($multiplicity == 'default')) {
       //dpm($data,'need to delete extraneous entries');
