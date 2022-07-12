@@ -3660,7 +3660,7 @@ function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
   //$efq->propertyCondition('featureid', $values['featureid']);
   $efq->propertyCondition('featureid', $values['featureid'], '=');
   // specific types don't use varid
-  if (!in_array($multiplicity, array('name', 'name_singular', 'all'))) {
+  if (!in_array($multiplicity, array('name', 'name_singular', 'all', 'default'))) {
     // if 'all' is request we ignore varid, otherwise we want a specific var
     // this is used for delete operations or operations in which we want top return
     // any and all timeseries records associated with this entity
@@ -3675,6 +3675,7 @@ function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
     // returning all
     break;
     
+    case 'default':
     case 'name':
     case 'name_singular':
     // expects only 1 value, but essentially returns all values for varid
