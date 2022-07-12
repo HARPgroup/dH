@@ -3904,7 +3904,7 @@ function dh_update_timeseries($values, $multiplicity = 'tstime_singular') {
   //drupal_set_message("Arg: '$argument'");
 }
 
-function dh_update_properties($values, $multiplicity = 'name') {  
+function dh_update_properties($values, $multiplicity = 'name_singular') {  
   // must have timestamp, featureid and entity_type
   // $multiplicity - @todo:  remove this, and get setting from dh_variabledefinition?
   // default allows any and all multiples provided that they have a unique name
@@ -3919,7 +3919,7 @@ function dh_update_properties($values, $multiplicity = 'name') {
   if (isset($result['dh_properties'])) {
     $data = entity_load('dh_properties', array_keys($result['dh_properties']));
     $record = array_shift($data);
-    if (!(strpos($multiplicity, 'singular') === FALSE)) {
+    if (!(strpos($multiplicity, 'singular') === FALSE) or ($multiplicity == 'default')) {
       // we need to grab one and delete the others because this is to be singular
       // otherwise, we just take the first one we come to and ignore the rest
       foreach ($data as $todel) {
