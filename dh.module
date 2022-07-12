@@ -3670,6 +3670,7 @@ function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
   //   ex: a birthdate
   // non_singular - just force an insert regardless of duplication
   // tstime_singular - one record for featureid/entity_type/varid/tstime/tsendtime
+  dsm("Multiplicity = $multiplicity");
   switch ($multiplicity) {
     case 'all':
     // returning all
@@ -3725,7 +3726,7 @@ function dh_get_properties(&$values, $multiplicity, $load = FALSE) {
   }
   $efq->propertyCondition('entity_type', $values['entity_type'], '=');
   $efq->propertyOrderBy('pid', 'DESC');
-  //dpm($efq,'efq');
+  dpm($efq,'efq');
   $result = $efq->execute();
   //dpm($result,'dh_get_properties result');
   return $result;
