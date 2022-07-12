@@ -3908,6 +3908,7 @@ function dh_update_properties($values, $multiplicity = 'name_singular') {
   // must have timestamp, featureid and entity_type
   // $multiplicity - @todo:  remove this, and get setting from dh_variabledefinition?
   // default allows any and all multiples provided that they have a unique name
+  dpm($values,"multiplicity = $multiplicity");
   $notnull = array('featureid', 'entity_type', 'varid');
   foreach ($notnull as $v) {
     if (!isset($values[$v]) or ($values[$v] === NULL)) {
