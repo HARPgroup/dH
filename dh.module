@@ -3859,7 +3859,7 @@ function dh_properties_enforce_singularity(&$values, $multiplicity, $set_values 
     $data = entity_load('dh_properties', array_keys($result['dh_properties']));
     //dpm($data,'entity_load result');
     $entity = array_shift($data);
-    if (!(strpos($multiplicity, 'singular') === FALSE) or ($multiplicity == 'name')) {
+    if (!(strpos($multiplicity, 'singular') === FALSE) or ($multiplicity == 'name') or ($multiplicity == 'default')) {
       //dpm($data,'need to delete extraneous entries');
       // we need to grab one and delete the others because this is to be singular
       // otherwise, we just take the first one we come to and ignore the rest
